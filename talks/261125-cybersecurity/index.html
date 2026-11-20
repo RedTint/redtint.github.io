@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cybersecurity Technical Masterclass · Algef Almocera</title>
+  <meta name="description" content="Take-home resources from the Cybersecurity Technical Masterclass: commands, checklists, the data lab answers, and a 90-day plan to start in security.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@75..112.5,100..800&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/">algef<span>.</span></a>
+      <nav aria-label="Main">
+        <a href="/#about">About</a>
+        <a href="/talks/">Talks</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="street" data-seed="261125-cybersecurity" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <div class="talk-head">
+      <p class="kicker">Talk resources</p>
+      <h1>Cybersecurity Technical Masterclass</h1>
+      <p class="meta">25 November 2026 · PhilDev CORE Talent Accelerator · 3 hours</p>
+      <p>We started with one computer in one room and followed it all the way out to the internet and back: what an operating system protects, how a network finds its way, how encryption keeps a login secret, what attackers actually do, and how defenders hold the line. This page has everything you need to keep going.</p>
+      <ul class="toc">
+        <li><a href="#slides">Slides</a></li>
+        <li><a href="#habits">Three habits</a></li>
+        <li><a href="#commands">Commands</a></li>
+        <li><a href="#phish">Spot the phish</a></li>
+        <li><a href="#passwords">Password storage</a></li>
+        <li><a href="#defence">Defence in depth</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#practice">Practice sites</a></li>
+      </ul>
+    </div>
+
+    <section id="slides">
+      <h2>Slides</h2>
+      <p class="deck-later">The slides will be posted here after the session on 25 November 2026.</p>
+    </section>
+
+    <section id="habits">
+      <h2>If you forget everything else</h2>
+      <div class="habits">
+        <div class="habit">Turn on MFA everywhere</div>
+        <div class="habit">Use a password manager</div>
+        <div class="habit">Verify through a second channel</div>
+      </div>
+      <p class="muted">And the commitment from the end of the session: one thing you will do this week, and one person you will tell.</p>
+    </section>
+
+    <section id="commands">
+      <h2>Commands from the session</h2>
+      <p>These run in the Terminal app on macOS. Most also work on Linux; where they differ, the Linux version is in the comment.</p>
+
+      <div class="note warn"><strong>The rule.</strong> Only scan, probe or test machines you own or have written permission to test. Everything below runs on your own computer or your own lab virtual machine.</div>
+
+      <h3>The machine alone: accounts and permissions</h3>
+<pre><code><span class="p">$ </span>whoami                                  <span class="c"># the account, not the person</span>
+<span class="p">$ </span>mkdir -p ~/demo &amp;&amp; echo "my secret plans" &gt; ~/demo/secret.txt
+<span class="p">$ </span>ls -l ~/demo/secret.txt                 <span class="c"># -rw-r--r--  owner can write, everyone can read</span>
+<span class="p">$ </span>ps -eo pid,user,comm | head -15         <span class="c"># programs running right now</span>
+<span class="p">$ </span>chmod 000 ~/demo/secret.txt             <span class="c"># nobody may read it</span>
+<span class="p">$ </span>cat ~/demo/secret.txt                   <span class="c"># Permission denied</span>
+<span class="p">$ </span>sudo cat ~/demo/secret.txt              <span class="c"># privilege escalation: the admin reads it anyway</span>
+<span class="p">$ </span>chmod 644 ~/demo/secret.txt             <span class="c"># reset</span></code></pre>
+      <p>Reading <code>-rw-r--r--</code>: the first character is the type, then three letters each for the owner, the group and everyone. <code>r</code> read, <code>w</code> write, <code>x</code> execute, <code>-</code> no.</p>
+
+      <h3>Your machine on the local network</h3>
+<pre><code><span class="p">$ </span>ipconfig getifaddr en0                  <span class="c"># your private IP (try en1)   Linux: ip -4 addr</span>
+<span class="p">$ </span>route -n get default | grep gateway     <span class="c"># your router                 Linux: ip route</span>
+<span class="p">$ </span>ping -c 4 $(route -n get default | awk '/gateway/ {print $2}')
+<span class="p">$ </span>arp -a                                  <span class="c"># devices your machine has talked to</span></code></pre>
+
+      <h3>The journey out</h3>
+<pre><code><span class="p">$ </span>traceroute -n -q 1 -w 1 example.com     <span class="c"># every line is a different machine on the route</span></code></pre>
+
+      <h3>Scan and close the doors on your own lab machine</h3>
+      <p>Needs <a href="https://canonical.com/multipass" rel="noopener" target="_blank">Multipass</a> and <a href="https://nmap.org/" rel="noopener" target="_blank">nmap</a> on your computer, and a lab VM you created yourself.</p>
+<pre><code><span class="p">$ </span>multipass launch --name lab             <span class="c"># your own Ubuntu VM</span>
+<span class="p">$ </span>multipass exec lab -- sudo apt-get install -y nginx   <span class="c"># give it a web server to find</span>
+<span class="p">$ </span>multipass info lab | grep IPv4          <span class="c"># note the lab IP</span>
+<span class="p">$ </span>nmap -sV &lt;LAB_IP&gt;                       <span class="c"># 22/tcp ssh, 80/tcp http: two open doors</span>
+
+<span class="c"># default deny, then allow only what you need</span>
+<span class="p">$ </span>multipass exec lab -- sudo ufw allow 22/tcp
+<span class="p">$ </span>multipass exec lab -- sudo ufw default deny incoming
+<span class="p">$ </span>multipass exec lab -- sudo ufw --force enable
+<span class="p">$ </span>nmap -sV &lt;LAB_IP&gt;                       <span class="c"># port 80 is now filtered</span>
+
+<span class="p">$ </span>multipass exec lab -- sudo ufw --force disable        <span class="c"># reset</span></code></pre>
+    </section>
+
+    <section id="phish">
+      <h2>Spot the phish</h2>
+      <p>Every scam in the session had one tell. Learn the tells, not the messages.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Channel</th><th>The scam</th><th>The tell</th></tr></thead>
+          <tbody>
+            <tr><td>SMS</td><td>"Verify your e-wallet account" with a link</td><td>A lookalike link domain. Open the app yourself instead.</td></tr>
+            <tr><td>SMS</td><td>Courier asks you to pay a redelivery fee</td><td>A payment request outside the official app.</td></tr>
+            <tr><td>Chat</td><td>A friendly job offer with a processing fee</td><td>You never pay to get hired.</td></tr>
+            <tr><td>Social</td><td>A friend's account asks for emergency money</td><td>A new or cloned account, urgency, money. Call them.</td></tr>
+            <tr><td>Email</td><td>The "CEO" asks for an urgent transfer</td><td>The reply-to address differs and the normal process is skipped.</td></tr>
+            <tr><td>QR</td><td>A sticker QR placed over a store's real payment QR</td><td>Check the payee name before you pay.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Bad grammar used to be the tell. AI removed it. The rule that still works: <strong>verify through a second channel</strong> you already trust.</p>
+    </section>
+
+    <section id="passwords">
+      <h2>How passwords should be stored</h2>
+      <p>The eight steps of the password ladder, from worst to best. If you build a login, aim for the bottom of the list.</p>
+      <ol class="steps">
+        <li><strong>Plaintext.</strong> One leak and every account is gone.</li>
+        <li><strong>Hashed.</strong> Unreadable, but not safe yet.</li>
+        <li><strong>Rainbow tables.</strong> Attackers do not crack common passwords, they look them up.</li>
+        <li><strong>The second leak.</strong> The same stored value means the same password.</li>
+        <li><strong>Salt.</strong> A random value per user, so the same password stores differently and lookups fail.</li>
+        <li><strong>Still guessable.</strong> Fast hashes allow billions of guesses a second. Salt made them work, not slow.</li>
+        <li><strong>Slow hashing.</strong> Use bcrypt, scrypt or Argon2, which are designed to be slow.</li>
+        <li><strong>Pepper, and after a leak.</strong> Keep a secret outside the database. After a leak: reset passwords, end every session, re-hash, notify within 72 hours, and check for reused passwords.</li>
+      </ol>
+      <p>Check your own email at <a href="https://haveibeenpwned.com/" rel="noopener" target="_blank">haveibeenpwned.com</a>, and see what your browser gives away at <a href="https://coveryourtracks.eff.org/" rel="noopener" target="_blank">coveryourtracks.eff.org</a>.</p>
+    </section>
+
+
+    <section id="defence">
+      <h2>Defence in depth</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Layer</th><th>Prevent</th><th>Detect</th><th>Respond</th></tr></thead>
+          <tbody>
+            <tr><td>Account</td><td>Unique passwords, a manager, MFA</td><td>Login alerts</td><td>Reset, and end every session</td></tr>
+            <tr><td>Machine</td><td>Patch, least privilege</td><td>Endpoint detection (EDR)</td><td>Isolate, rebuild</td></tr>
+            <tr><td>Network</td><td>Segment, default deny</td><td>Monitoring</td><td>Cut it off</td></tr>
+            <tr><td>Data</td><td>Classify, encrypt</td><td>Export alerts</td><td>Notify within 72 hours</td></tr>
+            <tr><td>Person</td><td>Verify through a second channel</td><td>A report button</td><td>No blame</td></tr>
+            <tr><td>Organisation</td><td>Policy, reviews</td><td>A security operations centre</td><td>An incident plan, 3-2-1 backups</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">3-2-1 backups: three copies, on two kinds of storage, with one kept offline or offsite.</p>
+    </section>
+
+    <section id="roadmap">
+      <h2>Your roadmap</h2>
+      <p>Full map: <a href="https://roadmap.sh/cyber-security" rel="noopener" target="_blank">roadmap.sh/cyber-security</a>.</p>
+
+      <h3>Fundamental IT skills</h3>
+      <ol class="steps">
+        <li>Hardware and connections: Wi-Fi, Bluetooth, NFC</li>
+        <li>Operating systems: the GUI and the command line</li>
+        <li>Networking: ping, traceroute, dig, arp, nmap, tcpdump</li>
+        <li>Virtualization: VirtualBox or Multipass</li>
+        <li>Everyday software, and its sharing settings</li>
+      </ol>
+      <p>Then add Python, SQL, cloud basics and reading logs. You only need networking and operating systems to start.</p>
+
+      <h3>Where people start</h3>
+      <div class="grid2">
+        <div class="card">
+          <h3>Entry roles</h3>
+          <p>SOC Analyst (Tier 1), IT Support moving into security, governance and compliance (GRC), junior penetration tester, application security.</p>
+        </div>
+        <div class="card">
+          <h3>Where data meets security</h3>
+          <p>Data analysts, engineers and scientists, ML engineers, security analysts and detection engineers all work with the same logs and pipelines.</p>
+        </div>
+      </div>
+
+      <h3>Certifications, honestly</h3>
+      <div class="grid2">
+        <div class="card">
+          <p class="meta">Start here</p>
+          <p>CompTIA A+, Linux+, Network+, CCNA, and Security+ (the one HR filters often look for).</p>
+        </div>
+        <div class="card">
+          <p class="meta">Later, often employer-funded</p>
+          <p>CEH, OSCP, CREST, GIAC, CISA, CISM, and CISSP (which needs five years of experience).</p>
+        </div>
+      </div>
+      <p>Certifications open the door. Public writeups and real skill get you through it.</p>
+
+      <h3>Your first 90 days</h3>
+      <div class="grid3">
+        <div class="card">
+          <p class="meta">Days 1 to 30</p>
+          <ul class="list">
+            <li>MFA and a password manager, tonight</li>
+            <li>VirtualBox and a Linux VM</li>
+            <li>TryHackMe Pre-Security</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="meta">Days 31 to 60</p>
+          <ul class="list">
+            <li>PortSwigger Web Security Academy</li>
+            <li>OWASP Juice Shop, run locally</li>
+            <li>Start writing public writeups</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="meta">Days 61 to 90</p>
+          <ul class="list">
+            <li>picoCTF</li>
+            <li>Three public writeups</li>
+            <li>Security+ study</li>
+            <li>Meet five people working in security in the Philippines</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="practice">
+      <h2>Practice sites</h2>
+      <p>Legal places to practise. Everything here is built to be attacked.</p>
+      <div class="grid2">
+        <div class="card"><h3><a href="https://tryhackme.com/" rel="noopener" target="_blank">TryHackMe</a></h3><p>Guided rooms. Start with Pre-Security.</p></div>
+        <div class="card"><h3><a href="https://portswigger.net/web-security" rel="noopener" target="_blank">PortSwigger Academy</a></h3><p>Free web security labs: SQL injection, XSS, access control.</p></div>
+        <div class="card"><h3><a href="https://owasp.org/www-project-juice-shop/" rel="noopener" target="_blank">OWASP Juice Shop</a></h3><p>A deliberately vulnerable shop to run on your own machine.</p></div>
+        <div class="card"><h3><a href="https://picoctf.org/" rel="noopener" target="_blank">picoCTF</a></h3><p>Beginner capture-the-flag challenges.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span><a href="/">Algef Almocera</a> · <a href="/talks/">All talks</a></span>
+      <span><a href="https://www.linkedin.com/in/algef-almocera-666a2b35/" rel="noopener" target="_blank">LinkedIn</a> · <a href="https://www.instagram.com/algef.almocera/" rel="noopener" target="_blank">Instagram</a></span>
+    </div>
+  </footer>
+  <script src="/assets/street.js" defer></script>
+</body>
+</html>

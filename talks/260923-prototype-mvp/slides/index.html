@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From Idea to MVP: Building a Prototype That Proves Your Value</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="vendor/reveal.min.css">
+  <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Slide 1: Title -->
+      <section class="centered">
+        <div class="bg-cast" style="background-image: url('../images/pro-title-sprint-team.png');"></div>
+        <h1 style="font-size:2.0em; line-height:1.12; margin-bottom:10px;">From Idea to <span class="accent">MVP</span></h1>
+        <p style="font-size:0.85em; font-weight:600;">Building a Prototype That Proves Your Value</p>
+        <p class="author">Algef Almocera</p>
+      </section>
+
+      <!-- Slide 2: Algef Almocera -->
+      <section>
+        <h2>Algef Almocera</h2>
+        <ul class="small" style="margin-top:20px;">
+          <li class="fragment">20+ years building software</li>
+          <li class="fragment">CTO, Narsima Technologies</li>
+          <li class="fragment">Ex-Director of Engineering, New York</li>
+        </ul>
+        <p class="fragment" style="font-size:1.05em; font-weight:700; margin-top:50px; text-align:left;">"I have watched more than a hundred products get built.<br><span class="accent">The teams that succeeded knew exactly what to build.</span>"</p>
+      </section>
+
+      <!-- Slide 3: How Today Works -->
+      <section>
+        <h2><span class="accent">How Today Works</span></h2>
+        <ul style="margin-top:24px;">
+          <li class="fragment">I walk you through one sprint step at a time</li>
+          <li class="fragment">Your team applies it to YOUR product, immediately</li>
+          <li class="fragment">When the timer appears, you work</li>
+        </ul>
+        <p class="fragment" style="font-weight:700; margin-top:44px; text-align:left;">You leave with a <span class="accent">better approach</span> to what you build</p>
+      </section>
+
+      <!-- Slide 4: Hands Up -->
+      <section>
+        <div class="cols">
+          <div class="col-text">
+            <p style="font-weight:700;">Raise your hand if your team knows EXACTLY what you will demo.</p>
+            <p class="fragment" style="font-weight:700; margin-top:30px;">Keep it up if you could show me <span class="accent">the screens</span> right now.</p>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-raising-hands.webp" alt="Students raising hands"></div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Section Marker: THE HACKATHON TRAP -->
+      <section class="centered">
+        <p class="section-marker-tag">01 The Problem</p>
+        <h1>The Hackathon Trap</h1>
+      </section>
+
+      <!-- Slide 6: Your Feature List -->
+      <section class="centered">
+        <p style="font-weight:700;">Let me guess your feature list:</p>
+        <div class="scatter">
+          <span class="fragment">Sign up</span>
+          <span class="fragment">Login</span>
+          <span class="fragment">Profile</span>
+          <span class="fragment">Settings</span>
+          <span class="fragment">Notifications</span>
+          <span class="fragment">Dark mode</span>
+        </div>
+        <p class="fragment" style="font-weight:800; font-size:1.1em;">...and buried somewhere in there,<br><span class="accent">THE ACTUAL IDEA</span></p>
+      </section>
+
+      <!-- Slide 7: The Iceberg -->
+      <section>
+        <img class="img-hero" src="img/pro-iceberg.webp" alt="Dream product iceberg vs buildable tip">
+        <p class="small" style="margin-top:6px;"><span class="muted">What you imagine: underwater.</span> &nbsp; <span class="accent" style="font-weight:700;">What you can build: the tip.</span></p>
+      </section>
+
+      <!-- Slide 8: How Demos Die -->
+      <section>
+        <div class="cols">
+          <div class="col-img"><img class="img-side" src="img/pro-demo-apology.webp" alt="Team apologizing on demo stage"></div>
+          <div class="col-text">
+            <p style="font-weight:700;">90% of the time goes to plumbing.</p>
+            <p class="fragment" style="margin-top:26px;">The demo becomes an apology:</p>
+            <p class="fragment red" style="font-weight:700;">"Sorry, this part is not working yet."</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 9: The Real Enemy -->
+      <section>
+        <img class="img-band" src="img/pro-clock-features.webp" alt="Hourglass looming over a wall of features">
+        <p style="font-weight:700; margin-top:10px;">Your enemy is not a missing feature.<br>Your enemy is <span class="accent">THE CLOCK</span> and unproven assumptions.</p>
+      </section>
+
+      <!-- Slide 10: The Three Levers -->
+      <section>
+        <div class="cols">
+          <div class="col-text">
+            <h2 style="margin-bottom:20px;">The Three <span class="accent">Levers</span></h2>
+            <div class="num-rows" style="width:100%;">
+              <div class="num-row fragment"><span class="num" style="background:var(--muted);">T</span><span><span class="ntitle">TIME</span><span class="ndesc">fixed. Demo day is Friday.</span></span></div>
+              <div class="num-row fragment"><span class="num" style="background:var(--muted);">B</span><span><span class="ntitle">BUDGET</span><span class="ndesc">fixed. You have zero.</span></span></div>
+              <div class="num-row fragment"><span class="num">S</span><span><span class="ntitle">SCOPE</span><span class="ndesc">the ONLY lever you can move</span></span></div>
+            </div>
+            <p class="fragment" style="font-weight:700; margin-top:24px;">This whole afternoon is about<br><span class="accent">moving it well</span>.</p>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-iron-triangle.webp" alt="Scope, time, and budget pulling against each other"></div>
+        </div>
+      </section>
+
+      <!-- Slide 11: One Proven Flow -->
+      <section class="centered">
+        <p class="big-word" style="font-size:1.6em;">Fifteen features do not fit<br>between now and demo day.</p>
+        <p class="big-word fragment" style="margin-top:30px;"><span class="accent">ONE PROVEN FLOW DOES.</span></p>
+      </section>
+
+      <!-- Slide 12: Section Marker: TWO WORDS -->
+      <section class="centered">
+        <p class="section-marker-tag">02 Foundations</p>
+        <h1>Two Words That Decide<br>What You Build</h1>
+      </section>
+
+      <!-- Slide 13: Prototype: Three Jobs -->
+      <section>
+        <h2 style="margin-bottom:4px;">PROTOTYPE</h2>
+        <p class="muted" style="text-align:center; font-size:0.9em; margin-bottom:34px;">a visual or interactive model to test design and user flow</p>
+        <div class="steps-list" style="width:88%; margin:0 auto;">
+          <div class="step fragment"><span class="sname">EXPLORE</span><span class="sdesc">try many ideas fast, before you commit<span class="sq">"Which layout is better?"</span></span></div>
+          <div class="step fragment"><span class="sname">COMMUNICATE</span><span class="sdesc">your whole team finally sees the SAME thing<span class="sq">"Is THIS what you meant?"</span></span></div>
+          <div class="step fragment"><span class="sname">TEST</span><span class="sdesc">watch a real person use it<span class="sq">"Can a student order food with it?"</span></span></div>
+        </div>
+      </section>
+
+      <!-- Slide 14: The Movie Set -->
+      <section>
+        <img class="img-hero" src="img/pro-movie-set.webp" alt="Movie set facade with scaffolding behind">
+        <p style="font-weight:700; margin-top:8px;">Looks real from the front. Not a real house.<br><span class="accent">That is the point.</span></p>
+      </section>
+
+      <!-- Slide 15: MVP Letter by Letter -->
+      <section>
+        <h2>MVP</h2>
+        <div class="mvp-rows" style="margin-top:20px;">
+          <div class="mvp-row fragment"><span class="letter">M</span><span class="word">Minimum</span><span class="meaning">as small as possible</span></div>
+          <div class="mvp-row fragment"><span class="letter">V</span><span class="word">Viable</span><span class="meaning">it actually works</span></div>
+          <div class="mvp-row fragment"><span class="letter">P</span><span class="word">Product</span><span class="meaning">someone can really use it</span></div>
+        </div>
+        <p class="fragment" style="font-weight:700; width:88%; margin:30px auto 0 auto; text-align:left;">A <span class="accent">functional version</span> of your product,<br>released to real users to test demand.</p>
+      </section>
+
+      <!-- Slide 16: Key Differences -->
+      <section>
+        <h2>Prototype vs MVP: <span class="accent">Key Differences</span></h2>
+        <table class="nice-table" style="margin-top:18px; font-size:0.62em;">
+          <tr><th></th><th>PROTOTYPE</th><th>MVP</th></tr>
+          <tr class="fragment"><td>Purpose</td><td>validates design, usability, and the concept</td><td>validates real user adoption</td></tr>
+          <tr class="fragment"><td>Functionality</td><td>a mockup or simulation, no real backend</td><td>a working product with essential core features for real-world use</td></tr>
+          <tr class="fragment"><td>Audience</td><td>your team, mentors, judges</td><td>real early users</td></tr>
+          <tr class="fragment"><td>Time and cost</td><td>days, almost free</td><td>weeks or months, real engineering</td></tr>
+        </table>
+      </section>
+
+      <!-- Slide 17: The Rule (anchor) -->
+      <section class="centered">
+        <p class="rule-line">PROTOTYPE: tests your <span class="accent">design</span>.</p>
+        <p class="support-line fragment" style="margin-top:14px;">It helps you answer questions faster.</p>
+        <p class="rule-line" style="margin-top:44px;">MVP: tests your <span class="accent">demand</span>.</p>
+        <p class="support-line fragment" style="margin-top:14px;">It gives real users real value.</p>
+      </section>
+
+      <!-- Slide 18: The Skateboard -->
+      <section>
+        <img class="img-band" src="img/pro-skateboard-car.webp" alt="Skateboard to car, usable at every step">
+        <p style="font-weight:700; margin-top:10px;">Every step is <span class="accent">USABLE</span>. Not one wheel of a future car.</p>
+      </section>
+
+      <!-- Slide 19: Not Half a Product -->
+      <section>
+        <img class="img-band" src="img/pro-half-bridge.webp" alt="Half a bridge vs a small complete footbridge">
+        <p style="font-weight:700; margin-top:10px;">Half a bridge helps no one.<br>A small <span class="green">complete</span> footbridge crosses.</p>
+      </section>
+
+      <!-- Slide 20: What Winning Looks Like This Week -->
+      <section>
+        <div class="cols">
+          <div class="col-text">
+            <h2>For THIS Hackathon</h2>
+            <p style="margin-top:26px; font-weight:700;">A clickable prototype, or<br>a functional demo of <span class="accent">ONE flow</span></p>
+            <p class="fragment green" style="font-weight:800; font-size:1.1em; margin-top:30px;">= a winning outcome.</p>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-flag-path.webp" alt="Planting the flag at the end of the path"></div>
+        </div>
+      </section>
+
+      <!-- Slide 21: Section Marker: THE DESIGN SPRINT -->
+      <section class="centered" data-bar="uuuuu">
+        <p class="section-marker-tag">03 The Machine</p>
+        <h1>The Design Sprint</h1>
+        <p class="support-line">Five days at Google. One afternoon here.</p>
+      </section>
+
+      <!-- Slide 22: Five Days, Five Steps -->
+      <section data-bar="uuuuu">
+        <div class="cols">
+          <div class="col-text" style="flex:55;">
+            <div class="steps-list">
+              <div class="step fragment"><span class="sname">UNDERSTAND &amp; MAP</span><span class="sdesc">understand the problem, map the journey</span></div>
+              <div class="step fragment"><span class="sname">SKETCH &amp; IDEATE</span><span class="sdesc">ask How Might We, draw solutions on paper</span></div>
+              <div class="step fragment"><span class="sname">DECIDE &amp; STORYBOARD</span><span class="sdesc">choose what to build, frame the flow</span></div>
+              <div class="step fragment"><span class="sname">PROTOTYPE</span><span class="sdesc">build a realistic fake</span></div>
+              <div class="step fragment"><span class="sname">TEST</span><span class="sdesc">watch real users try it</span></div>
+            </div>
+          </div>
+          <div class="col-img" style="flex:45;"><img class="img-side" src="img/pro-sprint-compression.webp" alt="Five calendar pages folding into one afternoon"></div>
+        </div>
+      </section>
+
+      <!-- Slide 23: Why It Works -->
+      <section class="centered" data-bar="uuuuu">
+        <p class="big-word" style="font-size:1.5em;">A deadline plus a fixed order<br>kills endless debate.</p>
+        <p class="support-line fragment">You do not argue. You build and test. The user decides.</p>
+      </section>
+
+      <!-- Slide 24: Meet CanteenGo -->
+      <section data-bar="uuuuu">
+        <div class="cols">
+          <div class="col-text">
+            <h2 style="margin-bottom:4px;">Meet <span class="accent">CanteenGo</span></h2>
+            <p class="muted small">our practice product for today</p>
+            <p class="fragment" style="margin-top:22px;"><strong>The problem:</strong> students lose 20 of their 30 break minutes in the canteen line.</p>
+            <p class="fragment"><strong>The idea:</strong> pre-order your food, get notified, walk over, pick it up.</p>
+            <p class="fragment" style="font-weight:700; margin-top:26px;">I demo every step on CanteenGo.<br>Your team runs it on <span class="accent">YOUR product</span>.</p>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-canteen-line.webp" alt="Students waiting in the canteen line"></div>
+        </div>
+      </section>
+
+      <!-- Slide 25: Section Marker: MAP -->
+      <section class="centered" data-bar="cuuuu">
+        <p class="section-marker-tag">Sprint Step 1</p>
+        <h1 style="font-size:1.9em;">UNDERSTAND &amp; MAP</h1>
+        <p class="support-line">The challenge, the goal, the questions. Then the journey.</p>
+      </section>
+
+      <!-- Slide 26: CanteenGo: Understand First -->
+      <section data-bar="cuuuu">
+        <h2 style="margin-bottom:14px;">CanteenGo: <span class="accent">Understand</span> First</h2>
+        <div style="text-align:left; width:92%; margin:0 auto; font-size:0.72em;">
+          <p class="fragment"><strong class="accent">CHALLENGE</strong><br>Students lose 20 of their 30 break minutes standing in the canteen line, while canteen staff struggle with chaotic peak-hour rushes.</p>
+          <p class="fragment" style="margin-top:20px;"><strong class="accent">GOAL</strong><br>This school year: every student gets their food with less than 5 minutes of waiting.</p>
+          <p class="fragment" style="margin-top:20px;"><strong class="accent">SPRINT QUESTIONS</strong><br>1. Will students pre-order before break instead of deciding in line?<br>2. Can canteen staff handle app orders and the walk-up line at the same time?<br>3. Will students trust the ready notification, or still crowd the pickup counter?</p>
+        </div>
+      </section>
+
+      <!-- Slide 27: CanteenGo User Personas -->
+      <section data-bar="cuuuu">
+        <h2 style="margin-bottom:10px;">CanteenGo: <span class="accent">Who Are We Building For?</span></h2>
+        <div class="compare" style="font-size:0.5em; margin-top:12px;">
+          <div class="side fragment">
+            <h3 class="accent">MIKA, student</h3>
+            <p><strong>Goals:</strong> order in seconds before break, skip the line, know the moment food is ready</p>
+            <p><strong>Pains:</strong> 20 of 30 minutes in line, favorite dish sold out on arrival, late back to class</p>
+            <p><strong>Tech:</strong> expert phone user</p>
+          </div>
+          <div class="side fragment">
+            <h3 class="accent">NENA, canteen staff</h3>
+            <p><strong>Goals:</strong> steady order flow, no more shouting order numbers, mark sold-out dishes fast</p>
+            <p><strong>Pains:</strong> paper ticket chaos, noisy pickup counter, uncollected orders</p>
+            <p><strong>Tech:</strong> can use a simple tablet</p>
+          </div>
+          <div class="side fragment">
+            <h3 class="accent">MR. SANTOS, admin</h3>
+            <p><strong>Goals:</strong> shorter lines, safer canteen at peak break, happier students</p>
+            <p><strong>Pains:</strong> overcrowding, student complaints, no view of canteen operations</p>
+            <p><strong>Tech:</strong> reads simple reports</p>
+          </div>
+        </div>
+        <p class="fragment" style="font-weight:700; margin-top:20px;">Your core value sentence names <span class="accent">ONE</span> of these. Design for them first.</p>
+      </section>
+
+      <!-- Slide 28: One Sentence -->
+      <section data-bar="cuuuu">
+        <div class="template-card">This product helps <span class="slot">[USER]</span><br>to <span class="slot">[DO ONE THING]</span><br>so that <span class="slot">[BENEFIT]</span>.</div>
+        <div class="example-card fragment"><strong class="accent">CanteenGo</strong> helps <strong>students</strong> get their <strong>canteen food</strong> with <strong>less than 5 minutes of waiting</strong>.</div>
+      </section>
+
+      <!-- Slide 29: The Journey -->
+      <section data-bar="cuuuu">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h2 style="margin:0;">The User Journey</h2>
+          <img class="img-tiny" src="img/pro-journey-line.webp" alt="Walking the journey boxes">
+        </div>
+        <div class="jline">
+          <div class="jbox fragment">Browse menu</div>
+          <div class="jarrow fragment"></div>
+          <div class="jbox fragment">Pre-order</div>
+          <div class="jarrow fragment"></div>
+          <div class="jbox fragment">Notified</div>
+          <div class="jarrow fragment"></div>
+          <div class="jbox fragment">Pick up</div>
+        </div>
+        <p class="fragment" style="font-weight:700;">If only ONE thing works on demo day,<br>it is <span class="accent">this line</span>.</p>
+      </section>
+
+      <!-- Slide 30: TEAM BLOCK: Map Yours -->
+      <section data-bar="cuuuu">
+        <span class="exercise-tag">EXERCISE</span>
+        <div class="exercise-card">
+          <ol>
+            <li>Your <strong>challenge</strong> and <strong>goal</strong>, one line each</li>
+            <li>Your core value: <strong>one sentence</strong> (use the template)</li>
+            <li>Your journey: <strong>3 to 6 boxes</strong>, straight line</li>
+          </ol>
+          <p class="ex-note">One sheet of paper. Everyone contributes.</p>
+        </div>
+        <div id="timer-map" class="timer" data-seconds="360">6:00</div>
+        <p class="fragment timer-start go-word">GO</p>
+      </section>
+
+      <!-- Slide 31: Section Marker: SKETCH -->
+      <section class="centered" data-bar="lcuuu">
+        <p class="section-marker-tag">Sprint Step 2</p>
+        <h1 style="font-size:1.9em;">SKETCH &amp; IDEATE</h1>
+        <p class="support-line">Ugly is correct.</p>
+      </section>
+
+      <!-- Slide 32: CanteenGo: How Might We -->
+      <section data-bar="lcuuu">
+        <h2 style="margin-bottom:14px;">CanteenGo: <span class="accent">How Might We</span></h2>
+        <div class="compare" style="font-size:0.62em;">
+          <div class="side fragment">
+            <h3 class="accent">HOW MIGHT WE...</h3>
+            <p>1. HMW let students order in seconds, not minutes?</p>
+            <p>2. HMW tell a student their food is ready without them waiting at the counter?</p>
+            <p>3. HMW help staff manage app orders without slowing the walk-up line?</p>
+          </div>
+          <div class="side fragment">
+            <h3 class="accent">CORE SOLUTION SKETCHES</h3>
+            <p><strong>One-Tap Menu:</strong> today's dishes as big photo cards, two taps to order</p>
+            <p><strong>Ready Board + Ping:</strong> order number on a big screen, plus a phone notification</p>
+            <p><strong>Staff Queue Tablet:</strong> all orders in one list, one tap to mark ready</p>
+          </div>
+        </div>
+        <p class="fragment" style="font-weight:700; margin-top:24px;">Each sketch answers a question.<br>The journey stays the same: <span class="accent">browse, order, notified, pick up</span>.</p>
+      </section>
+
+      <!-- Slide 33: What the Sketches Could Become -->
+      <section data-bar="lcuuu">
+        <h2 style="margin-bottom:8px;">What the Sketches <span class="accent">Could Become</span></h2>
+        <img class="img-band" src="img/canteengo-full-loop.webp" alt="CanteenGo full loop: order from desk, ready board, staff tablet" style="max-height:420px;">
+        <p class="small" style="margin-top:8px;"><strong>One-Tap Menu</strong> · <strong>Ready Board + Ping</strong> · <strong>Staff Queue Tablet</strong>: one journey, working together</p>
+      </section>
+
+      <!-- Slide 34: Wireframe: Boxes and Labels -->
+      <section data-bar="lcuuu">
+        <div class="cols">
+          <div class="col-text">
+            <h3 class="accent" style="font-size:1.3em;">WIREFRAME</h3>
+            <p class="muted small">a skeleton of a screen</p>
+            <p style="margin-top:24px; font-weight:700;">Boxes. Labels. Nothing else.</p>
+            <p class="fragment small">If you can draw a box,<br>you can wireframe.</p>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-wireframe-sketch.webp" alt="Rough hand-drawn phone wireframe"></div>
+        </div>
+      </section>
+
+      <!-- Slide 35: Ugly Is Correct -->
+      <section data-bar="lcuuu">
+        <img class="img-band" src="img/pro-sketching-hands.webp" alt="Hands sketching phone screens on folded paper">
+        <p style="margin-top:10px;"><span class="accent" style="font-weight:800; font-size:1.1em;">UGLY IS CORRECT.</span><br><span class="small">Nobody defends an ugly sketch. So the team argues about the IDEA.</span></p>
+      </section>
+
+      <!-- Slide 36: TEAM BLOCK: Sketch Yours -->
+      <section data-bar="lcuuu">
+        <span class="exercise-tag">EXERCISE</span>
+        <div class="exercise-card">
+          <ol>
+            <li>Write 2 or 3 <strong>How Might We</strong> questions from your challenge</li>
+            <li>Fold your paper: <strong>one panel per journey box</strong></li>
+            <li>Sketch each step as <strong>one rough screen</strong>, boxes and labels only</li>
+          </ol>
+          <p class="ex-note">If your sketch looks good, you are going too slow.</p>
+        </div>
+        <div id="timer-sketch" class="timer" data-seconds="420">7:00</div>
+        <p class="fragment timer-start go-word">GO</p>
+      </section>
+
+      <!-- Slide 37: Section Marker: DECIDE -->
+      <section class="centered" data-bar="llcuu">
+        <p class="section-marker-tag">Sprint Step 3</p>
+        <h1 style="font-size:1.9em;">DECIDE &amp; STORYBOARD</h1>
+        <p class="support-line">The line that saves your demo.</p>
+      </section>
+
+      <!-- Slide 38: The Disappearing Test -->
+      <section data-bar="llcuu">
+        <div class="cols">
+          <div class="col-text">
+            <p class="small muted">For every feature, ask:</p>
+            <p style="font-weight:800; font-size:1.05em;">"If this disappeared, does the core value still work?"</p>
+            <p class="fragment" style="margin-top:26px;"><span class="green" style="font-weight:800;">NO = must-have</span><br><span class="muted" style="font-weight:700;">YES = nice-to-have</span></p>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-sorting-board.webp" alt="Sorting features into two columns"></div>
+        </div>
+      </section>
+
+      <!-- Slide 39: The Decide Board (CanteenGo) -->
+      <section data-bar="llcuu">
+        <h2 style="margin-bottom:2px;">CanteenGo: <span class="accent">Keep or Later?</span></h2>
+        <p class="small muted" style="margin-bottom:0; font-size:0.5em;">orange dot: from a sketch &nbsp;&middot;&nbsp; gray dot: from the list you walked in with</p>
+        <div class="decide-board">
+          <div class="journey-row"><span>Browse</span><span>Order</span><span>Notified</span><span>Pick up</span></div>
+          <div id="sticky-browse" class="sticky must c-tan" style="--sx:30px; --sy:44px; --rot:-3deg; --ox:40px; --oy:150px;"><i class="dot sketch"></i>Browse menu</div>
+          <div id="sticky-allergen" class="sticky later c-sage" style="--sx:322px; --sy:30px; --rot:2deg;"><i class="dot list"></i>Allergen filter<span class="fragment stick-off" data-fragment-index="2"></span></div>
+          <div id="sticky-ready" class="sticky must c-cream" style="--sx:614px; --sy:46px; --rot:-2deg; --ox:620px; --oy:150px;"><i class="dot sketch"></i>Ready notification</div>
+          <div id="sticky-profiles" class="sticky later c-tan" style="--sx:906px; --sy:32px; --rot:3deg;"><i class="dot list"></i>Profiles + login<span class="fragment stick-off" data-fragment-index="1"></span></div>
+          <div id="sticky-darkmode" class="sticky later c-cream" style="--sx:28px; --sy:196px; --rot:3deg;"><i class="dot list"></i>Dark mode<span class="fragment stick-off" data-fragment-index="1"></span></div>
+          <div id="sticky-preorder" class="sticky must c-sage" style="--sx:324px; --sy:188px; --rot:-2deg; --ox:330px; --oy:150px;"><i class="dot sketch"></i>Pre-order</div>
+          <div id="sticky-slots" class="sticky later c-tan" style="--sx:616px; --sy:200px; --rot:2deg;"><i class="dot list"></i>Pickup time slots<span class="fragment stick-off" data-fragment-index="2"></span></div>
+          <div id="sticky-staff" class="sticky must c-cream" style="--sx:908px; --sy:192px; --rot:-3deg; --ox:910px; --oy:150px;"><i class="dot sketch"></i>Staff order list</div>
+          <div id="sticky-gcash" class="sticky later trap c-sage" style="--sx:32px; --sy:348px; --rot:-4deg;"><i class="dot list"></i>GCash payment<span class="fragment stick-off" data-fragment-index="3"></span></div>
+          <div id="sticky-ratings" class="sticky later c-tan" style="--sx:324px; --sy:354px; --rot:2deg;"><i class="dot list"></i>Ratings<span class="fragment stick-off" data-fragment-index="2"></span></div>
+          <div id="sticky-portions" class="sticky later c-cream" style="--sx:616px; --sy:342px; --rot:-3deg;"><i class="dot sketch"></i>Portion counter<span class="fragment stick-off" data-fragment-index="2"></span></div>
+          <div id="sticky-delivery" class="sticky later c-sage" style="--sx:908px; --sy:350px; --rot:2deg;"><i class="dot list"></i>Delivery<span class="fragment stick-off" data-fragment-index="1"></span></div>
+          <span class="fragment board-order" data-fragment-index="4"></span>
+        </div>
+        <p class="fragment small" data-fragment-index="4" style="font-weight:700; margin-top:0;">Build in <span class="accent">journey order</span>. That row is your storyboard.</p>
+      </section>
+
+      <!-- Slide 40: Cut These First -->
+      <section data-bar="llcuu">
+        <h2>Almost Always LATER<br><span class="small muted">at a hackathon</span></h2>
+        <div class="cuts">
+          <span class="fragment">Login and accounts (fake it)</span>
+          <span class="fragment">Settings</span>
+          <span class="fragment">Onboarding tutorials</span>
+          <span class="fragment">Admin panels</span>
+          <span class="fragment">Push notifications</span>
+          <span class="fragment">Multiple user types (pick ONE)</span>
+          <span class="fragment">Edge cases</span>
+          <span class="fragment">Dark mode</span>
+        </div>
+      </section>
+
+      <!-- Slide 41: The Fidelity Ladder -->
+      <section data-bar="llcuu">
+        <img class="img-hero" src="img/pro-fidelity-ladder.webp" alt="Same phone screen at four rising levels of polish">
+        <p class="small" style="margin-top:6px;"><strong>Wireframe</strong> &rsaquo; <strong>Mock-up</strong> &rsaquo; <strong>Clickable prototype</strong> &rsaquo; <strong>Functional demo</strong></p>
+      </section>
+
+      <!-- Slide 42: Which Rung, When -->
+      <section data-bar="llcuu">
+        <div class="fid-rows">
+          <div class="fid-row fragment"><span class="flevel">LOW</span><span><span class="fq">"Does the flow make sense? Do WE agree?"</span><span class="fcost">paper wireframe · minutes</span></span></div>
+          <div class="fid-row fragment"><span class="flevel">MEDIUM</span><span><span class="fq">"Can a stranger use it without help?"</span><span class="fcost">mock-up + clickable prototype · hours · zero code</span></span></div>
+          <div class="fid-row fragment"><span class="flevel">HIGH</span><span><span class="fq">"Does the risky logic actually work?"</span><span class="fcost">functional demo of ONE slice · days</span></span></div>
+        </div>
+      </section>
+
+      <!-- Slide 43: The Second Rule (anchor) -->
+      <section class="centered" data-bar="llcuu">
+        <div class="bg-cast" style="background-image: url('../images/pro-question-ladder.png'); opacity:0.12;"></div>
+        <p class="rule-line">Build the <span class="accent">LOWEST</span> fidelity that answers<br>your <span class="accent">CURRENT</span> question.</p>
+        <p class="support-line fragment">Never code what a click can answer.</p>
+      </section>
+
+      <!-- Slide 44: The Tools -->
+      <section data-bar="llcuu">
+        <h2>The Tools <span class="small muted">(all free)</span></h2>
+        <table class="nice-table" style="margin-top:16px;">
+          <tr><th>Rung</th><th>Tools</th></tr>
+          <tr class="fragment"><td>Wireframe</td><td>pen and paper, whiteboard, Excalidraw, Balsamiq</td></tr>
+          <tr class="fragment"><td>Mock-up</td><td>Figma (free for students), Canva</td></tr>
+          <tr class="fragment"><td>Clickable</td><td>Figma prototype mode, Marvel POP (photo your paper sketches!)</td></tr>
+          <tr class="fragment"><td>Functional</td><td>Glide, Softr, Bubble · AIDA, v0, Lovable, Bolt, Replit, Claude · your own stack</td></tr>
+        </table>
+        <p class="fragment small" style="margin-top:20px; font-weight:700;">Tools change every year. <span class="accent">The ladder and the rule are forever.</span></p>
+      </section>
+
+      <!-- Slide 45: TEAM BLOCK: Decide Yours -->
+      <section data-bar="llcuu">
+        <span class="exercise-tag">EXERCISE</span>
+        <div class="exercise-card" style="font-size:0.72em;">
+          <ol>
+            <li>List <strong>every feature</strong></li>
+            <li>Disappearing test on each: draw <strong>your MVP line</strong></li>
+            <li>Order the keepers in <strong>journey order</strong>: your storyboard</li>
+            <li>Pick your <strong>demo-day format</strong>, and write the <strong>question</strong> it will answer</li>
+          </ol>
+          <p class="ex-note">Be brutal. Your Friday self will thank you.</p>
+        </div>
+        <div class="example-card" style="font-size:0.55em; margin-top:8px; padding:12px 24px; width:88%; margin-left:auto; margin-right:auto;">
+          <strong class="accent">CanteenGo's finished answer:</strong> Keep: browse menu, pre-order, ready notification, staff order list, in journey order. Format: <strong>clickable prototype</strong>. The question it will answer: <strong>"Can a student order food with it?"</strong>
+        </div>
+        <div id="timer-decide" class="timer" data-seconds="360" style="margin-top:6px; font-size:2.1em;">6:00</div>
+        <p class="fragment timer-start go-word">GO</p>
+      </section>
+
+      <!-- Slide 46: Break -->
+      <section class="centered" data-bar="llluu">
+        <img class="img-small" src="img/pro-coffee-break.webp" alt="Coffee break">
+        <div id="timer-break" class="timer" data-seconds="420">7:00</div>
+        <p class="timer-hint">Stretch. Back when the timer hits zero.</p>
+      </section>
+
+      <!-- Slide 47: Live Teardown -->
+      <section class="centered" data-bar="llluu">
+        <span class="live-tag">LIVE</span>
+        <h1 style="font-size:1.7em;">One Real Feature List,<br>Cut Live</h1>
+        <p class="support-line">Watch the METHOD, not the product.</p>
+      </section>
+
+      <!-- Slide 48: Section Marker: PROTOTYPE -->
+      <section class="centered" data-bar="lllcu">
+        <p class="section-marker-tag">Sprint Step 4</p>
+        <h1>PROTOTYPE</h1>
+        <p class="support-line">One complete thread.</p>
+      </section>
+
+      <!-- Slide 49: Three Rules of the Build -->
+      <section data-bar="lllcu">
+        <div class="num-rows">
+          <div class="num-row fragment"><span class="num">1</span><span><span class="ntitle">CORE FLOW ONLY</span><span class="ndesc">one complete thread beats five half threads<span class="ex-line">CanteenGo: browse to order to notified to pick up works end to end, and nothing else exists</span></span></span></div>
+          <div class="num-row fragment"><span class="num">2</span><span><span class="ntitle">TIMEBOX EVERYTHING</span><span class="ndesc">deadlines in minutes, not "until it is done"<span class="ex-line">CanteenGo: 40 minutes for the menu screen, 30 for the order tap, 30 for the ready screen</span></span></span></div>
+          <div class="num-row fragment"><span class="num">3</span><span><span class="ntitle">FAKE WHAT YOU CAN</span><span class="ndesc">hard-code data, skip real login, placeholder content<span class="ex-line">CanteenGo: the menu is 4 hard-coded dishes; "login" is one button that just opens the app</span></span></span></div>
+        </div>
+      </section>
+
+      <!-- Slide 50: Nobody Watches One Laptop -->
+      <section data-bar="lllcu">
+        <img class="img-band" src="img/pro-team-roles.webp" alt="Three teammates working in parallel">
+        <p style="font-weight:700; margin-top:10px;">One builds. One preps the user test. One drafts the demo script.</p>
+        <div class="example-card" style="font-size:0.55em; margin-top:10px; padding:12px 24px; width:90%; margin-left:auto; margin-right:auto;">
+          <strong class="accent">CanteenGo tonight:</strong> the builder links the Figma screens into one tappable flow &middot; the tester writes the task card, "Order food for your break" &middot; the presenter drafts the 5-minute pitch and the 1-minute demo run
+        </div>
+      </section>
+
+      <!-- Slide 51: TEAM BLOCK: Build Plan -->
+      <section data-bar="lllcu">
+        <span class="exercise-tag">EXERCISE</span>
+        <div class="exercise-card">
+          <ol>
+            <li>Screens, <strong>in order</strong></li>
+            <li><strong>Who</strong> builds what</li>
+            <li>What gets <strong>FAKED</strong> (list it honestly)</li>
+            <li><strong>Timebox</strong> per task, in minutes</li>
+          </ol>
+          <p class="ex-note">This paper is your schedule for tomorrow.</p>
+        </div>
+        <div id="timer-build" class="timer" data-seconds="300">5:00</div>
+        <p class="fragment timer-start go-word">GO</p>
+      </section>
+
+      <!-- Slide 52: Section Marker: TEST -->
+      <section class="centered" data-bar="llllc">
+        <p class="section-marker-tag">Sprint Step 5</p>
+        <h1>TEST</h1>
+        <p class="support-line">Silence is data.</p>
+      </section>
+
+      <!-- Slide 53: The 5-Minute User Test -->
+      <section data-bar="llllc">
+        <div class="num-rows">
+          <div class="num-row fragment"><span class="num">1</span><span><span class="ntitle">One stranger</span><span class="ndesc">not on your team</span></span></div>
+          <div class="num-row fragment"><span class="num">2</span><span><span class="ntitle">One task</span><span class="ndesc">"Order food for your break"</span></span></div>
+          <div class="num-row fragment"><span class="num">3</span><span><span class="ntitle accent">STAY QUIET and watch</span><span class="ndesc">do not help, do not explain, do not defend</span></span></div>
+        </div>
+      </section>
+
+      <!-- Slide 54: Watch What They DO -->
+      <section data-bar="llllc">
+        <div class="cols">
+          <div class="col-text">
+            <p style="font-weight:700;">Hesitations. Wrong taps.<br>THAT face.</p>
+            <p class="fragment" style="margin-top:26px;">Ask: <strong>"What did you expect to happen?"</strong></p>
+            <p class="fragment red" style="font-weight:700;">Never: "Did you like it?"</p>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-silent-observer.webp" alt="Silently observing a user tap through a phone"></div>
+        </div>
+      </section>
+
+      <!-- Slide 55: LIVE: Watch a Real Test -->
+      <section class="centered" data-bar="llllc">
+        <span class="live-tag">LIVE</span>
+        <h1 style="font-size:1.6em;">One Volunteer. One Task.</h1>
+        <p class="support-line">Watch the hands. Watch the face.</p>
+      </section>
+
+      <!-- Slide 56: Your First User Test (next steps guide) -->
+      <section data-bar="llllc">
+        <h2 style="margin-bottom:8px;">When Your Prototype Is Ready: <span class="accent">Run This</span></h2>
+        <div class="cols">
+          <div class="col-text" style="flex:55;">
+            <div class="num-rows" style="width:100%; font-size:0.88em;">
+              <div class="num-row fragment"><span class="num">1</span><span><span class="ntitle">Find one stranger</span><span class="ndesc">another team, a friend, anyone not on your team</span></span></div>
+              <div class="num-row fragment"><span class="num">2</span><span><span class="ntitle">One task sentence, then SILENCE</span><span class="ndesc">three minutes of watching, zero helping</span></span></div>
+              <div class="num-row fragment"><span class="num">3</span><span><span class="ntitle">Note where they get stuck</span><span class="ndesc">hands and face, not their compliments</span></span></div>
+              <div class="num-row fragment"><span class="num">4</span><span><span class="ntitle">Ask, then pick ONE fix</span><span class="ndesc">"What did you expect to happen?" and fix that first</span></span></div>
+            </div>
+          </div>
+          <div class="col-img" style="flex:45;"><img class="img-side" style="max-height:400px;" src="img/canteengo-first-test.webp" alt="Handing the prototype to a tester tonight"></div>
+        </div>
+        <div class="example-card fragment" style="font-size:0.55em; margin-top:12px; padding:12px 24px; width:90%; margin-left:auto; margin-right:auto;">
+          <strong class="accent">CanteenGo's test plan:</strong> tonight, 3 students from another team &middot; task: "Order food for your break" &middot; watch in silence &middot; one fix before sleeping
+        </div>
+      </section>
+
+      <!-- Slide 57: All Five Lit -->
+      <section class="centered" data-bar="lllll">
+        <p class="big-word" style="font-size:1.7em;">Your team just ran<br>a <span class="accent">DESIGN SPRINT</span>.</p>
+        <p class="support-line fragment">Now: what do you do with what you saw?</p>
+      </section>
+
+      <!-- Slide 58: Feedback Is a To-Do List -->
+      <section data-bar="lllll">
+        <h2>Feedback Is a <span class="accent">To-Do List</span>,<br>Not a Verdict</h2>
+        <ul style="margin-top:24px;">
+          <li class="fragment"><strong class="green">3 of 3 stuck on one step</strong> = SIGNAL. Fix it now.</li>
+          <li class="fragment"><strong class="muted">1 person dislikes a color</strong> = noise. Park it.</li>
+          <li class="fragment"><strong>One change per iteration.</strong> Then test again.</li>
+        </ul>
+      </section>
+
+      <!-- Slide 59: Build, Measure, Learn -->
+      <section data-bar="lllll">
+        <img class="img-hero" style="max-height:440px;" src="img/pro-build-measure-learn.webp" alt="Build measure learn loop">
+        <p style="font-weight:700; margin-top:8px;">This loop is the career skill.<br><span class="accent">Today you learned the turn. Tonight you run it.</span></p>
+      </section>
+
+      <!-- Slide 60: What You Now Hold -->
+      <section data-bar="lllll">
+        <p class="section-marker-tag">04 The Payoff</p>
+        <h2>What You Now Hold</h2>
+        <div class="artifacts">
+          <span class="fragment">Core value sentence</span>
+          <span class="fragment">Journey map</span>
+          <span class="fragment">Paper wireframes</span>
+          <span class="fragment">An MVP line</span>
+          <span class="fragment">A format + fidelity</span>
+          <span class="fragment">A build plan</span>
+          <span class="fragment">A test plan for tonight</span>
+          <span class="fragment">Your first test question</span>
+        </div>
+        <p class="fragment green" style="font-weight:800; margin-top:24px;">Not notes. A finished design sprint.</p>
+      </section>
+
+      <!-- Slide 61: Tomorrow: The Pitch -->
+      <section class="centered" data-bar="lllll">
+        <p class="big-word" style="font-size:1.3em;">Tomorrow: mentors help you<br>with the PITCH.</p>
+        <p class="big-word fragment" style="font-size:1.3em; margin-top:22px;">Your prototype is the <span class="accent">PROOF</span><br>inside that pitch.</p>
+        <img class="fragment" src="img/pro-scene-demo.webp" alt="Pitching with proof on screen" style="max-height:280px; margin-top:24px;">
+      </section>
+
+      <!-- Slide 62: The Judges' Scorecard -->
+      <section data-bar="lllll">
+        <h2 style="margin-bottom:10px;">The Judges' <span class="accent">Scorecard</span></h2>
+        <table class="nice-table" style="margin-top:10px; font-size:0.55em;">
+          <tr><th>Criteria</th><th>Weight</th><th>You already did this</th></tr>
+          <tr class="fragment"><td>Relevance</td><td><strong>15%</strong></td><td>your challenge, goal, and target users (Understand &amp; Map)</td></tr>
+          <tr class="fragment"><td>Innovation &amp; Creativity</td><td><strong>25%</strong></td><td>your How Might We solution sketches (Sketch &amp; Ideate)</td></tr>
+          <tr class="fragment"><td>Feasibility &amp; Practicality</td><td><strong>25%</strong></td><td>your MVP line and storyboard (Decide &amp; Storyboard)</td></tr>
+          <tr class="fragment"><td>Viability &amp; Sustainability</td><td><strong>20%</strong></td><td>your LATER list is the growth path; your test proves demand</td></tr>
+          <tr class="fragment"><td>Presentation &amp; Communication</td><td><strong>15%</strong></td><td>your 5-minute pitch and 1-minute demo, polished at pitch prep tomorrow</td></tr>
+        </table>
+        <p class="fragment" style="font-weight:700; margin-top:16px;">Half the score is originality plus realistic scope.<br><span class="accent">Nobody scores feature count.</span></p>
+      </section>
+
+      <!-- Slide 63: Your Pitch: 5 + 1 + 5 -->
+      <section data-bar="lllll">
+        <h2>Your Pitch on Demo Day: <span class="accent">5 + 1 + 5</span></h2>
+        <div class="num-rows" style="margin-top:14px;">
+          <div class="num-row fragment"><span class="num">5</span><span><span class="ntitle">5-MINUTE PITCH</span><span class="ndesc">problem, solution, value, evidence, what is next: walk the scorecard</span></span></div>
+          <div class="num-row fragment"><span class="num">1</span><span><span class="ntitle">1-MINUTE DEMO</span><span class="ndesc">ONE live pass through your core flow, no video if you can help it</span></span></div>
+          <div class="num-row fragment"><span class="num">5</span><span><span class="ntitle">5-MINUTE Q&amp;A</span><span class="ndesc">own your scope; judges probe feasibility and viability</span></span></div>
+        </div>
+        <p class="fragment" style="font-weight:700; margin-top:20px;">Sixty seconds of demo. <span class="accent">One flow is ALL that fits.</span><br>You scoped for exactly this today.</p>
+      </section>
+
+      <!-- Slide 64: Never Apologize -->
+      <section data-bar="lllll">
+        <h2>Same Fact. Different Frame.</h2>
+        <div class="compare">
+          <div class="side redside fragment"><p style="font-weight:700;">"Sorry, this part is not working yet."</p></div>
+          <div class="side greenside fragment"><p style="font-weight:700;">"We focused on proving the core value first."</p></div>
+        </div>
+        <p class="fragment" style="font-weight:800; margin-top:26px;">Judges fund <span class="accent">discipline</span>.</p>
+      </section>
+
+      <!-- Slide 65: Prove the Most with the Least -->
+      <section data-bar="lllll">
+        <img class="img-band" src="img/pro-demo-day.webp" alt="Confident team showing a phone to judges">
+        <p style="font-weight:700; margin-top:10px;">The winning team is rarely the one that built the most.<br>It is the one that <span class="accent">PROVED</span> the most with the least.</p>
+      </section>
+
+      <!-- Slide 66: The Commitment -->
+      <section data-bar="lllll">
+        <span class="exercise-tag">EXERCISE</span>
+        <div class="cols">
+          <div class="col-text">
+            <div class="exercise-card" style="font-size:0.75em;">
+              <p style="font-weight:700;">On one small paper:</p>
+              <ol>
+                <li>The ONE flow you will have <strong>WORKING</strong> by demo day</li>
+                <li>Your chosen <strong>format</strong></li>
+              </ol>
+              <p class="ex-note">Everyone signs. Photo. Pin it in the group chat.</p>
+            </div>
+            <div id="timer-commit" class="timer" data-seconds="60" style="margin-top:14px;">1:00</div>
+            <p class="fragment timer-start go-word">GO</p>
+          </div>
+          <div class="col-img"><img class="img-small" src="img/pro-commitment-card.webp" alt="Signing the commitment card"></div>
+        </div>
+      </section>
+
+      <!-- Slide 67: Thank You / Q&A -->
+      <section class="centered" data-bar="lllll">
+        <p class="rule-line" style="font-size:1.1em;">PROTOTYPE: tests your <span class="accent">design</span>. &nbsp; MVP: tests your <span class="accent">demand</span>.</p>
+        <h1 style="margin-top:30px;">Questions?</h1>
+        <p class="support-line">Anything goes: your product, your scope, careers, war stories.</p>
+        <img src="img/pro-raise-hand.webp" alt="Student raising a hand to ask" style="max-height:250px; margin-top:14px;">
+        <p class="author" style="margin-top:10px;">Algef Almocera · CTO, Narsima Technologies</p>
+      </section>
+
+      <!-- Slide 68: Thank You -->
+      <section class="centered" data-bar="lllll">
+        <div class="bg-cast" style="background-image: url('../images/pro-demo-day.png');"></div>
+        <h1 style="font-size:2.4em;">Thank <span class="accent">You</span></h1>
+        <p style="font-weight:600; margin-top:10px;">Now go prove your value.</p>
+        <p class="author">Algef Almocera · CTO, Narsima Technologies</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="vendor/reveal.min.js"></script>
+  <script src="vendor/lucide.min.js"></script>
+  <script src="js/timers.js"></script>
+  <script src="js/init.js"></script>
+</body>
+</html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Management for Tech Professionals</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="vendor/reveal.min.css">
+  <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Slide 1: Title -->
+      <section class="centered">
+        <div class="bg-cast" style="background-image: url('../images-v2/pro-team-lineup.png');"></div>
+        <h1 style="font-size:2.1em; line-height:1.12; margin-bottom:10px;">Project Management<br><span class="accent">for Tech Professionals</span></h1>
+        <p class="author">Algef Almocera<br><span class="small">CTO, Narsima Technologies</span></p>
+      </section>
+
+      <!-- Slide 2: About Me -->
+      <section>
+        <h2>About Me</h2>
+        <div class="cols">
+          <div class="col-text">
+            <ul class="small">
+              <li class="fragment">20+ years building software</li>
+              <li class="fragment">Elephant Ventures New York, 12 years: Senior Engineer to Director of Engineering</li>
+              <li class="fragment">AWS Solutions Architect and Professional Scrum Master certified</li>
+              <li class="fragment">Now: CTO, Narsima Technologies</li>
+              <li class="fragment">I have watched great teams fail and balanced teams ship</li>
+            </ul>
+          </div>
+          <div class="col-img">
+            <img src="img/presenter-photo.webp" alt="Algef Almocera" style="max-height:380px; border-radius:16px;">
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Honest Confession -->
+      <section>
+        <h2>An Honest Confession</h2>
+        <div class="cols">
+          <div class="col-text">
+            <ul>
+              <li class="fragment">My first time teaching PM to students</li>
+              <li class="fragment">If a word is unclear: <strong>WRITE IT DOWN</strong>, then ask me</li>
+              <li class="fragment">Learning this early is an advantage most people never get</li>
+            </ul>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-notebook.webp" alt="Junior taking notes"></div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Who Is in the Room -->
+      <section>
+        <h2>Who Is in the Room?</h2>
+        <div class="cols">
+          <div class="col-text">
+            <ul>
+              <li class="fragment">2nd year? 3rd? 4th?</li>
+              <li class="fragment">Written code before?</li>
+              <li class="fragment">Done a group project?</li>
+              <li class="fragment">One person did EVERYTHING at 2AM?</li>
+            </ul>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-raising-hands.webp" alt="Students raising hands"></div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Can a Team of Geniuses Fail -->
+      <section class="centered">
+        <p class="big-word">Can a great team fail?</p>
+        <p class="support-line">One minute. Discuss with your seatmate.</p>
+      </section>
+
+      <!-- Slide 6: Section Marker, Same Page First -->
+      <section class="centered">
+        <div class="cols">
+          <div class="col-text">
+            <p class="section-marker-tag">Section 01</p>
+            <h1>Same Page First</h1>
+            <p class="muted small">The first project management skill: agree on the words.</p>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-shared-page.webp" alt="The team aligned on one shared page"></div>
+        </div>
+      </section>
+
+      <!-- Slide 7: Project -->
+      <section>
+        <h2>Project</h2>
+        <div class="cols">
+          <div class="col-text">
+            <p><strong>Temporary. Specific goal.<br>A start and an end.</strong></p>
+            <p class="muted small">Thesis: yes. School fair: yes.<br>Running a store day to day: no, that is operations.</p>
+            <div class="story-card fragment" style="width:100%; margin:14px 0 0 0;"><strong>Nanay's sinigang for lunch?</strong> A project: specific goal, starts with the ingredient list, ends when the family eats at noon.</div>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-flag-path.webp" alt="Mentor planting a flag at the finish line"></div>
+        </div>
+      </section>
+
+      <!-- Slide 8: Management -->
+      <section>
+        <h2>Management</h2>
+        <div class="cols">
+          <div class="col-text">
+            <ul>
+              <li>Deciding what, by whom, by when, with what resources<br><span class="term-tag">Planning</span><span class="term-tag">Organizing</span></li>
+              <li>Adjusting when reality surprises the plan<br><span class="term-tag">Monitoring</span><span class="term-tag">Controlling</span><span class="term-tag">Risk Management</span></li>
+              <li>Not bossing people around<br><span class="term-tag">Leading</span><span class="term-tag">Delegating</span></li>
+            </ul>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-planning-board.webp" alt="Mentor at a planning board"></div>
+        </div>
+        <div class="scene-pop fragment">
+          <h3 style="margin:0 0 4px 0;">The Sinigang Project</h3>
+          <div class="prd-card" style="width:76%;">
+            <div class="prd-row"><span class="prd-label">The project</span>Mom cooks sinigang for lunch. Temporary, specific goal, clear end.</div>
+            <div class="prd-row"><span class="prd-label">To-do list</span>1. Buy the ingredients, with a list and a budget. 2. Cook the sinigang.</div>
+            <div class="prd-row"><span class="prd-label">Scope</span>Sinigang for the whole family. Nothing more, nothing less.</div>
+            <div class="prd-row"><span class="prd-label">Cost</span>Ingredient money, plus gas or electricity for cooking</div>
+            <div class="prd-row"><span class="prd-label">Time</span>About 2 hours, groceries plus cooking, done by 12 noon</div>
+            <div class="prd-row"><span class="prd-label">Delegation</span>You buy the ingredients. Mom cooks. Mom answers for lunch.</div>
+            <div class="prd-row"><span class="prd-label">Progress tracking</span>"Nabili mo na ba?" at 11AM. That text is a status check.</div>
+            <div class="prd-row nongoals"><span class="prd-label">Risk management</span>Buy late? Everybody eats late, at mapapalo ka ni mama.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 9: Project Management -->
+      <section class="centered">
+        <p class="big-word">A group reaching a temporary goal <span class="accent">ON PURPOSE</span></p>
+        <p class="support-line">Planned, coordinated, adjusted. Not luck.</p>
+        <div class="prd-card fragment" style="width:78%; margin:30px auto 0 auto;">
+          <span class="prd-label">The formal definition</span>The structured practice of planning, organizing, and executing tasks to achieve a specific goal within defined limits of <strong>time</strong>, <strong>cost</strong>, and <strong>quality</strong>.
+        </div>
+        <div class="scene-pop fragment">
+          <h3 style="margin:0 0 4px 0;">The Project Lifecycle</h3>
+          <div class="prd-card" style="width:80%;">
+            <div class="prd-row"><span class="prd-label">Initiation</span>Defining the primary goal, scope, and feasibility of a new idea</div>
+            <div class="prd-row"><span class="prd-label">Planning</span>Creating a roadmap that outlines schedules, budgets, resource allocation, and risk management</div>
+            <div class="prd-row"><span class="prd-label">Execution</span>Coordinating people and resources to complete the actual work</div>
+            <div class="prd-row"><span class="prd-label">Monitoring and Controlling</span>Tracking progress and performance to ensure the project stays on schedule and budget</div>
+            <div class="prd-row"><span class="prd-label">Closing</span>Delivering the final output, evaluating results, and formally wrapping up the project</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 10: Words part 1 -->
+      <section>
+        <h2>Words We Need <span class="muted">1 of 3</span></h2>
+        <div class="tiles tiles-4">
+          <div class="tile fragment" data-fragment-index="0"><div class="tile-head"><i data-lucide="users"></i>Stakeholder</div><div class="tile-def">Anyone who cares about or is affected by the project. Including your professor.</div></div>
+          <div class="tile fragment" data-fragment-index="1"><div class="tile-head"><i data-lucide="clipboard-list"></i>Requirement</div><div class="tile-def">What the project must do or include.</div></div>
+          <div class="tile fragment" data-fragment-index="2"><div class="tile-head"><i data-lucide="scan"></i>Scope</div><div class="tile-def">Everything you agreed to build or deliver.</div></div>
+          <div class="tile fragment" data-fragment-index="3"><div class="tile-head"><i data-lucide="calendar-clock"></i>Deadline</div><div class="tile-def">When things must be done.</div></div>
+        </div>
+        <p class="muted small" style="margin-top:14px;">Running example: your org's Christmas party</p>
+        <div class="tiles tiles-4" style="margin-top:6px;">
+          <div class="tile fragment" data-fragment-index="0"><div class="tile-def">The org members, the officers, the adviser, the school.</div></div>
+          <div class="tile fragment" data-fragment-index="1"><div class="tile-def">A Christmas party the whole org will actually attend and enjoy.</div></div>
+          <div class="tile fragment" data-fragment-index="2"><div class="tile-def">Venue, food, invitations, program, decorations. Nothing else.</div></div>
+          <div class="tile fragment" data-fragment-index="3"><div class="tile-def">December 18, 6PM. Fixed date, walang extension ang Pasko.</div></div>
+        </div>
+      </section>
+
+      <!-- Slide 11: Words part 2 -->
+      <section>
+        <h2>Words We Need <span class="muted">2 of 3</span></h2>
+        <div class="tiles tiles-4">
+          <div class="tile fragment" data-fragment-index="0"><div class="tile-head"><i data-lucide="list-ordered"></i>Backlog</div><div class="tile-def">The to-do list of the project, ordered by importance.</div></div>
+          <div class="tile fragment" data-fragment-index="1"><div class="tile-head"><i data-lucide="arrow-up-narrow-wide"></i>Prioritization</div><div class="tile-def">Deciding what matters most and doing that FIRST.</div></div>
+          <div class="tile fragment" data-fragment-index="2"><div class="tile-head"><i data-lucide="ruler"></i>Estimate</div><div class="tile-def">An educated guess of how much effort something takes.</div></div>
+          <div class="tile fragment" data-fragment-index="3"><div class="tile-head"><i data-lucide="map"></i>Roadmap</div><div class="tile-def">The ordered work placed on a calendar: what happens when.</div></div>
+        </div>
+        <p class="muted small" style="margin-top:14px;">The party list, transforming step by step</p>
+        <div class="tiles tiles-4" style="margin-top:6px;">
+          <div class="tile fragment" data-fragment-index="0"><div class="tile-def">Decorations<br>Book the venue<br>Food and drinks<br>Program and hosts<br>Invitations</div></div>
+          <div class="tile fragment" data-fragment-index="1"><div class="tile-def">1. Book the venue<br>2. Food and drinks<br>3. Invitations<br>4. Program and hosts<br>5. Decorations</div></div>
+          <div class="tile fragment" data-fragment-index="2"><div class="tile-def">1. Venue <strong class="accent">M</strong><br>2. Food <strong class="accent">M</strong><br>3. Invitations <strong class="accent">S</strong><br>4. Program <strong class="accent">M</strong><br>5. Decorations <strong class="accent">L</strong></div></div>
+          <div class="tile fragment" data-fragment-index="3"><div class="tile-def">Week 1: venue and food<br>Week 2: invites and program<br>Party week: decorations</div></div>
+        </div>
+      </section>
+
+      <!-- Slide 12: Words part 3 -->
+      <section>
+        <h2>Words We Need <span class="muted">3 of 3</span></h2>
+        <div class="tiles tiles-4">
+          <div class="tile fragment" data-fragment-index="0"><div class="tile-head"><i data-lucide="flag"></i>Milestone</div><div class="tile-def">A checkpoint that marks real progress.</div></div>
+          <div class="tile fragment" data-fragment-index="1"><div class="tile-head"><i data-lucide="package"></i>Deliverable</div><div class="tile-def">A concrete output you hand over.</div></div>
+          <div class="tile fragment" data-fragment-index="2"><div class="tile-head"><i data-lucide="rocket"></i>MVP</div><div class="tile-def">The smallest version that already works and delivers value.</div></div>
+          <div class="tile fragment" data-fragment-index="3"><div class="tile-head"><i data-lucide="wallet"></i>Budget / Cost</div><div class="tile-def">Money, tools, and people's time. Time is money.</div></div>
+        </div>
+        <p class="muted small" style="margin-top:14px;">The party, managed to the finish</p>
+        <div class="tiles tiles-4" style="margin-top:6px;">
+          <div class="tile fragment" data-fragment-index="0"><div class="tile-def">Dec 1: venue booked<br>Dec 10: invites sent<br>Dec 18: party day</div></div>
+          <div class="tile fragment" data-fragment-index="1"><div class="tile-def">The signed venue booking. The invite poster. The party itself.</div></div>
+          <div class="tile fragment" data-fragment-index="2"><div class="tile-def">Venue, food, and people having fun. Decorations are a bonus.</div></div>
+          <div class="tile fragment" data-fragment-index="3"><div class="tile-def">The org fund, plus every officer's weekend hours.</div></div>
+        </div>
+      </section>
+
+      <!-- Slide 13: Section Marker, The Fall -->
+      <section class="centered">
+        <div class="cols">
+          <div class="col-text">
+            <p class="section-marker-tag">Section 02</p>
+            <h1>1,100 Forms.<br>5 Months.</h1>
+            <p class="muted small">A true story from my first day at a new company.</p>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-office-storm.webp" alt="Office under a storm cloud"></div>
+        </div>
+      </section>
+
+      <!-- Slide 14: The Commitment -->
+      <section>
+        <h2>The Commitment</h2>
+        <div class="cols">
+          <div class="col-text">
+            <ul class="small">
+              <li class="fragment">Convert a legacy Visual Basic 6 system to .NET</li>
+              <li class="fragment"><strong>1,100 forms</strong> promised in <strong>5 months</strong></li>
+              <li class="fragment">7 engineers: 6 writing code, 1 QA</li>
+              <li class="fragment">No documentation: the old app, one visiting expert, and clicking around</li>
+              <li class="fragment">Client delegates had already booked flights for training at month 5</li>
+            </ul>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-confident-team.webp" alt="A confident team at work"></div>
+        </div>
+      </section>
+
+      <!-- Slide 15: Month 1 Scoreboard -->
+      <section class="centered">
+        <h2>Month 1: The Scoreboard</h2>
+        <p class="big-word"><span class="accent">10</span> of 1,100 forms</p>
+        <p class="support-line">And those 10 were still buggy.</p>
+        <table class="nice-table" style="width:72%; margin:26px auto 0 auto;">
+          <tr class="fragment"><td style="text-align:left;">At that pace, 5 months</td><td style="text-align:right;">10 x 5 = <strong>50</strong></td></tr>
+          <tr class="fragment"><td style="text-align:left;">Fantasy mode: 1 form per engineer per day, zero rest days</td><td style="text-align:right;">30 x 7 x 5 = <strong>1,050</strong></td></tr>
+          <tr class="fragment"><td style="text-align:left;"><strong class="accent">The promise</strong></td><td style="text-align:right;"><strong class="accent">1,100</strong></td></tr>
+        </table>
+        <p class="fragment support-line" style="margin-top:16px;"><strong class="accent">Even the fantasy misses the promise.</strong></p>
+      </section>
+
+      <!-- Slide 16: The Red Flags -->
+      <section>
+        <h2>The Red Flags I Found on Night One</h2>
+        <ul class="small">
+          <li class="fragment"><strong class="accent">RISK</strong> &nbsp;Windows Forms quietly became WEB forms mid-flight. The estimates never changed.</li>
+          <li class="fragment"><strong class="accent">RISK</strong> &nbsp;A framework NOBODY on the team knew. Even the tech lead struggled with it.</li>
+          <li class="fragment"><strong class="accent">RISK</strong> &nbsp;5 months was promised while honest estimates were still being computed.</li>
+          <li class="fragment"><strong class="accent">NO PM</strong> &nbsp;The team had been requesting a project manager for months. There was none.</li>
+          <li class="fragment"><strong class="accent">COMMUNICATION</strong> &nbsp;The team kept saying 5 months was impossible. Nobody listened.</li>
+        </ul>
+      </section>
+
+      <!-- Slide 17: The Heroic Month -->
+      <section>
+        <h2>We Tried to Out-Code the Problem</h2>
+        <div class="cols">
+          <div class="col-text">
+            <ul class="small">
+              <li class="fragment">Day two: I was made assistant team lead</li>
+              <li class="fragment">Sorted all 1,100 forms by complexity: easiest CRUD forms first</li>
+              <li class="fragment">Wrote best practices and coding standards for the new framework</li>
+              <li class="fragment">A month of overnights: <strong>110 forms</strong>, less buggy. 11x faster</li>
+              <li class="fragment"><strong class="accent">But 110 x 3 remaining months = 330. Heroics do not beat arithmetic.</strong></li>
+            </ul>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-blame-meeting.webp" alt="A tense meeting with pointed fingers"></div>
+        </div>
+      </section>
+
+      <!-- Slide 18: BEFORE Exercise -->
+      <section>
+        <span class="exercise-tag">Exercise</span>
+        <div class="exercise-card">
+          <p><strong>Plan the launch of CanteenGo,<br>an app for the school canteen.</strong></p>
+          <p class="muted">Pairs or triads. 5 minutes. Go.</p>
+        </div>
+        <div class="fragment timer-start"></div>
+        <div class="timer" id="timer-before" data-seconds="300">5:00</div>
+        <p class="timer-hint muted">Timer starts on next click. Click the timer to start or reset manually.</p>
+      </section>
+
+      <!-- Slide 19: Debrief + CLARITY -->
+      <section>
+        <h2>What Just Happened?</h2>
+        <ul>
+          <li class="fragment">Did your plans match?</li>
+          <li class="fragment">Who decided what comes first?</li>
+          <li class="fragment">How do you know when you are DONE?</li>
+        </ul>
+        <div class="scene-pop fragment fade-in-then-out">
+          <img src="img/pro-four-bubbles.webp" alt="Four people imagining four different apps">
+          <p class="scene-cap">One brief. A different app in every head.</p>
+        </div>
+        <p class="fragment big-word accent" style="margin-top:30px;">CLARITY</p>
+        <p class="fragment support-line">Nobody gave it, because nobody's job was to give it.</p>
+      </section>
+
+      <!-- Slide 20: Section Marker, Why Talent Is Not Enough -->
+      <section class="centered">
+        <div class="cols">
+          <div class="col-text">
+            <p class="section-marker-tag">Section 03</p>
+            <h1>Why Talent Is Not Enough</h1>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-fast-wrong.webp" alt="Fast coding, wrong output"></div>
+        </div>
+      </section>
+
+      <!-- Slide 21: Engine and Steering -->
+      <section>
+        <h2>Engine and Steering</h2>
+        <div class="cols">
+          <div class="col-text">
+            <p><strong>Talent multiplies output.<br>It does not choose the goal.</strong></p>
+            <p class="muted small">Talent is the engine.<br>Project management is the steering.</p>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-no-steering.webp" alt="A kart with an engine but no steering wheel"></div>
+        </div>
+      </section>
+
+      <!-- Slide 22: The Iron Triangle -->
+      <section class="centered">
+        <div class="overlay-wrap">
+          <img class="img-hero" style="max-height:500px;" src="img/pro-iron-triangle.webp" alt="Three characters pulling a rope triangle with a gem in the center">
+          <span class="olabel" style="left:50%; top:5%;">TIME</span>
+          <span class="olabel" style="left:26%; top:78%;">SCOPE</span>
+          <span class="olabel" style="left:77%; top:78%;">COST</span>
+          <span class="olabel q" style="left:49%; top:50%;">QUALITY</span>
+        </div>
+        <p class="caption">Scope. Time. Cost. Quality is carried by all three.</p>
+      </section>
+
+      <!-- Slide 23: The Only Math Today -->
+      <section class="centered">
+        <p class="big-word">capacity = people x time</p>
+        <p class="support-line">Possible work must meet demanded work.</p>
+      </section>
+
+      <!-- Slide 24: If Nobody Moves a Lever -->
+      <section>
+        <h2>If Nobody Moves a Lever</h2>
+        <div class="cols">
+          <div class="col-text">
+            <ul>
+              <li class="fragment">Corners get cut</li>
+              <li class="fragment">Testing gets skipped</li>
+              <li class="fragment">People burn out</li>
+              <li class="fragment"><strong>Quality pays the bill you refused to pay</strong></li>
+            </ul>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-gem-cracking.webp" alt="The quality gem cracking"></div>
+        </div>
+      </section>
+
+      <!-- Slide 25: Brooks's Law -->
+      <section>
+        <h2>Brooks's Law</h2>
+        <div class="cols">
+          <div class="col-text">
+            <p><strong>Adding people to a late project makes it later.</strong></p>
+            <p class="muted small">Onboarding plus coordination eats the gain.</p>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-overloaded-boat.webp" alt="An overloaded rowboat"></div>
+        </div>
+      </section>
+
+      <!-- Slide 26: Which Lever Would You Move -->
+      <section>
+        <h2>Which Lever Would You Move?</h2>
+        <ul>
+          <li class="fragment">Sponsor moves the event 2 weeks earlier</li>
+          <li class="fragment">A thesis groupmate drops the subject</li>
+          <li class="fragment">Client doubles the features, not the pay</li>
+        </ul>
+        <p class="support-line">Vote by hands: scope, time, or cost?</p>
+      </section>
+
+      <!-- Slide 27: Five Hats -->
+      <section>
+        <h2>Five Hats on Every Project</h2>
+        <div class="cols">
+          <div class="col-text">
+            <div class="hat-rows">
+              <div class="hat-row"><i data-lucide="crown"></i><span><span class="hat-role">Stakeholders</span><span class="hat-desc">want the outcome, define success</span></span></div>
+              <div class="hat-row"><i data-lucide="compass"></i><span><span class="hat-role">PM / Product Owner</span><span class="hat-desc">owns what and when</span></span></div>
+              <div class="hat-row"><i data-lucide="drafting-compass"></i><span><span class="hat-role">Tech Lead</span><span class="hat-desc">owns how</span></span></div>
+              <div class="hat-row"><i data-lucide="hammer"></i><span><span class="hat-role">Team Members</span><span class="hat-desc">own the work</span></span></div>
+              <div class="hat-row"><i data-lucide="search-check"></i><span><span class="hat-role">QA</span><span class="hat-desc">owns "does it really work?"</span></span></div>
+            </div>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-five-hats.webp" alt="Five hats on a rack"></div>
+        </div>
+      </section>
+
+      <!-- Slide 28: Responsibility vs Accountability -->
+      <section>
+        <h2>Responsibility vs Accountability</h2>
+        <div class="compare">
+          <div class="side"><h3>Responsibility</h3><p>I DO the work.<br><span class="muted">Can be shared.</span></p></div>
+          <div class="side"><h3 class="accent">Accountability</h3><p>I ANSWER for the result.<br><span class="muted">One name only.</span></p></div>
+        </div>
+        <img class="img-small" style="margin-top:14px; max-height:330px;" src="img/pro-responsibility.webp" alt="Many hands working, one owner holding the flag">
+      </section>
+
+      <!-- Slide 29: The 2AM Friend -->
+      <section class="centered">
+        <img class="img-hero" src="img/pro-2am.webp" alt="The junior alone at 2AM">
+        <p class="caption">Five responsible members. Zero accountable ones. Until 2AM.</p>
+      </section>
+
+      <!-- Slide 30: Delegation Is Not Dumping -->
+      <section>
+        <h2>Delegation Is Not Dumping</h2>
+        <div class="compare">
+          <div class="side red"><h3>Dumping</h3><p>The task only.</p>
+            <p class="small muted fragment" data-fragment-index="1" style="margin-top:10px;">"Make the event poster. Due tomorrow."<br>No files. No budget. No say. No help.</p></div>
+          <div class="side green"><h3>Delegating</h3><p>The task, the authority, the context.</p>
+            <p class="small muted fragment" data-fragment-index="1" style="margin-top:10px;">"You own the poster. Theme and logos are in this folder. Budget: 500 pesos, design is your call. Due Friday. Ping me if you get stuck."</p></div>
+        </div>
+        <img class="img-small" style="margin-top:12px; max-height:290px;" src="img/pro-map-vs-box.webp" alt="Dropping a box versus handing a map and lantern">
+      </section>
+
+      <!-- Slide 31: A Leader's First Duty -->
+      <section class="centered">
+        <p class="big-word accent">CLARITY</p>
+        <p class="support-line">Clear goal. Clear priorities. Clear owners. Clear done.</p>
+        <img class="img-small" style="margin-top:14px; max-height:340px;" src="img/pro-lantern-path.webp" alt="Mentor lighting the path with a lantern">
+      </section>
+
+      <!-- Slide 32: State the Obvious -->
+      <section>
+        <h2>State the Obvious</h2>
+        <div class="cols">
+          <div class="col-text">
+            <ul>
+              <li class="fragment">Silent nods are how teams fail politely</li>
+              <li class="fragment">Rule 1: nobody feels stupid for raising the obvious</li>
+              <li class="fragment">Rule 2: never question a teammate's capacity for asking</li>
+              <li class="fragment"><strong>Questions are cheap. Assumptions are expensive.</strong></li>
+            </ul>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-raise-hand.webp" alt="The junior bravely raising a hand"></div>
+        </div>
+      </section>
+
+      <!-- Slide 33: Break -->
+      <section class="centered">
+        <img class="img-hero" src="img/pro-coffee-break.webp" alt="The team on a coffee break">
+        <p class="caption">Back in 10 minutes.</p>
+      </section>
+
+      <!-- Slide 34: Section Marker, The Pipeline -->
+      <section class="centered">
+        <p class="section-marker-tag">Section 04</p>
+        <h1 style="font-size:1.6em;">How Teams Get on the Same Page</h1>
+        <div class="pstrip pstrip-hero"><div class="pnode"><span class="pdot"><i data-lucide="search"></i></span><span class="plabel">Requirements</span></div><div class="pnode"><span class="pdot"><i data-lucide="file-text"></i></span><span class="plabel">PRD</span></div><div class="pnode"><span class="pdot"><i data-lucide="list"></i></span><span class="plabel">Stories</span></div><div class="pnode"><span class="pdot"><i data-lucide="pencil-ruler"></i></span><span class="plabel">Approach</span></div><div class="pnode"><span class="pdot"><i data-lucide="shirt"></i></span><span class="plabel">Estimates</span></div><div class="pnode"><span class="pdot"><i data-lucide="map"></i></span><span class="plabel">Roadmap</span></div><div class="pnode"><span class="pdot"><i data-lucide="refresh-cw"></i></span><span class="plabel">Sprint</span></div></div>
+        <p class="muted small" style="margin-top:30px;">One example rides this line all the way: <strong>CanteenGo</strong>, skip the canteen queue.</p>
+      </section>
+
+      <!-- Slide 35: The Vague Sentence (station 1) -->
+      <section>
+        <div class="pstrip step-1"><div class="pnode"><span class="pdot"><i data-lucide="search"></i></span><span class="plabel">Requirements</span></div><div class="pnode"><span class="pdot"><i data-lucide="file-text"></i></span><span class="plabel">PRD</span></div><div class="pnode"><span class="pdot"><i data-lucide="list"></i></span><span class="plabel">Stories</span></div><div class="pnode"><span class="pdot"><i data-lucide="pencil-ruler"></i></span><span class="plabel">Approach</span></div><div class="pnode"><span class="pdot"><i data-lucide="shirt"></i></span><span class="plabel">Estimates</span></div><div class="pnode"><span class="pdot"><i data-lucide="map"></i></span><span class="plabel">Roadmap</span></div><div class="pnode"><span class="pdot"><i data-lucide="refresh-cw"></i></span><span class="plabel">Sprint</span></div></div>
+        <div class="cols">
+          <div class="col-text">
+            <p><strong>"I want a canteen app."</strong></p>
+            <p class="muted small">Ask questions until the real need appears.<br>What would YOU ask?</p>
+          </div>
+          <div class="col-img"><img class="img-side" style="max-height:360px;" src="img/pro-vague-idea.webp" alt="A vague idea meets a good question"></div>
+        </div>
+        <div class="scene-pop fragment">
+          <img src="img/pro-scene-requirements.webp" alt="A requirements interview: listening, asking, taking notes">
+          <p class="scene-cap">Requirements gathering in a real team: listen, ask, write it down.</p>
+        </div>
+      </section>
+
+      <!-- Slide 36: The Real Requirement (station 1) -->
+      <section>
+        <div class="pstrip step-1"><div class="pnode"><span class="pdot"><i data-lucide="search"></i></span><span class="plabel">Requirements</span></div><div class="pnode"><span class="pdot"><i data-lucide="file-text"></i></span><span class="plabel">PRD</span></div><div class="pnode"><span class="pdot"><i data-lucide="list"></i></span><span class="plabel">Stories</span></div><div class="pnode"><span class="pdot"><i data-lucide="pencil-ruler"></i></span><span class="plabel">Approach</span></div><div class="pnode"><span class="pdot"><i data-lucide="shirt"></i></span><span class="plabel">Estimates</span></div><div class="pnode"><span class="pdot"><i data-lucide="map"></i></span><span class="plabel">Roadmap</span></div><div class="pnode"><span class="pdot"><i data-lucide="refresh-cw"></i></span><span class="plabel">Sprint</span></div></div>
+        <p class="big-word" style="font-size:1.3em;">Students lose 20 of their 30 break minutes standing in line.</p>
+        <p class="support-line">The requirement is the pain.</p>
+        <img class="img-small" style="max-height:330px;" src="img/pro-canteen-line.webp" alt="A long canteen line">
+      </section>
+
+      <!-- Slide 37: The PRD (station 2) -->
+      <section>
+        <div class="pstrip step-2"><div class="pnode"><span class="pdot"><i data-lucide="search"></i></span><span class="plabel">Requirements</span></div><div class="pnode"><span class="pdot"><i data-lucide="file-text"></i></span><span class="plabel">PRD</span></div><div class="pnode"><span class="pdot"><i data-lucide="list"></i></span><span class="plabel">Stories</span></div><div class="pnode"><span class="pdot"><i data-lucide="pencil-ruler"></i></span><span class="plabel">Approach</span></div><div class="pnode"><span class="pdot"><i data-lucide="shirt"></i></span><span class="plabel">Estimates</span></div><div class="pnode"><span class="pdot"><i data-lucide="map"></i></span><span class="plabel">Roadmap</span></div><div class="pnode"><span class="pdot"><i data-lucide="refresh-cw"></i></span><span class="plabel">Sprint</span></div></div>
+        <h2>The PRD: One Page, One Picture</h2>
+        <p class="muted small" style="margin-bottom:14px;">PRD: Product Requirements Document. One page everyone agrees on before anyone builds.</p>
+        <div class="prd-card">
+          <div class="prd-row"><span class="prd-label">Problem</span>Students lose ~20 of their 30 break minutes in line</div>
+          <div class="prd-row"><span class="prd-label">Users</span>Students (order and pick up), canteen staff (fulfill)</div>
+          <div class="prd-row"><span class="prd-label">Persona</span>"Mia," 3rd year student: 30-minute break, small allowance, hates lines</div>
+          <div class="prd-row"><span class="prd-label">Goal</span>Order before break, pick up with under 5 minutes waiting</div>
+          <div class="prd-row"><span class="prd-label">Success</span>Average wait time for app users under 5 minutes</div>
+          <div class="prd-row fragment nongoals"><span class="prd-label">Non-goals</span>No online payment. No delivery. No ratings. Cash on pickup.</div>
+        </div>
+        <div class="scene-pop fragment">
+          <img src="img/pro-scene-prd.webp" alt="Two people co-writing one document page">
+          <p class="scene-cap">The PRD is written together: one page, two heads aligned.</p>
+        </div>
+      </section>
+
+      <!-- Slide 38: Same Sentence, Different Pictures (station 2) -->
+      <section>
+        <div class="pstrip step-2"><div class="pnode"><span class="pdot"><i data-lucide="search"></i></span><span class="plabel">Requirements</span></div><div class="pnode"><span class="pdot"><i data-lucide="file-text"></i></span><span class="plabel">PRD</span></div><div class="pnode"><span class="pdot"><i data-lucide="list"></i></span><span class="plabel">Stories</span></div><div class="pnode"><span class="pdot"><i data-lucide="pencil-ruler"></i></span><span class="plabel">Approach</span></div><div class="pnode"><span class="pdot"><i data-lucide="shirt"></i></span><span class="plabel">Estimates</span></div><div class="pnode"><span class="pdot"><i data-lucide="map"></i></span><span class="plabel">Roadmap</span></div><div class="pnode"><span class="pdot"><i data-lucide="refresh-cw"></i></span><span class="plabel">Sprint</span></div></div>
+        <img class="img-hero" style="max-height:400px;" src="img/pro-four-bubbles.webp" alt="Four people imagining four different apps">
+        <p class="caption">One sentence. Four different apps imagined.</p>
+      </section>
+
+      <!-- Slide 39: User Stories (station 3) -->
+      <section>
+        <div class="pstrip step-3"><div class="pnode"><span class="pdot"><i data-lucide="search"></i></span><span class="plabel">Requirements</span></div><div class="pnode"><span class="pdot"><i data-lucide="file-text"></i></span><span class="plabel">PRD</span></div><div class="pnode"><span class="pdot"><i data-lucide="list"></i></span><span class="plabel">Stories</span></div><div class="pnode"><span class="pdot"><i data-lucide="pencil-ruler"></i></span><span class="plabel">Approach</span></div><div class="pnode"><span class="pdot"><i data-lucide="shirt"></i></span><span class="plabel">Estimates</span></div><div class="pnode"><span class="pdot"><i data-lucide="map"></i></span><span class="plabel">Roadmap</span></div><div class="pnode"><span class="pdot"><i data-lucide="refresh-cw"></i></span><span class="plabel">Sprint</span></div></div>
+        <h2 style="font-size:1.2em;">User Stories: As a WHO, I want WHAT, so that WHY</h2>
+        <div class="story-card fragment" data-fragment-index="0">As a <strong>student</strong>, I want to <strong>browse today's menu</strong>, so that <strong>I can decide before break starts</strong>.
+          <div class="fragment" data-fragment-index="3" style="font-size:0.8em; color:var(--muted); margin-top:8px;"><span class="term-tag">UAC</span> Demo that the student can open the app and see today's menu with prices, sold-out items clearly marked.</div></div>
+        <div class="story-card fragment" data-fragment-index="1">As a <strong>student</strong>, I want to <strong>place a pre-order</strong>, so that <strong>my food is ready when I arrive</strong>.
+          <div class="fragment" data-fragment-index="3" style="font-size:0.8em; color:var(--muted); margin-top:8px;"><span class="term-tag">UAC</span> Demo that the student can order an item before break and the canteen screen shows the order instantly.</div></div>
+        <div class="story-card fragment" data-fragment-index="2">As a <strong>student</strong>, I want a <strong>notification when my order is ready</strong>, so that <strong>I only walk over when it is time</strong>.
+          <div class="fragment" data-fragment-index="3" style="font-size:0.8em; color:var(--muted); margin-top:8px;"><span class="term-tag">UAC</span> Demo that the student gets an alert the moment staff marks the order ready, even with the app closed.</div></div>
+        <p class="fragment small" data-fragment-index="4">The ordered list of stories is your <strong class="accent">BACKLOG</strong>.</p>
+        <div class="scene-pop fragment">
+          <img src="img/pro-scene-story-wall.webp" alt="Two teammates placing story cards on a wall in one column">
+          <p class="scene-cap">Stories go on a wall the whole team can see, one tidy column.</p>
+        </div>
+      </section>
+
+      <!-- Slide 40: Technical Approach (station 4) -->
+      <section>
+        <div class="pstrip step-4"><div class="pnode"><span class="pdot"><i data-lucide="search"></i></span><span class="plabel">Requirements</span></div><div class="pnode"><span class="pdot"><i data-lucide="file-text"></i></span><span class="plabel">PRD</span></div><div class="pnode"><span class="pdot"><i data-lucide="list"></i></span><span class="plabel">Stories</span></div><div class="pnode"><span class="pdot"><i data-lucide="pencil-ruler"></i></span><span class="plabel">Approach</span></div><div class="pnode"><span class="pdot"><i data-lucide="shirt"></i></span><span class="plabel">Estimates</span></div><div class="pnode"><span class="pdot"><i data-lucide="map"></i></span><span class="plabel">Roadmap</span></div><div class="pnode"><span class="pdot"><i data-lucide="refresh-cw"></i></span><span class="plabel">Sprint</span></div></div>
+        <h2>What the Tech Lead Writes</h2>
+        <table class="nice-table">
+          <tr class="fragment"><td>Frontend architecture</td><td>How the screens are organized: pages, components, what talks to what</td></tr>
+          <tr class="fragment"><td>Backend architecture</td><td>The machinery behind the screens: APIs, business logic</td></tr>
+          <tr class="fragment"><td>Database schema</td><td>How data is shaped and connected: tables with relationships</td></tr>
+          <tr class="fragment"><td>Language and tools</td><td>Chosen for fit, not for hype</td></tr>
+          <tr class="fragment"><td>Implementation notes</td><td>The tricky parts thought through in advance</td></tr>
+        </table>
+        <div class="scene-pop fragment fade-in-then-out">
+          <img src="img/pro-scene-architecture.webp" alt="The tech lead sketching a system diagram on a whiteboard">
+          <p class="scene-cap">The HOW is designed on a whiteboard before anyone builds.</p>
+        </div>
+        <div class="scene-pop fragment fade-in-then-out">
+          <h3 style="margin:0 0 6px 0;">Frontend Architecture</h3>
+          <div class="arch">
+            <div class="arch-row"><div class="arch-box">CanteenGo App<span class="sub">what the student opens</span></div></div>
+            <div class="arch-arrow"><i data-lucide="arrow-down"></i></div>
+            <div class="arch-row">
+              <div class="arch-box">Menu Page<span class="sub">MenuList, MenuItem card</span></div>
+              <div class="arch-box">Cart Page<span class="sub">CartList, CheckoutButton</span></div>
+              <div class="arch-box">Order Status Page<span class="sub">StatusBadge, ReadyAlert</span></div>
+            </div>
+            <div class="arch-arrow"><i data-lucide="arrow-down"></i></div>
+            <div class="arch-row"><div class="arch-box">Shared<span class="sub">Header, API client, student session</span></div></div>
+          </div>
+          <p class="scene-cap">Pages, the components inside them, and what they all share.</p>
+        </div>
+        <div class="scene-pop fragment fade-in-then-out">
+          <h3 style="margin:0 0 6px 0;">Backend Architecture</h3>
+          <div class="arch">
+            <div class="arch-row"><div class="arch-box">CanteenGo App</div></div>
+            <div class="arch-arrow"><i data-lucide="arrow-down"></i></div>
+            <div class="arch-row"><div class="arch-box">API<span class="sub">GET /menu &nbsp;·&nbsp; POST /orders &nbsp;·&nbsp; GET /orders/:id</span></div></div>
+            <div class="arch-arrow"><i data-lucide="arrow-down"></i></div>
+            <div class="arch-row">
+              <div class="arch-box">MenuService</div>
+              <div class="arch-box">OrderService</div>
+              <div class="arch-box">NotificationService</div>
+            </div>
+            <div class="arch-arrow"><i data-lucide="arrow-down"></i></div>
+            <div class="arch-row"><div class="arch-box">Database</div></div>
+          </div>
+          <p class="scene-cap">Every tap travels this road: screen to API to service to data.</p>
+        </div>
+        <div class="scene-pop fragment fade-in-then-out">
+          <h3 style="margin:0 0 6px 0;">Database Schema</h3>
+          <div class="arch-row" style="align-items:flex-start; gap:18px;">
+            <div class="db-table"><div class="db-head">students</div><div class="db-col">id</div><div class="db-col">name</div><div class="db-col">section</div></div>
+            <div class="db-table"><div class="db-head">menu_items</div><div class="db-col">id</div><div class="db-col">name</div><div class="db-col">price</div><div class="db-col">is_available</div></div>
+            <div class="db-table"><div class="db-head">orders</div><div class="db-col">id</div><div class="db-col fk">student_id &#8594; students.id</div><div class="db-col">status</div><div class="db-col">pickup_time</div></div>
+            <div class="db-table"><div class="db-head">order_items</div><div class="db-col">id</div><div class="db-col fk">order_id &#8594; orders.id</div><div class="db-col fk">menu_item_id &#8594; menu_items.id</div><div class="db-col">quantity</div></div>
+          </div>
+          <p class="scene-cap">Four tables. The orange arrows are relationships: one order, many items.</p>
+        </div>
+        <span class="fragment" aria-hidden="true"></span>
+      </section>
+
+      <!-- Slide 41: The Sizing Game (station 5) -->
+      <section class="compact">
+        <div class="pstrip step-5"><div class="pnode"><span class="pdot"><i data-lucide="search"></i></span><span class="plabel">Requirements</span></div><div class="pnode"><span class="pdot"><i data-lucide="file-text"></i></span><span class="plabel">PRD</span></div><div class="pnode"><span class="pdot"><i data-lucide="list"></i></span><span class="plabel">Stories</span></div><div class="pnode"><span class="pdot"><i data-lucide="pencil-ruler"></i></span><span class="plabel">Approach</span></div><div class="pnode"><span class="pdot"><i data-lucide="shirt"></i></span><span class="plabel">Estimates</span></div><div class="pnode"><span class="pdot"><i data-lucide="map"></i></span><span class="plabel">Roadmap</span></div><div class="pnode"><span class="pdot"><i data-lucide="refresh-cw"></i></span><span class="plabel">Sprint</span></div></div>
+        <h2>The Sizing Game</h2>
+        <img src="img/pro-tshirts.webp" alt="T-shirts small to extra large" style="max-height:140px;">
+        <div class="story-card fragment">As a <strong>student</strong>, I want to <strong>browse today's menu</strong>, so that I can decide before break starts. <div class="vote-row">S M L XL ?</div></div>
+        <div class="story-card fragment">As a <strong>student</strong>, I want to <strong>place a pre-order</strong>, so that my food is ready when I arrive. <div class="vote-row">S M L XL ?</div></div>
+        <div class="story-card fragment">As a <strong>student</strong>, I want a <strong>notification when my order is ready</strong>, so that I only walk over when it is time. <div class="vote-row">S M L XL ?</div></div>
+        <div class="story-card fragment">As a <strong>student</strong>, I want to <strong>pay with GCash</strong>, so that I do not need cash at pickup. <div class="vote-row">S M L XL ?</div></div>
+        <div class="scene-pop fragment">
+          <img src="img/pro-scene-planning-poker.webp" alt="Four teammates holding up cards of visibly different sizes">
+          <p class="scene-cap">Planning poker: everyone votes at once, disagreement starts the conversation.</p>
+        </div>
+      </section>
+
+      <!-- Slide 42: How Sizes Become Time (station 5) -->
+      <section>
+        <div class="pstrip step-5"><div class="pnode"><span class="pdot"><i data-lucide="search"></i></span><span class="plabel">Requirements</span></div><div class="pnode"><span class="pdot"><i data-lucide="file-text"></i></span><span class="plabel">PRD</span></div><div class="pnode"><span class="pdot"><i data-lucide="list"></i></span><span class="plabel">Stories</span></div><div class="pnode"><span class="pdot"><i data-lucide="pencil-ruler"></i></span><span class="plabel">Approach</span></div><div class="pnode"><span class="pdot"><i data-lucide="shirt"></i></span><span class="plabel">Estimates</span></div><div class="pnode"><span class="pdot"><i data-lucide="map"></i></span><span class="plabel">Roadmap</span></div><div class="pnode"><span class="pdot"><i data-lucide="refresh-cw"></i></span><span class="plabel">Sprint</span></div></div>
+        <h2>How Sizes Become Time</h2>
+        <table class="nice-table" style="width:80%; margin:0 auto;">
+          <tr><th>Size</th><th>Agreed range</th></tr>
+          <tr><td>S</td><td>about 2 to 4 hours, one sitting</td></tr>
+          <tr><td>M</td><td>about 4 to 8 hours, roughly one working day</td></tr>
+          <tr><td>L</td><td>about 2 to 3 days</td></tr>
+          <tr><td>XL</td><td>1 week or more: STOP, split it first</td></tr>
+        </table>
+        <p class="support-line">Agreed once per team. Ranges, never exact numbers.</p>
+      </section>
+
+      <!-- Slide 43: Priority Means Order (station 6) -->
+      <section>
+        <div class="pstrip step-6"><div class="pnode"><span class="pdot"><i data-lucide="search"></i></span><span class="plabel">Requirements</span></div><div class="pnode"><span class="pdot"><i data-lucide="file-text"></i></span><span class="plabel">PRD</span></div><div class="pnode"><span class="pdot"><i data-lucide="list"></i></span><span class="plabel">Stories</span></div><div class="pnode"><span class="pdot"><i data-lucide="pencil-ruler"></i></span><span class="plabel">Approach</span></div><div class="pnode"><span class="pdot"><i data-lucide="shirt"></i></span><span class="plabel">Estimates</span></div><div class="pnode"><span class="pdot"><i data-lucide="map"></i></span><span class="plabel">Roadmap</span></div><div class="pnode"><span class="pdot"><i data-lucide="refresh-cw"></i></span><span class="plabel">Sprint</span></div></div>
+        <h2>Priority Means Order</h2>
+        <div class="cols">
+          <div class="col-text small">
+            <p>1. Browse menu<br>2. Pre-order<br>3. Ready notification<br>4. Staff dashboard</p>
+            <p class="accent" style="font-weight:800;">MVP LINE</p>
+            <p class="muted">5. GCash &nbsp; 6. Ratings: later</p>
+          </div>
+          <div class="col-img"><img class="img-side" style="max-height:360px;" src="img/pro-sorted-conveyor.webp" alt="A sorted conveyor with an MVP divider"></div>
+        </div>
+        <div class="scene-pop fragment">
+          <img src="img/pro-scene-backlog-mvp.webp" alt="An ordered card column on a board with a bold line separating the MVP">
+          <p class="scene-cap">A real prioritized backlog: one ordered column, one visible MVP line.</p>
+        </div>
+      </section>
+
+      <!-- Slide 44: The Roadmap (station 6) -->
+      <section>
+        <div class="pstrip step-6"><div class="pnode"><span class="pdot"><i data-lucide="search"></i></span><span class="plabel">Requirements</span></div><div class="pnode"><span class="pdot"><i data-lucide="file-text"></i></span><span class="plabel">PRD</span></div><div class="pnode"><span class="pdot"><i data-lucide="list"></i></span><span class="plabel">Stories</span></div><div class="pnode"><span class="pdot"><i data-lucide="pencil-ruler"></i></span><span class="plabel">Approach</span></div><div class="pnode"><span class="pdot"><i data-lucide="shirt"></i></span><span class="plabel">Estimates</span></div><div class="pnode"><span class="pdot"><i data-lucide="map"></i></span><span class="plabel">Roadmap</span></div><div class="pnode"><span class="pdot"><i data-lucide="refresh-cw"></i></span><span class="plabel">Sprint</span></div></div>
+        <h2>The Roadmap</h2>
+        <div class="cols">
+          <div class="col-text small">
+            <p><strong>Milestone 1</strong> <span class="muted">Weeks 1 to 2:</span><br>browse + pre-order, demo to staff</p>
+            <p><strong>Milestone 2</strong> <span class="muted">Weeks 3 to 4:</span><br>notifications + dashboard, pilot one stall</p>
+            <p><strong>Milestone 3</strong> <span class="muted">later:</span><br>payments, ratings, only if wait time drops</p>
+          </div>
+          <div class="col-img"><img class="img-side" style="max-height:360px;" src="img/pro-roadmap.webp" alt="A road with milestone flags"></div>
+        </div>
+      </section>
+
+      <!-- Slide 45: The Sprint Loop (station 7) -->
+      <section>
+        <div class="pstrip step-7"><div class="pnode"><span class="pdot"><i data-lucide="search"></i></span><span class="plabel">Requirements</span></div><div class="pnode"><span class="pdot"><i data-lucide="file-text"></i></span><span class="plabel">PRD</span></div><div class="pnode"><span class="pdot"><i data-lucide="list"></i></span><span class="plabel">Stories</span></div><div class="pnode"><span class="pdot"><i data-lucide="pencil-ruler"></i></span><span class="plabel">Approach</span></div><div class="pnode"><span class="pdot"><i data-lucide="shirt"></i></span><span class="plabel">Estimates</span></div><div class="pnode"><span class="pdot"><i data-lucide="map"></i></span><span class="plabel">Roadmap</span></div><div class="pnode"><span class="pdot"><i data-lucide="refresh-cw"></i></span><span class="plabel">Sprint</span></div></div>
+        <h2>The Sprint Loop <span class="muted small">one loop = 1 to 2 weeks</span></h2>
+        <div class="cycle">
+          <div class="cstep"><i data-lucide="clipboard-list"></i>Plan<span class="cdesc">pick what FITS<br>the week</span></div>
+          <span class="carrow"><i data-lucide="arrow-right"></i></span>
+          <div class="cstep"><i data-lucide="hammer"></i>Build<span class="cdesc">5-minute standups,<br>raise blockers early</span></div>
+          <span class="carrow"><i data-lucide="arrow-right"></i></span>
+          <div class="cstep"><i data-lucide="presentation"></i>Demo<span class="cdesc">show WORKING<br>output</span></div>
+          <span class="carrow"><i data-lucide="arrow-right"></i></span>
+          <div class="cstep"><i data-lucide="messages-square"></i>Retro<span class="cdesc">what do we<br>improve?</span></div>
+        </div>
+        <svg class="cycle-return-svg" viewBox="0 0 1100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 1045 6 L 1045 42 Q 1045 68 1019 68 L 81 68 Q 55 68 55 42 L 55 26" stroke="#E8590C" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <path d="M 38 32 L 55 8 L 72 32" stroke="#E8590C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <p class="cycle-return-label">refine the backlog, then plan again</p>
+        <div class="scene-pop fragment fade-in-then-out" data-fragment-index="1">
+          <img src="img/pro-scene-sprint-board.webp" alt="A three-column sprint board with cards moving across">
+          <p class="scene-cap">Plan: the sprint board. To do, doing, done. Cards move, everyone sees.</p>
+        </div>
+        <div class="scene-pop fragment fade-in-then-out" data-fragment-index="2">
+          <img src="img/pro-scene-standup.webp" alt="Three teammates in a quick standing huddle, one raising a blocker flag">
+          <p class="scene-cap">Build: the five-minute standup. Blockers raised early, standing up, kept short.</p>
+        </div>
+        <div class="scene-pop fragment fade-in-then-out" data-fragment-index="3">
+          <img src="img/pro-scene-demo.webp" alt="A teammate demoing a working product while the client applauds">
+          <p class="scene-cap">Demo: working output shown to the client. No promises, only proof.</p>
+        </div>
+        <div class="scene-pop fragment fade-in-then-out" data-fragment-index="4">
+          <img src="img/pro-scene-retro.webp" alt="The team reflecting in front of a keep-and-improve board">
+          <p class="scene-cap">Retro: what stays, what improves. Then plan again.</p>
+        </div>
+        <span class="fragment" data-fragment-index="5" aria-hidden="true"></span>
+      </section>
+
+      <!-- Slide 46: AI, Typing vs Deciding (station 7) -->
+      <section>
+        <div class="pstrip step-7"><div class="pnode"><span class="pdot"><i data-lucide="search"></i></span><span class="plabel">Requirements</span></div><div class="pnode"><span class="pdot"><i data-lucide="file-text"></i></span><span class="plabel">PRD</span></div><div class="pnode"><span class="pdot"><i data-lucide="list"></i></span><span class="plabel">Stories</span></div><div class="pnode"><span class="pdot"><i data-lucide="pencil-ruler"></i></span><span class="plabel">Approach</span></div><div class="pnode"><span class="pdot"><i data-lucide="shirt"></i></span><span class="plabel">Estimates</span></div><div class="pnode"><span class="pdot"><i data-lucide="map"></i></span><span class="plabel">Roadmap</span></div><div class="pnode"><span class="pdot"><i data-lucide="refresh-cw"></i></span><span class="plabel">Sprint</span></div></div>
+        <h2 style="font-size:1.2em;">AI Compresses the Typing, Not the Deciding</h2>
+        <div class="compare">
+          <div class="side green"><h3>AI does the typing</h3><p class="small">questions, PRD drafts, story lists, size suggestions</p></div>
+          <div class="side red"><h3>AI does not decide</h3><p class="small">the MVP line, the priorities, the accountability</p></div>
+        </div>
+        <img class="img-small" style="margin-top:12px; max-height:280px;" src="img/pro-robot-decides.webp" alt="A robot assists with typing while the tech lead decides">
+      </section>
+
+      <!-- Slide 47: Section Marker, The Turnaround -->
+      <section class="centered">
+        <div class="cols">
+          <div class="col-text">
+            <p class="section-marker-tag">Section 05</p>
+            <h1>Same Team, Managed</h1>
+          </div>
+          <div class="col-img"><img class="img-side" src="img/pro-office-sunrise.webp" alt="The office at sunrise, help arriving"></div>
+        </div>
+      </section>
+
+      <!-- Slide 48: What We Actually Did -->
+      <section>
+        <h2>What We Actually Did</h2>
+        <ul>
+          <li class="fragment">Organized all remaining forms into a <strong>product backlog</strong></li>
+          <li class="fragment"><strong>T-shirt sized</strong> every form: S, M, L, XL</li>
+          <li class="fragment"><strong>Prioritized</strong> with me: one numbered order, honest projections</li>
+          <li class="fragment">Renegotiated with the CEO and the client: <strong>what ships when</strong></li>
+          <li class="fragment">Executed, sprint by sprint: <strong>the blame game ended</strong></li>
+        </ul>
+      </section>
+
+      <!-- Slide 49: The Only Variable That Changed -->
+      <section class="centered">
+        <p class="big-word" style="font-size:1.7em;">Same seven engineers.<br>Same 1,100 forms. Different outcome.</p>
+        <p class="support-line">The variable was management, not talent.</p>
+        <img src="img/pro-tugofwar-rowing.webp" alt="Tug-of-war chaos versus rowing in sync" style="max-height:330px; margin-top:10px;">
+      </section>
+
+      <!-- Slide 50: AFTER Exercise -->
+      <section>
+        <span class="exercise-tag">Exercise</span>
+        <div class="exercise-card">
+          <ol>
+            <li>Write the GOAL in one sentence</li>
+            <li>List FIVE tasks</li>
+            <li>ORDER them, 1 to 5</li>
+            <li>ONE owner per task</li>
+            <li>Define DONE for task one</li>
+          </ol>
+          <p class="muted" style="margin-top:10px;">Same partners. Same project. 5 minutes. Go.</p>
+        </div>
+        <div class="fragment timer-start"></div>
+        <div class="timer" id="timer-after" data-seconds="300">5:00</div>
+        <p class="timer-hint muted">Timer starts on next click. Click the timer to start or reset manually.</p>
+      </section>
+
+      <!-- Slide 51: Many Frameworks, One Discipline -->
+      <section>
+        <h2>Many Frameworks, One Discipline</h2>
+        <ul>
+          <li class="fragment"><strong>Scrum</strong>: short cycles, what you learned today</li>
+          <li class="fragment"><strong>Kanban</strong>: continuous flow, limit work in progress</li>
+          <li class="fragment"><strong>Waterfall</strong>: plan everything first, right for fixed known work</li>
+          <li class="fragment"><strong>The discipline</strong>: shared words, shared plan, clear owners, short feedback loops</li>
+        </ul>
+      </section>
+
+      <!-- Slide 52: The Mini-Scrum -->
+      <section>
+        <h2>The Mini-Scrum <span class="accent">(photograph this)</span></h2>
+        <div class="mini-scrum">
+          <ol>
+            <li>Write everything the project needs: your <strong>backlog</strong></li>
+            <li>Order it, pick the <strong>MVP</strong></li>
+            <li><strong>ONE accountable owner</strong> per item</li>
+            <li>Pick what fits ONE week: your <strong>sprint</strong></li>
+            <li>Five-minute check-ins, twice a week</li>
+            <li>Show each other <strong>working output</strong> weekly</li>
+            <li>Ask "what do we improve?", then repeat</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Slide 53: AIDA Walkthrough -->
+      <section>
+        <h2>The Pipeline, Grown Up</h2>
+        <div class="shots">
+          <div class="img-placeholder">AIDA screenshot<br>PRD view<br>(pending export)</div>
+          <div class="img-placeholder">AIDA screenshot<br>Backlog and roadmap<br>(pending export)</div>
+          <div class="img-placeholder">AIDA screenshot<br>Sprint view<br>(pending export)</div>
+        </div>
+        <p class="caption">PRD, userflows, design system, C4, backlog, prioritization, roadmap, sprints. You know these words now.</p>
+      </section>
+
+      <!-- Slide 54: Q&A -->
+      <section class="centered">
+        <p class="big-word">Ask me anything.</p>
+      </section>
+
+      <!-- Slide 55: Closing -->
+      <section class="centered">
+        <div class="bg-cast" style="background-image: url('../images-v2/pro-team-waving.png');"></div>
+        <h2>Talent sets the ceiling.<br>Management decides if you reach it.</h2>
+        <ul class="small">
+          <li class="fragment">Talent does not save you, PROCESS saves you</li>
+          <li class="fragment">Manage the triangle consciously, or quality pays secretly</li>
+          <li class="fragment">The system produces CLARITY, and you own a small version of it</li>
+        </ul>
+        <p class="fragment" style="font-weight:800; margin-top:16px;">Run the mini-scrum on ONE project this month.</p>
+        <div class="fragment">
+          <p class="support-line">Thank you for listening.</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="vendor/reveal.min.js"></script>
+  <script src="vendor/lucide.min.js"></script>
+  <script src="js/timers.js"></script>
+  <script src="js/init.js"></script>
+</body>
+</html>

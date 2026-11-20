@@ -1,0 +1,281 @@
+/* Reusable slide components for From Idea to MVP.
+   Source of truth: docs/030-presentation-plan-v1.0.0.md (layouts)
+   and docs/040-presentation-plan-with-images-v1.0.0.md (placements). */
+
+/* Exercise card + timer (team block slides) */
+.exercise-tag {
+  display: inline-block;
+  background: var(--accent);
+  color: #FFF;
+  font-weight: 700;
+  font-size: 0.55em;
+  letter-spacing: 0.15em;
+  padding: 6px 18px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+.exercise-card {
+  background: #FFFFFF;
+  border: 3px solid var(--outline);
+  border-radius: 16px;
+  padding: 26px 34px;
+  text-align: left;
+  font-size: 0.85em;
+}
+.exercise-card ol { margin: 0 0 0 1em; line-height: 1.6; }
+.exercise-card .ex-note { color: var(--muted); font-size: 0.7em; margin-top: 10px; }
+.timer {
+  font-size: 2.6em;
+  font-weight: 800;
+  color: var(--accent);
+  margin-top: 24px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  user-select: none;
+}
+.timer.done { animation: timer-flash 0.8s steps(2) infinite; }
+@keyframes timer-flash { 50% { opacity: 0.25; } }
+.timer-hint { color: var(--muted); font-size: 0.5em; }
+/* GO is anchored to the slide bottom so its reserved space never pushes the
+   exercise card and timer off-center while the fragment is still hidden. */
+.go-word {
+  font-size: 1.6em;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  margin: 0;
+}
+
+/* Scattered feature words (slide 6) */
+.scatter { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px 34px; margin: 30px 0; }
+.scatter span { color: var(--muted); font-weight: 600; font-size: 0.9em; }
+
+/* MVP letter rows (slide 14) */
+.mvp-rows { text-align: left; width: 88%; margin: 0 auto; }
+.mvp-row { display: flex; align-items: baseline; gap: 22px; margin: 18px 0; }
+.mvp-row .letter { font-size: 1.9em; font-weight: 800; color: var(--accent); width: 60px; text-align: center; flex: none; }
+.mvp-row .word { font-weight: 700; width: 240px; flex: none; }
+.mvp-row .meaning { color: var(--muted); font-size: 0.8em; }
+
+/* Anchor rule slides (15, 36) */
+.rule-line { font-size: 1.5em; font-weight: 800; line-height: 1.35; letter-spacing: -0.01em; }
+.rule-line .accent { color: var(--accent); }
+
+/* Five sprint steps list (slide 20), also the prototype jobs (slide 12) */
+.steps-list { text-align: left; font-size: 0.82em; }
+.steps-list .step { display: flex; align-items: baseline; gap: 18px; margin: 14px 0; }
+.steps-list .sname { font-weight: 800; color: var(--accent); width: 250px; flex: none; letter-spacing: 0.06em; }
+.steps-list .sdesc { color: var(--muted); }
+/* The concrete question each prototype job answers (slide 12) */
+.steps-list .sq { display: block; font-style: italic; color: var(--text); font-weight: 600; font-size: 0.85em; margin-top: 3px; }
+
+/* CanteenGo journey line (slide 24) */
+.jline { display: flex; align-items: center; justify-content: center; gap: 0; margin: 30px 0 20px 0; }
+.jbox {
+  background: #FFFFFF;
+  border: 3px solid var(--outline);
+  border-radius: 14px;
+  padding: 18px 26px;
+  font-weight: 700;
+  font-size: 0.75em;
+  white-space: nowrap;
+}
+.jarrow { width: 44px; height: 3px; background: var(--accent); margin: 0 2px; position: relative; flex: none; }
+.jarrow::after { content: ''; position: absolute; right: -2px; top: -5px; border: 7px solid transparent; border-left-color: var(--accent); }
+
+/* Sentence template card (slide 23) */
+.template-card {
+  background: #FFFFFF;
+  border: 3px solid var(--outline);
+  border-radius: 16px;
+  padding: 24px 34px;
+  font-size: 0.95em;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: left;
+}
+.template-card .slot { color: var(--accent); }
+.example-card {
+  background: rgba(232, 89, 12, 0.07);
+  border: 3px solid var(--accent);
+  border-radius: 16px;
+  padding: 20px 30px;
+  font-size: 0.8em;
+  line-height: 1.5;
+  text-align: left;
+  margin-top: 24px;
+}
+
+/* CanteenGo backlog with the MVP line (slide 32) */
+.backlog { width: 78%; margin: 0 auto; text-align: left; font-size: 0.72em; }
+.brow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFFFFF;
+  border: 3px solid var(--outline);
+  border-radius: 12px;
+  padding: 8px 24px;
+  margin: 8px 0;
+  font-weight: 600;
+}
+.brow .tag { font-weight: 800; letter-spacing: 0.08em; font-size: 0.8em; }
+.brow.must { border-color: var(--after-green); }
+.brow.must .tag { color: var(--after-green); }
+.brow.later { opacity: 0.65; }
+.brow.later .tag { color: var(--muted); }
+.brow.trap { border-color: var(--before-red); }
+.brow.trap .tag { color: var(--before-red); }
+.brow.rejected { text-decoration: line-through; opacity: 0.45; }
+/* GCash trap choreography (slide 32): when the inner .strike fragment is
+   revealed, the trap row above the MVP line strikes out while the LATER
+   duplicate appears below (same fragment index). */
+.brow.trap .strike { display: inline; }
+.brow.trap:has(.strike.visible) { text-decoration: line-through; opacity: 0.45; }
+.mvp-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 0.8em;
+  letter-spacing: 0.2em;
+  margin: 14px 0;
+}
+.mvp-divider::before, .mvp-divider::after { content: ''; flex: 1; height: 4px; background: var(--accent); border-radius: 2px; }
+
+/* Common cuts grid (slide 33) */
+.cuts { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 20px; margin-top: 26px; }
+.cuts span {
+  background: rgba(201, 42, 42, 0.07);
+  border: 2px solid var(--before-red);
+  color: var(--before-red);
+  border-radius: 999px;
+  padding: 8px 24px;
+  font-weight: 700;
+  font-size: 0.62em;
+}
+
+/* Fidelity rows (slide 35) */
+.fid-rows { text-align: left; width: 92%; margin: 0 auto; font-size: 0.72em; }
+.fid-row { display: flex; align-items: baseline; gap: 20px; margin: 20px 0; }
+.fid-row .flevel { font-weight: 800; color: var(--accent); width: 170px; flex: none; letter-spacing: 0.06em; }
+.fid-row .fq { font-weight: 700; }
+.fid-row .fcost { color: var(--muted); font-size: 0.85em; display: block; margin-top: 2px; }
+
+/* Simple styled table (slide 37 tools) */
+.nice-table { width: 100%; border-collapse: collapse; font-size: 0.58em; }
+.nice-table th, .nice-table td {
+  border: 2px solid var(--outline);
+  padding: 10px 16px;
+  text-align: left;
+  background: #FFFFFF;
+}
+.nice-table th { background: var(--accent); color: #FFF; font-weight: 700; }
+.nice-table td:first-child { font-weight: 700; white-space: nowrap; color: var(--accent); }
+
+/* Three numbered rules (slide 42, 47, 56) */
+.num-rows { text-align: left; width: 90%; margin: 0 auto; }
+.num-row { display: flex; align-items: baseline; gap: 22px; margin: 20px 0; }
+.num-row .num {
+  background: var(--accent);
+  color: #FFF;
+  font-weight: 800;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  flex: none;
+  align-self: flex-start;
+}
+.num-row .ntitle { font-weight: 800; display: block; }
+.num-row .ndesc { color: var(--muted); font-size: 0.75em; }
+
+/* Comparison sides (slide 57) */
+.compare { display: flex; gap: 30px; margin-top: 24px; }
+.compare .side { flex: 1; border-radius: 16px; padding: 22px 26px; text-align: left; font-size: 0.75em; border: 3px solid var(--outline); background: #FFF; }
+.compare .side.redside { border-color: var(--before-red); color: var(--before-red); }
+.compare .side.greenside { border-color: var(--after-green); color: var(--after-green); }
+
+/* Artifact grid (slide 54) */
+.artifacts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 26px; width: 88%; margin: 20px auto 0 auto; text-align: left; font-size: 0.68em; }
+.artifacts span {
+  background: #FFFFFF;
+  border: 2px solid var(--outline);
+  border-radius: 10px;
+  padding: 8px 20px;
+  font-weight: 600;
+}
+
+/* LIVE tag (slides 40, 49) */
+.live-tag {
+  display: inline-block;
+  background: var(--before-red);
+  color: #FFF;
+  font-weight: 800;
+  font-size: 0.55em;
+  letter-spacing: 0.2em;
+  padding: 6px 20px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+
+/* Placeholders for missing assets */
+.img-placeholder {
+  border: 4px dashed var(--muted);
+  border-radius: 14px;
+  color: var(--muted);
+  font-size: 0.55em;
+  padding: 40px 24px;
+  background: #FFF;
+}
+
+/* Decide & Storyboard sticky board (slide 37). Stage 1: scattered colored wall.
+   Stage 2: .stick-off fragments grey out the nice-to-haves. Stage 3: the
+   .board-order fragment glides the keepers into journey order (the storyboard). */
+.decide-board { position: relative; width: 1140px; height: 470px; margin: 4px auto 0 auto; }
+.decide-board .sticky {
+  position: absolute; width: 190px; min-height: 82px;
+  left: var(--sx); top: var(--sy);
+  transform: rotate(var(--rot));
+  padding: 28px 12px 10px 14px;
+  font-size: 0.52em; font-weight: 700; text-align: left; line-height: 1.2;
+  border: 2px solid var(--outline); border-radius: 6px;
+  box-shadow: 0 3px 0 rgba(62, 44, 35, 0.18);
+  transition: all 0.9s cubic-bezier(0.35, 0, 0.25, 1);
+}
+.sticky.c-tan { background: #EAD9BC; }
+.sticky.c-sage { background: #D8E2D0; }
+.sticky.c-cream { background: #FFF6E0; }
+.sticky .dot { position: absolute; top: 9px; left: 14px; width: 12px; height: 12px; border-radius: 50%; }
+.sticky .dot.sketch { background: var(--accent); }
+.sticky .dot.list { background: #9A9186; }
+.sticky:has(.stick-off.visible) { background: #E8E4DD; color: #A39B90; filter: saturate(0); opacity: 0.55; }
+.sticky.trap:has(.stick-off.visible) { border-color: var(--before-red); }
+.decide-board .journey-row {
+  position: absolute; top: 96px; left: 0; width: 100%;
+  opacity: 0; transition: opacity 0.7s ease 0.5s;
+}
+.decide-board .journey-row span {
+  position: absolute; width: 190px; text-align: center;
+  font-weight: 800; font-size: 0.55em; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent);
+}
+.decide-board .journey-row span:nth-child(1) { left: 40px; }
+.decide-board .journey-row span:nth-child(2) { left: 330px; }
+.decide-board .journey-row span:nth-child(3) { left: 620px; }
+.decide-board .journey-row span:nth-child(4) { left: 910px; }
+.decide-board:has(.board-order.visible) .journey-row { opacity: 1; }
+.decide-board:has(.board-order.visible) .sticky.must { left: var(--ox); top: var(--oy); transform: rotate(0deg); border-color: var(--accent); }
+.decide-board:has(.board-order.visible) .sticky.later { top: 430px; opacity: 0.08; transform: rotate(var(--rot)) scale(0.55); }
+
+/* Italic worked-example line under a rule or description (PROTOTYPE rules etc.) */
+.ex-line { display: block; font-style: italic; color: var(--text); font-weight: 600; font-size: 0.85em; margin-top: 3px; }

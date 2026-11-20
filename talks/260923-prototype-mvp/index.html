@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>From Idea to MVP · Algef Almocera</title>
+  <meta name="description" content="Take-home resources from From Idea to MVP: prototype versus MVP, a one-afternoon design sprint with templates for each step, MVP scoping, the 5-minute user test, and a demo-day checklist.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@75..112.5,100..800&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/">algef<span>.</span></a>
+      <nav aria-label="Main">
+        <a href="/#about">About</a>
+        <a href="/talks/">Talks</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="street" data-seed="260923-prototype-mvp" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <div class="talk-head">
+      <p class="kicker">Talk resources</p>
+      <h1>From Idea to MVP: Building a Prototype That Proves Your Value</h1>
+      <p class="meta">23 September 2026 · Dagitab: InnovFest 2026, CORE NCR Hackathon · CORE Talent Accelerator · 2.5 hours</p>
+      <p>Every team ran a compressed design sprint on its own product in one afternoon: understand and map, sketch, decide and storyboard, prototype, test, then iterate. We separated a prototype from an MVP, drew the line between must-haves and everything else, and planned a demo that proves one complete flow instead of promising fifteen features. This page has the templates and checklists to finish the job before demo day.</p>
+      <ul class="toc">
+        <li><a href="#slides">Slides</a></li>
+        <li><a href="#remember">Remember this</a></li>
+        <li><a href="#words">Prototype vs MVP</a></li>
+        <li><a href="#sprint">The sprint</a></li>
+        <li><a href="#map">1. Map</a></li>
+        <li><a href="#sketch">2. Sketch</a></li>
+        <li><a href="#decide">3. Decide</a></li>
+        <li><a href="#prototype">4. Prototype</a></li>
+        <li><a href="#test">5. Test</a></li>
+        <li><a href="#iterate">Iterate</a></li>
+        <li><a href="#demo">Demo day</a></li>
+        <li><a href="#next">Next steps</a></li>
+      </ul>
+    </div>
+
+    <section id="slides">
+      <h2>Slides</h2>
+      <div class="deck-frame"><iframe src="slides/" title="Slides: From Idea to MVP" loading="lazy" allowfullscreen></iframe></div>
+      <div class="deck-actions"><a class="btn" href="slides/">Open the slides full screen</a><span>Use the arrow keys, or swipe on a phone.</span></div>
+    </section>
+
+    <section id="remember">
+      <h2>If you forget everything else</h2>
+      <div class="habits">
+        <div class="habit">A prototype tests your design. An MVP tests your demand.</div>
+        <div class="habit">Build the lowest fidelity that answers your current question.</div>
+        <div class="habit">One complete flow beats five half flows.</div>
+      </div>
+      <p class="muted">The winning team is rarely the one that built the most. It is the one that proved the most with the least.</p>
+    </section>
+
+    <section id="words">
+      <h2>Two words that decide what you build</h2>
+      <div class="grid2">
+        <div class="card">
+          <h3>Prototype</h3>
+          <p>A visual or interactive model of your idea, built to test your design and user flow. Like a movie set: it looks real from the front, and that is the point. A paper sketch already counts.</p>
+          <ul class="list">
+            <li><strong>Explore:</strong> try several options cheaply.</li>
+            <li><strong>Communicate:</strong> get the whole team seeing the same thing.</li>
+            <li><strong>Test:</strong> put it in front of a real person and watch.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>MVP (Minimum Viable Product)</h3>
+          <p>A functional version of your product, released to real users to test demand.</p>
+          <ul class="list">
+            <li><strong>Minimum:</strong> as small as possible.</li>
+            <li><strong>Viable:</strong> it actually works.</li>
+            <li><strong>Product:</strong> someone can actually use it.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Key differences</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>Prototype</th><th>MVP</th></tr></thead>
+          <tbody>
+            <tr><td>Purpose</td><td>Validates design, usability and the concept</td><td>Validates real user adoption</td></tr>
+            <tr><td>Functionality</td><td>A mock-up or simulation, no real backend</td><td>A working product with the essential core features</td></tr>
+            <tr><td>Audience</td><td>Your team, mentors, judges</td><td>Real early users</td></tr>
+            <tr><td>Time and cost</td><td>Days, almost free</td><td>Weeks or months of real engineering</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note"><strong>An MVP is not half a product.</strong> Half a bridge helps no one cross; a small, complete footbridge does. If the goal is transportation, the first version is a skateboard you can ride today, not one wheel of a car. Small, but complete end to end.</div>
+      <p>For a hackathon, a clickable prototype or a working demo of one flow is a winning outcome. A true MVP usually comes after, and that is normal.</p>
+    </section>
+
+    <section id="sprint">
+      <h2>The design sprint, compressed</h2>
+      <p>The design sprint was created by Jake Knapp at GV (Google Ventures) to answer big product questions fast. It normally takes five days, one step per day. A deadline plus a fixed order kills endless debate: you build, you test, and the user decides. We ran the same steps, in the same order, in one afternoon.</p>
+      <ol class="steps">
+        <li><strong>Understand and map:</strong> understand the problem, map the user's journey.</li>
+        <li><strong>Sketch and ideate:</strong> ask How Might We questions, draw solutions on paper.</li>
+        <li><strong>Decide and storyboard:</strong> choose what to build, put it in order.</li>
+        <li><strong>Prototype:</strong> build a realistic fake of the core flow.</li>
+        <li><strong>Test:</strong> watch real people try it.</li>
+      </ol>
+      <p class="muted">Then iterate: turn what you saw into one change at a time. Throughout the session the worked example was CanteenGo, a pre-order app for a school canteen. Run each step on your own product.</p>
+    </section>
+
+    <section id="map">
+      <h2>1. Understand and map</h2>
+      <h3>Understand the problem</h3>
+      <div class="grid3">
+        <div class="card"><p class="meta">Challenge</p><p>What is broken today, and for whom?</p></div>
+        <div class="card"><p class="meta">Goal</p><p>What does success look like, in one measurable line?</p></div>
+        <div class="card"><p class="meta">Sprint questions</p><p>What must be true for this to work? A prototype exists to answer these.</p></div>
+      </div>
+      <p>Pick your <strong>primary persona</strong>: the one user you design for first. Write down what they want to get done and what gets in their way.</p>
+
+      <h3>Write the core value in one sentence</h3>
+<pre><code>This product helps [WHO] to [DO ONE THING] so that [BENEFIT].</code></pre>
+      <p class="muted">Example: CanteenGo helps students get their canteen food with less than five minutes of waiting.</p>
+      <p>If your team cannot fill this in one sentence, that is the first problem to fix, and fixing it costs paper, not code.</p>
+
+      <h3>Map the core user journey</h3>
+      <p>The shortest path from opening the product to getting the value: three to six boxes in a straight line.</p>
+<pre><code>[ Browse menu ] -&gt; [ Pre-order ] -&gt; [ Ready notification ] -&gt; [ Pick up ]</code></pre>
+      <p>That line is your <strong>core user experience</strong>. If only one thing works on demo day, it must be this line.</p>
+    </section>
+
+    <section id="sketch">
+      <h2>2. Sketch and ideate</h2>
+      <h3>How Might We questions</h3>
+      <p>Reframe the challenge as open questions, then give each answer a short name.</p>
+      <ul class="list">
+        <li>How might we let users finish the core task in seconds?</li>
+        <li>How might we tell users something is ready without making them wait and watch?</li>
+        <li>How might we help the people on the other side without slowing down the old way?</li>
+      </ul>
+
+      <h3>Wireframes, the folded-paper way</h3>
+      <p>A <strong>wireframe</strong> is a black-and-white skeleton of a screen: boxes and labels, no colors, no fonts, no design talent required.</p>
+      <ol class="steps">
+        <li>Fold one sheet of paper into panels, one panel per journey box.</li>
+        <li>Sketch each step as one rough screen. Minutes, not hours.</li>
+        <li>Weave your best How Might We answers into the screens.</li>
+        <li>Compare sketches as a team and discuss the idea, not the drawing.</li>
+      </ol>
+      <div class="note good"><strong>Ugly is correct.</strong> Ugly means fast, fast means disposable, and disposable means honest feedback. Sketching also has no language barrier: everyone on the team can contribute equally.</div>
+    </section>
+
+    <section id="decide">
+      <h2>3. Decide and storyboard: scope the MVP</h2>
+      <p>The step that decides whether you demo something working or apologize on stage. <strong>Scope</strong> is everything you decided to build for this version, and nothing more. At a hackathon, time and budget are fixed, so scope is the only lever you can move.</p>
+
+      <h3>The disappearing test</h3>
+      <ol class="steps">
+        <li>List every feature you have imagined. Every single one.</li>
+        <li>For each, ask: <strong>if this feature disappeared, does the core value still work?</strong> Yes means nice-to-have. No means must-have.</li>
+        <li>Draw the MVP line. Must-haves that serve the core journey go above it. Everything else goes below, into a <strong>Later</strong> list. Parked, not deleted.</li>
+        <li>Put the keepers in journey order. That ordered row is your storyboard: for each frame, write the user action and the system response.</li>
+        <li>Pick your demo-day format and write the question it will answer.</li>
+      </ol>
+      <div class="note warn"><strong>Watch for trap cards.</strong> A feature that sounds essential but is a large integration, such as real online payments, can eat your whole hackathon. If paying cash at pickup still proves the core value, payments go on the Later list.</div>
+
+      <h3>Common hackathon cuts</h3>
+      <ul class="chips">
+        <li>Login and accounts (fake it)</li>
+        <li>Settings</li>
+        <li>Onboarding tutorials</li>
+        <li>Admin panels</li>
+        <li>Push notifications</li>
+        <li>Multiple user types (pick one)</li>
+        <li>Edge cases</li>
+        <li>Dark mode</li>
+      </ul>
+      <p class="muted">MoSCoW (Must, Should, Could, Won't) is the formal version. For a hackathon, the honest version is Must versus Later.</p>
+
+      <h3>The fidelity ladder</h3>
+      <p><strong>Fidelity</strong> is how finished a prototype looks and behaves. Choose by the question you need answered.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Fidelity</th><th>Format</th><th>The question it answers</th><th>Effort</th></tr></thead>
+          <tbody>
+            <tr><td>Low</td><td>Paper wireframe</td><td>Does the flow make sense? Do we agree?</td><td>Minutes</td></tr>
+            <tr><td>Medium</td><td>Mock-up (static, real colors and layout) or clickable prototype (linked screens, no real backend)</td><td>Can a user get through without help? Does it look real?</td><td>Hours, no code</td></tr>
+            <tr><td>High</td><td>Functional demo (a real working slice with real logic or data)</td><td>Does the risky logic actually work?</td><td>Days, so build only the one risky slice</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>The rule:</strong> build the lowest fidelity that answers your current question. Never code what a clickable prototype can answer.</div>
+
+      <h3>Tools, free or free-tier</h3>
+      <div class="grid2">
+        <div class="card"><p class="meta">Wireframes</p><p>Pen and paper (the best tool you have), a whiteboard, <a href="https://excalidraw.com/" rel="noopener" target="_blank">Excalidraw</a>, Balsamiq, Figma wireframe kits.</p></div>
+        <div class="card"><p class="meta">Mock-ups</p><p><a href="https://www.figma.com/" rel="noopener" target="_blank">Figma</a>, Canva.</p></div>
+        <div class="card"><p class="meta">Clickable prototypes</p><p>Figma prototype mode: link your frames and present on a phone.</p></div>
+        <div class="card"><p class="meta">Functional demos</p><p>No-code builders (Glide, Softr, Bubble, AppSheet), AI-assisted coding tools (v0, Lovable, Bolt, Replit, Claude, Cursor), or your own stack. Describe the one core flow and build only that.</p></div>
+      </div>
+      <p class="muted">Tools change every year. The ladder and the rule do not.</p>
+    </section>
+
+    <section id="prototype">
+      <h2>4. Prototype: one complete thread</h2>
+      <div class="grid2">
+        <div class="card">
+          <h3>Build the core flow only</h3>
+          <p>Front to back, even if ugly. One complete thread beats five half threads. Judges do not count features; they look for one that works end to end.</p>
+        </div>
+        <div class="card">
+          <h3>Timebox everything</h3>
+          <p>Every task gets a deadline in minutes, not "until it is done." For example: 40 minutes for the menu screen, then move on.</p>
+        </div>
+        <div class="card">
+          <h3>Fake what you can</h3>
+          <p>Hard-code the data, use placeholder content, make "Login" a button that just opens the app. Build the front of the movie set, not the house.</p>
+        </div>
+        <div class="card">
+          <h3>Divide the team</h3>
+          <p>Not everyone codes. One person builds, one prepares the user test, one drafts the pitch and the demo run. Parallel work beats five people watching one laptop.</p>
+        </div>
+      </div>
+
+      <h3>Build plan template</h3>
+      <ul class="list">
+        <li>The screens, in journey order</li>
+        <li>Who builds what</li>
+        <li>What gets faked, written down explicitly</li>
+        <li>A timebox per task, in minutes</li>
+        <li>Who prepares the user test, and who drafts the pitch</li>
+      </ul>
+    </section>
+
+    <section id="test">
+      <h2>5. Test: the 5-minute user test</h2>
+      <p>No lab, no forms, no budget. One stranger and five minutes. Run it as soon as your prototype is ready, and before your pitch is final.</p>
+      <ol class="steps">
+        <li><strong>Find one person who is not on your team.</strong></li>
+        <li><strong>Give them one task, in one sentence.</strong> For example: "Order food for your break."</li>
+        <li><strong>Stay quiet and watch.</strong> Do not help, do not explain, do not defend. Silence is data.</li>
+        <li><strong>Note where they get stuck.</strong> Hesitations, wrong taps, stuck points, the face they make. Watch what they do, not what they say.</li>
+        <li><strong>Ask open questions afterward.</strong> "What did you expect to happen here?" Never "Did you like it?", because people are polite.</li>
+        <li><strong>Pick one fix.</strong> Make it, then test again.</li>
+      </ol>
+
+      <h3>Your test plan</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Field</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>Who</td><td>Three people from another team</td></tr>
+            <tr><td>When</td><td>Tonight, before pitch prep</td></tr>
+            <tr><td>Task sentence</td><td>"Order food for your break."</td></tr>
+            <tr><td>Question it answers</td><td>Can a first-time user complete the order without help?</td></tr>
+            <tr><td>Outcome</td><td>One fix before the next test</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="iterate">
+      <h2>Iterate: one fix at a time</h2>
+      <ul class="list">
+        <li><strong>Feedback is a to-do list, not a verdict.</strong> One confusing step means fix that step, not scrap the product.</li>
+        <li><strong>Separate signal from noise.</strong> Every tester stuck on the same step is signal; one person's color preference is noise.</li>
+        <li><strong>Change one thing, then test again.</strong> Change ten things at once and you learn nothing.</li>
+        <li><strong>Build, measure, learn.</strong> This loop from the Lean Startup is how serious products are made. The MVP is just the vehicle.</li>
+      </ul>
+      <p class="muted">If the core value itself gets shrugs, you just saved months. Rework the value sentence and keep the skills.</p>
+    </section>
+
+    <section id="demo">
+      <h2>Demo-day preparation</h2>
+      <p>The demo-day format was five minutes of pitch, one minute of demo, and five minutes of questions. Your prototype is the proof inside the pitch.</p>
+
+      <h3>The pitch: four beats</h3>
+      <ol class="steps">
+        <li>The problem, in one line</li>
+        <li>The core flow, live</li>
+        <li>What a real user told you</li>
+        <li>What you build next</li>
+      </ol>
+      <p>Lead with the value, not the tech.</p>
+
+      <h3>How the judging criteria map to your sprint</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Criterion</th><th>Weight</th><th>Your evidence</th></tr></thead>
+          <tbody>
+            <tr><td>Relevance</td><td>15%</td><td>Challenge, goal, target users</td></tr>
+            <tr><td>Innovation and creativity</td><td>25%</td><td>Your How Might We sketches</td></tr>
+            <tr><td>Feasibility and practicality</td><td>25%</td><td>The MVP line and storyboard: realistic scope, a logical path</td></tr>
+            <tr><td>Viability and sustainability</td><td>20%</td><td>The Later list as a growth path, plus your user tests</td></tr>
+            <tr><td>Presentation and communication</td><td>15%</td><td>The pitch and the live demo</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">No criterion counts features.</p>
+
+      <h3>Checklist</h3>
+      <ul class="list">
+        <li>Core value sentence, final</li>
+        <li>Problem line for the pitch, written</li>
+        <li>Core flow works end to end, in your chosen format</li>
+        <li>Demo rehearsed as one live pass through the core flow, inside one minute</li>
+        <li>At least one user test run, and one fix made from it</li>
+        <li>One quote or observation from a real user ready for the pitch</li>
+        <li>Later list ready as your answer to "what is next?"</li>
+        <li>MVP line ready as your answer to "why not feature X?"</li>
+        <li>Prototype loaded on a phone and on a laptop</li>
+        <li>Team agreed on who presents, who drives the demo, who takes questions</li>
+      </ul>
+      <div class="note good"><strong>Never apologize on stage.</strong> Not "Sorry, this part is not working yet," but "We focused on proving the core value first." Same fact; one sounds like failure, the other sounds like discipline.</div>
+
+      <h3>The one-flow commitment</h3>
+      <p>Write the one core flow your team will have working by demo day, plus the format. For example: "Order flow, browse to notification, clickable prototype in Figma." Everyone signs it. Pin a photo in your team chat, and look at it whenever someone says "let us add one more feature."</p>
+    </section>
+
+    <section id="next">
+      <h2>Keep going</h2>
+      <div class="grid2">
+        <div class="card"><h3><a href="https://www.gv.com/sprint/" rel="noopener" target="_blank">The Design Sprint, by GV</a></h3><p>The original five-day process, with the checklists and schedule.</p></div>
+        <div class="card"><h3><a href="https://www.thesprintbook.com/" rel="noopener" target="_blank">Sprint (the book)</a></h3><p>Jake Knapp, John Zeratsky and Braden Kowitz on solving big problems in five days.</p></div>
+        <div class="card"><h3><a href="https://blog.crisp.se/2016/01/25/henrikkniberg/making-sense-of-mvp" rel="noopener" target="_blank">Making sense of MVP</a></h3><p>Henrik Kniberg's skateboard-not-a-wheel explanation of what an MVP really is.</p></div>
+        <div class="card"><h3><a href="https://theleanstartup.com/" rel="noopener" target="_blank">The Lean Startup</a></h3><p>Eric Ries on the build, measure, learn loop.</p></div>
+      </div>
+
+      <h3>After the hackathon</h3>
+      <ol class="steps">
+        <li>Keep testing: five minutes, one stranger, one task, every time something changes.</li>
+        <li>Move up the fidelity ladder only when a new question needs it.</li>
+        <li>Pull the next item off the Later list only after the core flow is proven.</li>
+        <li>When the prototype has answered its questions, release a small, complete MVP to real users and test demand.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span><a href="/">Algef Almocera</a> · <a href="/talks/">All talks</a></span>
+      <span><a href="https://www.linkedin.com/in/algef-almocera-666a2b35/" rel="noopener" target="_blank">LinkedIn</a> · <a href="https://www.instagram.com/algef.almocera/" rel="noopener" target="_blank">Instagram</a></span>
+    </div>
+  </footer>
+  <script src="/assets/street.js" defer></script>
+</body>
+</html>

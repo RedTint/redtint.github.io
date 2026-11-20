@@ -1,1 +1,153 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><link rel="icon" href="/favicon.ico"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="Web site created using create-react-app"/><link rel="apple-touch-icon" href="/logo192.png"/><link rel="manifest" href="/manifest.json"/><title>React App</title><script defer="defer" src="/static/js/main.088adcf1.js"></script><link href="/static/css/main.4df41f57.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Algef Almocera</title>
+  <meta name="description" content="Algef Almocera, CTO of Narsima Technologies. Writing software since 2002, building and leading engineering teams, and teaching students what is underneath it.">
+  <meta property="og:title" content="Algef Almocera">
+  <meta property="og:description" content="Writing software since 2002. Building systems, leading the teams that build them, and teaching what is underneath.">
+  <meta property="og:image" content="https://redtint.github.io/assets/img/algef-almocera.jpg">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#070a14">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@75..112.5,100..800&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/home.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <a class="skip" href="#about">Skip to content</a>
+
+  <div class="stage" id="stage" aria-hidden="true">
+    <div class="sky" id="sky"></div>
+    <div class="world" id="world"></div>
+    <canvas class="life" id="life"></canvas>
+    <div class="fx vignette"></div>
+    <div class="fx grain"></div>
+  </div>
+
+  <header class="hud top">
+    <a class="brand" href="/">Algef Almocera<small>CTO · Narsima Technologies</small></a>
+    <nav class="hud-links" aria-label="Elsewhere">
+      <a href="/talks/">Talks</a>
+      <a href="https://www.linkedin.com/in/algef-almocera-666a2b35/" rel="me noopener" target="_blank">LinkedIn</a>
+      <a href="https://www.instagram.com/algef.almocera/" rel="me noopener" target="_blank">Instagram</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="chapter intro" id="top" data-name="Look up">
+      <div class="intro-inner">
+        <h1>Look up.<span>Every light is a system someone built.</span></h1>
+        <p>I have been building systems like these since 2002. Now I also teach students what is underneath them.</p>
+      </div>
+      <div class="hint" aria-hidden="true"><span>Scroll to walk the street</span><i></i></div>
+    </section>
+
+    <section class="chapter" id="about" data-name="About">
+      <article class="placard left">
+        <p class="no">No. 01 · About</p>
+        <div class="about">
+          <img src="/assets/img/algef-almocera.jpg" alt="Algef Almocera at night on a street full of shop lights" width="480" height="480" loading="lazy">
+          <div>
+            <h2>Algef Almocera</h2>
+            <p>Chief Technology Officer at Narsima Technologies, where we build AI-assisted products.</p>
+          </div>
+        </div>
+        <p>I wrote my first programs in high school and never stopped. Twenty years on, I design systems, lead the teams that build them, and teach students how they work underneath.</p>
+        <p>Lately I work on Document-Driven Development: the whole software lifecycle written as versioned documents that people and AI agents build against.</p>
+        <p class="spec">AWS Certified Solutions Architect (Associate) · Professional Scrum Master · Teaching programming part-time since 2011 · MS Computer Science, in progress</p>
+      </article>
+    </section>
+
+    <section class="chapter" id="career" data-name="Career">
+      <article class="placard right wide">
+        <p class="no">No. 02 · Career, first layer up</p>
+        <h2>From freelance code to CTO</h2>
+        <ol class="layers">
+          <li><span class="when">2006</span><span class="what">Freelance programmer and web developer: more than fifty applications</span></li>
+          <li><span class="when">2011</span><span class="what">Programmer, Ionics EMS, after graduating in Computer Engineering</span></li>
+          <li><span class="when">2013</span><span class="what">Senior .NET Developer and Development Lead, Innerworks International</span></li>
+          <li><span class="when">2013</span><span class="what">Principal Software Engineer and Tech Lead, Elephant Ventures</span></li>
+          <li><span class="when">2015</span><span class="what">Group Architect, Full Stack Engineer, then Director of Engineering for the Philippines</span></li>
+          <li><span class="when">2022</span><span class="what">Director of Engineering, Global, across several time zones</span></li>
+          <li><span class="when">2026</span><span class="what">Software Architecture Consultant, A-Grade CodeSmith</span></li>
+          <li><span class="when">2026</span><span class="what">Chief Technology Officer, Narsima Technologies</span></li>
+        </ol>
+        <p class="spec">Elephant Ventures is a global software company headquartered in New York.</p>
+      </article>
+    </section>
+
+    <section class="chapter" id="work" data-name="Work">
+      <article class="placard left">
+        <p class="no">No. 03 · Work</p>
+        <h2>Some of what I have built</h2>
+        <ul class="work">
+          <li><b>A hospital ERP</b> with fifteen modules, from inpatient billing to the blood bank, for a multinational healthcare client.</li>
+          <li><b>A fleet and loyalty system</b> for a network of gas stations.</li>
+          <li><b>A factory alarm</b> that watched process control charts and alerted engineers the moment a line went out of control.</li>
+          <li><b>An architecture review framework</b> that every client project passed through: data, services, testing and risk.</li>
+          <li><b>AI engineering workflows</b> for a whole engineering department, from choosing the tools to changing how teams ship.</li>
+        </ul>
+        <p class="spec">Most client work since 2013 is under NDA, so it is described by kind, not by name.</p>
+      </article>
+    </section>
+
+    <section class="chapter" id="stack" data-name="Stack">
+      <article class="placard right wide">
+        <p class="no">No. 04 · Tools I have shipped with</p>
+        <h2>The stack, so far</h2>
+        <dl class="stack">
+          <dt>Frontend</dt>
+          <dd>React · Angular · Vue · Next.js · React Native · Tailwind · D3.js</dd>
+          <dt>Backend</dt>
+          <dd>Node · Express · NestJS · Python · Flask · FastAPI · Django · C# .NET · GraphQL · PHP</dd>
+          <dt>Data and ML</dt>
+          <dd>PostgreSQL · MySQL · SQL Server · MongoDB · DynamoDB · Redshift · Athena · Glue · Kinesis · Databricks · Snowflake · Pandas · scikit-learn · TensorFlow</dd>
+          <dt>Cloud and DevOps</dt>
+          <dd>AWS · Azure · GCP · Docker · Kubernetes · Terraform · CloudFormation · GitHub Actions</dd>
+          <dt>AI and agents</dt>
+          <dd>Amazon Bedrock · LangChain · LangGraph · CrewAI · OpenAI · Claude · Ollama · Hugging Face · RAG</dd>
+        </dl>
+        <p class="spec">Not a complete list. The best tool is the one the problem needs.</p>
+      </article>
+    </section>
+
+    <section class="chapter" id="talks" data-name="Talks">
+      <article class="placard left wide">
+        <p class="no">No. 05 · Talks</p>
+        <h2>What I teach in rooms full of students</h2>
+        <ul class="talk-list">
+          <li><a href="/talks/261125-cybersecurity/"><span class="when">25 Nov 2026</span><span class="what">Cybersecurity Technical Masterclass</span><span class="go" aria-hidden="true">&rarr;</span></a></li>
+          <li><a href="/talks/260923-prototype-mvp/"><span class="when">23 Sep 2026</span><span class="what">From Idea to MVP</span><span class="go" aria-hidden="true">&rarr;</span></a></li>
+          <li><a href="/talks/260902-project-management/"><span class="when">2 Sep 2026</span><span class="what">Why Great Teams Fail</span><span class="go" aria-hidden="true">&rarr;</span></a></li>
+        </ul>
+        <p class="spec">Each page has the material to take home. <a href="/talks/">All talks</a></p>
+      </article>
+    </section>
+
+    <section class="chapter fin" id="contact" data-name="Contact">
+      <div class="fin-inner">
+        <h2>Say hello.</h2>
+        <p>If you attended one of my talks, tell me what you built after it.</p>
+        <div class="row">
+          <a class="chip solid" href="https://www.linkedin.com/in/algef-almocera-666a2b35/" rel="me noopener" target="_blank">Message me on LinkedIn</a>
+          <a class="chip" href="https://www.instagram.com/algef.almocera/" rel="me noopener" target="_blank">Instagram</a>
+          <button class="chip" id="reroll" type="button">Light another city</button>
+        </div>
+        <p class="colophon">This street is generated fresh on every visit. Skyline heights come from fractal noise. Each office light switches on and off as a two-state Markov chain, and more of them go dark as the night gets later. Lanterns, blurred lights and shooting stars arrive as Poisson processes. <span id="seed"></span></p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="hud bottom" aria-label="Chapters">
+    <div class="progress" id="progress">
+      <div class="track"></div><div class="bar" id="bar"></div>
+    </div>
+  </nav>
+
+  <script src="/assets/home.js" defer></script>
+</body>
+</html>

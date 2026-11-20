@@ -1,0 +1,178 @@
+/* Theme: From Idea to MVP (light, warm cream, orange accent)
+   Same visual profile as 260902-project-management-talk.
+   Source of truth: docs/030-presentation-plan-v1.0.0.md Design Notes */
+
+@import url('../vendor/fonts/inter.css');
+
+:root {
+  --bg: #FAF7F2;
+  --text: #2B2B2B;
+  --muted: #6B6257;
+  --accent: #E8590C;
+  --before-red: #C92A2A;
+  --after-green: #2F9E44;
+  --outline: #3E2C23;
+}
+
+.reveal-viewport { background: var(--bg); }
+
+.reveal {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 34px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  text-transform: none;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.reveal h1 { font-size: 2.2em; font-weight: 800; }
+.reveal h2 { font-size: 1.5em; font-weight: 700; }
+.reveal h3 { font-size: 1.1em; font-weight: 700; }
+
+.reveal p { line-height: 1.5; }
+.reveal strong { font-weight: 700; }
+
+.reveal ul { list-style: none; margin-left: 0; }
+.reveal ul li {
+  margin: 0.5em 0;
+  padding-left: 1.1em;
+  position: relative;
+  text-align: left;
+  line-height: 1.4;
+}
+.reveal ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.48em;
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.reveal a { color: var(--accent); }
+.reveal .controls { color: var(--accent); }
+.reveal .progress { display: none; }
+
+/* Text utilities */
+.accent { color: var(--accent); }
+.muted { color: var(--muted); }
+.green { color: var(--after-green); }
+.red { color: var(--before-red); }
+.small { font-size: 0.65em; }
+.big-word {
+  font-size: 2.4em;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.big-word .accent { color: var(--accent); }
+.support-line { color: var(--muted); font-size: 0.75em; margin-top: 0.8em; }
+
+.section-marker-tag {
+  color: var(--accent);
+  font-size: 0.55em;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.4em;
+}
+
+.author { font-size: 0.7em; color: var(--muted); margin-top: 1.2em; }
+
+/* Full-bleed low-opacity background image (slide 1) */
+.bg-cast {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+/* Images */
+.reveal img { border: none; box-shadow: none; background: transparent; object-fit: contain; }
+.img-side { max-height: 460px; max-width: 100%; }
+.img-hero { max-height: 520px; max-width: 88%; }
+.img-band { max-height: 340px; max-width: 96%; }
+.img-small { max-height: 300px; }
+.img-tiny { max-height: 180px; }
+
+.caption { color: var(--muted); font-size: 0.65em; margin-top: 0.5em; }
+
+/* Two-column layouts */
+.cols { display: flex; align-items: center; gap: 40px; }
+.cols .col-text { flex: 45; text-align: left; }
+.cols .col-img { flex: 55; }
+
+/* Every slide is vertically centered: each top-level section becomes a
+   648px flex column with content centered in the middle. Content slides
+   keep left-aligned text (align-items: stretch); .centered statement
+   slides also center horizontally. */
+.reveal .slides > section {
+  height: 720px;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding-top: 0;
+}
+.reveal .slides > section > * { flex-shrink: 0; }
+/* Images and tables must not be stretched to full width by the flex column. */
+.reveal .slides > section > img { align-self: center; }
+.reveal .slides > section.centered { align-items: center; }
+
+/* Persistent section kicker, updated by js/init.js */
+.kicker { position: fixed; left: 22px; bottom: 14px; z-index: 30; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); opacity: 0.75; }
+.kicker .k-accent { color: var(--accent); }
+
+/* Next-topic hint, bottom right: presenter cue when no speaker monitor exists */
+.next-hint { position: fixed; right: 64px; bottom: 14px; z-index: 30; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); opacity: 0.6; }
+.next-hint .nh-tag { color: var(--accent); font-weight: 800; margin-right: 6px; }
+
+/* Sprint progress bar: fixed top strip, rendered by js/init.js from data-bar.
+   States per segment: u (unlit outline), c (current, pulsing), l (lit, filled). */
+#sprint-bar {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+}
+#sprint-bar .seg {
+  min-width: 128px;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 10px 5px 10px;
+  border-radius: 999px;
+  border: 2px solid var(--muted);
+  color: var(--muted);
+  background: transparent;
+  opacity: 0.55;
+}
+#sprint-bar .seg.current {
+  border-color: var(--accent);
+  color: var(--accent);
+  opacity: 1;
+  animation: seg-pulse 1.6s ease-in-out infinite;
+}
+#sprint-bar .seg.lit {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #FFFFFF;
+  opacity: 1;
+}
+@keyframes seg-pulse { 50% { box-shadow: 0 0 0 6px rgba(232, 89, 12, 0.18); } }

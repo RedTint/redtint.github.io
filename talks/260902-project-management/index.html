@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Why Great Teams Fail · Algef Almocera</title>
+  <meta name="description" content="Take-home resources from Why Great Teams Fail: The Power of Project Management. Key definitions, the iron triangle, accountability, a full worked example from idea to sprint, and a mini-Scrum you can run this week.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@75..112.5,100..800&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/">algef<span>.</span></a>
+      <nav aria-label="Main">
+        <a href="/#about">About</a>
+        <a href="/talks/">Talks</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="street" data-seed="260902-project-management" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <div class="talk-head">
+      <p class="kicker">Talk resources</p>
+      <h1>Why Great Teams Fail: The Power of Project Management</h1>
+      <p class="meta">2 September 2026 · PhilDev CORE Talent Accelerator · 3 hours</p>
+      <p>Talented teams rarely fail for lack of skill. They fail for lack of clarity, ownership and honest planning. We walked from a real project that was drowning to the practices that rescued it, named the instincts you already use every day, and took one small app idea all the way from a vague sentence to a sprint. This page has the frameworks, templates and the mini-Scrum so you can run it on your next project.</p>
+      <ul class="toc">
+        <li><a href="#slides">Slides</a></li>
+        <li><a href="#remember">Remember this</a></li>
+        <li><a href="#story">The story's lessons</a></li>
+        <li><a href="#words">Shared words</a></li>
+        <li><a href="#everyday">Everyday PM</a></li>
+        <li><a href="#triangle">Iron triangle</a></li>
+        <li><a href="#ownership">Ownership</a></li>
+        <li><a href="#pipeline">Idea to sprint</a></li>
+        <li><a href="#exercise">The exercise</a></li>
+        <li><a href="#mini-scrum">Mini-Scrum</a></li>
+        <li><a href="#ai">AI prompts</a></li>
+        <li><a href="#next">Keep going</a></li>
+      </ul>
+    </div>
+
+    <section id="slides">
+      <h2>Slides</h2>
+      <div class="deck-frame"><iframe src="slides/" title="Slides: Why Great Teams Fail" loading="lazy" allowfullscreen></iframe></div>
+      <div class="deck-actions"><a class="btn" href="slides/">Open the slides full screen</a><span>Use the arrow keys, or swipe on a phone.</span></div>
+    </section>
+
+    <section id="remember">
+      <h2>If you forget everything else</h2>
+      <div class="habits">
+        <div class="habit">Talent does not save you. Process does.</div>
+        <div class="habit">Manage the triangle consciously, or quality pays secretly.</div>
+        <div class="habit">You already manage projects. Now do it on purpose.</div>
+      </div>
+      <p class="muted">The challenge from the end of the session: run the mini-Scrum on one project this month. And: go make someone accountable.</p>
+    </section>
+
+    <section id="story">
+      <h2>Lessons from the 1,100 forms</h2>
+      <p>The spine of the talk was a real project: a team of seven engineers committed to converting 1,100 forms from a legacy desktop application in five months. After the first month, ten forms were done, and they were still buggy. Even in a fantasy where every coder finished one form every day with no rest, the team would have fallen short. The promise was impossible before a single line of code was written.</p>
+
+      <h3>The five red flags</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Type</th><th>What happened</th></tr></thead>
+          <tbody>
+            <tr><td>Risk</td><td>The target platform changed mid-flight to something very different, and the estimates were never updated.</td></tr>
+            <tr><td>Risk</td><td>The team was told to use a framework nobody on the team knew.</td></tr>
+            <tr><td>Risk</td><td>The deadline was promised to the client before anyone finished an honest estimate, and the client had already scheduled training around it.</td></tr>
+            <tr><td>No PM</td><td>The team had asked for a project manager for months. There was none.</td></tr>
+            <tr><td>Communication</td><td>Leadership did not listen when the team said the deadline was impossible, and client expectations were never managed.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Not one of these is about coding skill. Every red flag is a management failure.</p>
+
+      <h3>What changed it</h3>
+      <ol class="steps">
+        <li><strong>Heroics first.</strong> Sorting the forms by complexity, writing coding standards and pulling overnights made the team about eleven times faster. It was still nowhere near enough. Heroics do not beat arithmetic.</li>
+        <li><strong>A project manager arrived.</strong> She did not hire more engineers. She turned the form list into a <strong>product backlog</strong>.</li>
+        <li><strong>Estimates.</strong> Every item got a t-shirt size.</li>
+        <li><strong>Prioritization.</strong> The backlog was put in order, with an honest projected delivery.</li>
+        <li><strong>Renegotiation.</strong> With one clear, ordered list, the team could go back to leadership and the client and agree how and when things would roll out. With numbers, not hope.</li>
+      </ol>
+      <div class="note good"><strong>The point.</strong> Communication, prioritization and managing expectations are learnable. I have watched great teams fail and balanced teams ship: one senior, some mid-levels, some juniors, complete and well managed.</div>
+    </section>
+
+    <section id="words">
+      <h2>Shared words</h2>
+      <p>Agreeing on what words mean is the first project management skill.</p>
+      <div class="grid3">
+        <div class="card">
+          <h3>Project</h3>
+          <p>A temporary effort with a specific goal, a start and an end. A thesis or a school fair is a project. Running a store every day is operations. Opening the store is a project.</p>
+        </div>
+        <div class="card">
+          <h3>Management</h3>
+          <p>Deciding what gets done, by whom, by when, with what resources, and adjusting when reality surprises the plan. Coordination plus decisions, not bossing people around.</p>
+        </div>
+        <div class="card">
+          <h3>Project management</h3>
+          <p>Getting a group of people to a temporary goal on purpose: planned, coordinated and adjusted, instead of by luck.</p>
+        </div>
+      </div>
+
+      <h3>The eleven words</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Word</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td>Stakeholder</td><td>Everyone who cares about the outcome, including the person grading or paying for it.</td></tr>
+            <tr><td>Requirement</td><td>What is actually needed.</td></tr>
+            <tr><td>Scope</td><td>Everything you promised to deliver.</td></tr>
+            <tr><td>Deadline</td><td>When it is due.</td></tr>
+            <tr><td>Budget or cost</td><td>Money, tools, and people's hours. Time is money.</td></tr>
+            <tr><td>Deliverable</td><td>The thing you hand over.</td></tr>
+            <tr><td>Milestone</td><td>A checkpoint along the way.</td></tr>
+            <tr><td>MVP</td><td>Minimum viable product: the smallest version that already works.</td></tr>
+            <tr><td>Backlog</td><td>The to-do list, sorted by importance.</td></tr>
+            <tr><td>Priority</td><td>What comes first. Priority means order.</td></tr>
+            <tr><td>Estimate</td><td>An educated guess of effort.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="everyday">
+      <h2>You already do this: the sinigang project</h2>
+      <p>Everyone in the room had already managed a project without knowing it. Mom is cooking sinigang, a Filipino sour soup, for lunch, and you are sent to buy the ingredients.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>PM concept</th><th>In the kitchen</th></tr></thead>
+          <tbody>
+            <tr><td>Project</td><td>Cook sinigang for lunch. Temporary, specific, with a clear end.</td></tr>
+            <tr><td>Deadline</td><td>12:00 noon, because the family eats at lunch time.</td></tr>
+            <tr><td>Tasks</td><td>Buy the ingredients, with a list and a budget. Then cook.</td></tr>
+            <tr><td>Accountable</td><td>Mom. If lunch fails, she answers to the hungry family. One name.</td></tr>
+            <tr><td>Responsible</td><td>Mom for the cooking, you for the ingredient run. Shared work, single owner.</td></tr>
+            <tr><td>Cost</td><td>Ingredient money, plus gas or electricity for cooking.</td></tr>
+            <tr><td>Time</td><td>One to two hours, groceries plus cooking.</td></tr>
+            <tr><td>Risk</td><td>Buy now or later? Too late and everyone eats late. That instinct is risk assessment.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Nothing here is alien. Project management gives names and structure to instincts you already have, so you can use them on purpose, at work, at scale.</p>
+    </section>
+
+    <section id="triangle">
+      <h2>The iron triangle and the one equation</h2>
+      <p>Talent is the engine. Project management is the steering. Talent multiplies output, but it does not choose the goal.</p>
+      <div class="grid3">
+        <div class="card"><h3>Scope</h3><p>What you promised.</p></div>
+        <div class="card"><h3>Time</h3><p>When it is due.</p></div>
+        <div class="card"><h3>Cost</h3><p>Money and people's hours.</p></div>
+      </div>
+      <p><strong>Quality</strong> sits in the middle, carried by all three.</p>
+      <div class="note"><strong>Capacity = people × time.</strong> Cost and time decide how much work is possible. Scope decides how much work is demanded. Those two numbers must meet. When one lever moves, another must move too.</div>
+      <h3>When nobody moves a lever</h3>
+      <p>The equation still balances, invisibly. Corners get cut, testing gets skipped, people burn out. Quality pays the bill you refused to pay. You do not choose whether the trade-off happens, only whether you make it consciously.</p>
+      <h3>Brooks's Law</h3>
+      <p>Adding people to a late project makes it later. New people need onboarding, and everyone spends more time coordinating. Hiring is not an escape hatch.</p>
+      <h3>Practice: which lever would you move?</h3>
+      <ul class="list">
+        <li>An org event: the sponsor moved the date two weeks earlier.</li>
+        <li>A thesis group: one member dropped the subject.</li>
+        <li>A client doubles the features but not the pay.</li>
+      </ul>
+    </section>
+
+    <section id="ownership">
+      <h2>Roles, ownership and clarity</h2>
+      <h3>Five hats</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Hat</th><th>Owns</th></tr></thead>
+          <tbody>
+            <tr><td>Stakeholders</td><td>Want the outcome</td></tr>
+            <tr><td>Project Manager or Product Owner</td><td>What, and when</td></tr>
+            <tr><td>Tech Lead</td><td>How</td></tr>
+            <tr><td>Team members</td><td>The work</td></tr>
+            <tr><td>QA</td><td>Does it really work?</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">The hats exist even when the heads are few. One person can wear several, but one head wearing three hats is a fire hazard.</p>
+
+      <div class="grid2">
+        <div class="card">
+          <h3>Responsibility</h3>
+          <p>"I do the work." Many people can be responsible.</p>
+        </div>
+        <div class="card">
+          <h3>Accountability</h3>
+          <p>"I answer for the result." Exactly one name. When everyone is accountable, nobody is.</p>
+        </div>
+      </div>
+      <div class="note"><strong>The rule.</strong> Every task has a doer. Every outcome has one owner.</div>
+
+      <h3>Delegation is not dumping</h3>
+      <div class="grid2">
+        <div class="card"><p class="meta">Delegation</p><p>Task, plus the authority, plus the context to succeed.</p></div>
+        <div class="card"><p class="meta">Dumping</p><p>Task only.</p></div>
+      </div>
+
+      <h3>A leader's first duty: clarity</h3>
+      <ul class="chips">
+        <li>Clear goal</li>
+        <li>Clear priorities</li>
+        <li>Clear owners</li>
+        <li>Clear "done"</li>
+      </ul>
+      <p>A leader who provides clarity has done half the job. A leader who provides only pressure has done none of it.</p>
+
+      <h3>State the obvious</h3>
+      <p>Many project disasters begin with someone who noticed something and stayed quiet. The silent nod is how teams fail politely. Two team rules: nobody feels stupid for raising the obvious, and when a teammate asks, you never question their capacity. Say "good catch, let us clarify" instead. Questions are cheap. Assumptions are expensive.</p>
+    </section>
+
+    <section id="pipeline">
+      <h2>From idea to sprint: one example all the way through</h2>
+      <p>Our running example was <strong>CanteenGo</strong>, an app that lets students pre-order from the school canteen so they do not spend their break standing in line. These are the artifacts from each station.</p>
+
+      <h3>1. Requirements gathering</h3>
+      <p>It always starts with a vague sentence: "I want a canteen app." Ask questions until the real need appears. Who uses it? How do they pay? When are peak hours? What phones do they have? Keep going until you reach the pain: students lose most of their break standing in line. The requirement is the pain, not the app. In requirements gathering, the obvious question is the professional move.</p>
+
+      <h3>2. The mini-PRD</h3>
+      <p>A Product Requirements Document: one page, so everyone sees the same picture.</p>
+      <div class="card">
+        <p class="meta">CanteenGo, Product Requirements v1</p>
+        <ul class="list">
+          <li><strong>Problem:</strong> Students lose most of their break standing in the canteen line.</li>
+          <li><strong>Users:</strong> Students, who order and pick up. Canteen staff, who receive and fulfil orders.</li>
+          <li><strong>Goal:</strong> A student can order before break and pick up food with less than 5 minutes of waiting.</li>
+          <li><strong>Success measure:</strong> Average wait time for app users under 5 minutes.</li>
+          <li><strong>Non-goals (v1):</strong> No online payment. No delivery. No ratings or reviews. Cash on pickup only.</li>
+        </ul>
+      </div>
+      <p>Non-goals are the scope fence. Half of project management is politely saying "not yet".</p>
+
+      <h3>3. User stories, the backlog</h3>
+      <p>Format: <strong>As a [who], I want [what], so that [why].</strong> The why lets teammates catch bad ideas: "that what does not achieve that why".</p>
+      <ol class="steps">
+        <li>As a student, I want to browse today's menu, so that I can decide before break starts.</li>
+        <li>As a student, I want to place a pre-order, so that my food is ready when I arrive.</li>
+        <li>As a student, I want a notification when my order is ready, so that I only walk over when it is time.</li>
+        <li>As canteen staff, I want to see incoming orders on one screen, so that I can prepare them in order.</li>
+        <li>As a student, I want to pay online, so that I do not handle cash. (later)</li>
+        <li>As a student, I want to rate my meal, so that others know what is good. (later)</li>
+      </ol>
+
+      <h3>4. Technical approach</h3>
+      <p>For each story, the Tech Lead writes the how. Example for story 2:</p>
+      <div class="card">
+        <p><strong>Pre-order.</strong> One screen lists today's menu with an Order button. On tap, create an order record (student name and section, item, timestamp) with status NEW. The staff dashboard checks for NEW orders. Risks: double orders (disable the button after a tap), sold-out items (staff can mark items unavailable), students without smartphones (keep the cash line running: the app adds a lane, it does not replace the line).</p>
+      </div>
+      <p>In real teams the how goes deeper:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Artifact</th><th>What it covers</th></tr></thead>
+          <tbody>
+            <tr><td>Frontend architecture</td><td>How the screens are organized: pages, components, what talks to what.</td></tr>
+            <tr><td>Backend architecture</td><td>The machinery behind the screens: APIs, business logic, processing.</td></tr>
+            <tr><td>Database schema</td><td>How data is shaped and connected: tables with relationships.</td></tr>
+            <tr><td>Language and framework choices</td><td>What to build with, chosen because it fits the team and the problem, not because it is trendy.</td></tr>
+            <tr><td>Tools</td><td>Where code lives, how it is tested, how it is deployed.</td></tr>
+            <tr><td>Implementation notes</td><td>The tricky parts thought through in advance: payments, offline, security.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">One page of thinking before building saves a week of rebuilding.</p>
+
+      <h3>5. Estimates: t-shirt sizing</h3>
+      <p>Instead of guessing hours, compare: is this story Small, Medium, Large or Extra Large relative to the others? Everyone votes at the same time. This is called planning poker.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Story</th><th>What the votes revealed</th></tr></thead>
+          <tbody>
+            <tr><td>Browse today's menu</td><td>Mostly agreement. Well-understood work sizes tightly.</td></tr>
+            <tr><td>Pre-order plus staff dashboard</td><td>Votes split. Is the dashboard included? Scope ambiguity shows up as size disagreement.</td></tr>
+            <tr><td>Online payment</td><td>Looks small until someone who has integrated a payment API speaks up. Hidden complexity.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="list">
+        <li><strong>The conversation is the value.</strong> Diverging votes mean people understand the story differently. Talk until you know why.</li>
+        <li><strong>Turning sizes into time.</strong> The team agrees once on a range of hours for each size. Use ranges, never exact numbers: a decimal point on a guess is fake precision.</li>
+        <li><strong>XL means stop.</strong> It is too big. Split it into smaller stories before anyone starts.</li>
+        <li><strong>Back to capacity.</strong> Once sizes have agreed ranges, sprint planning is simple arithmetic again: people × time.</li>
+      </ul>
+
+      <h3>6. Prioritize, draw the MVP line, build a roadmap</h3>
+      <p>Priority means order: what is first, second, third. Sort by value against effort, then draw the MVP line.</p>
+      <div class="note"><strong>Order:</strong> 1. Browse menu, 2. Pre-order, 3. Ready notification, 4. Staff dashboard. <strong>MVP line.</strong> 5. Online payment, 6. Ratings.</div>
+      <div class="grid3">
+        <div class="card"><p class="meta">Milestone 1, weeks 1 to 2</p><p>Browse and pre-order working. Demo to canteen staff.</p></div>
+        <div class="card"><p class="meta">Milestone 2, weeks 3 to 4</p><p>Notifications and staff dashboard. Pilot with one canteen stall.</p></div>
+        <div class="card"><p class="meta">Milestone 3, later</p><p>Payments and ratings, only after the pilot proves wait time drops.</p></div>
+      </div>
+      <p>A roadmap is not mystical. It is a sorted list with dates.</p>
+
+      <h3>7. The sprint loop</h3>
+      <ol class="steps">
+        <li><strong>Sprint planning.</strong> A sprint is a short, fixed cycle of one or two weeks. Pick the top stories that fit the team's capacity, and commit to only those.</li>
+        <li><strong>Build, with standups.</strong> Five minutes: what I did, what I am doing, what is blocking me. A blocker raised on Monday costs a day. Hidden until Friday, it costs the sprint.</li>
+        <li><strong>Demo.</strong> Show working output to stakeholders, not promises. The demo is the accountability ritual: there is no blame game when everyone sees the truth every week.</li>
+        <li><strong>Retro.</strong> Fifteen minutes, team only. What went well, what we change next time.</li>
+        <li><strong>Refine and plan again.</strong> Update the backlog with what you learned and start the next sprint.</li>
+      </ol>
+      <p>Agile is not "no planning". It is planning more often, so the plan keeps touching reality.</p>
+    </section>
+
+    <section id="exercise">
+      <h2>The before and after exercise</h2>
+      <div class="grid2">
+        <div class="card">
+          <p class="meta">Before</p>
+          <p>"Plan the launch of CanteenGo. Four minutes. Go." No other instructions. Plans did not match, nothing was prioritized, nobody owned anything, and nobody knew what done looked like. Nobody gave clarity, because it was nobody's job.</p>
+        </div>
+        <div class="card">
+          <p class="meta">After</p>
+          <p>Same partners, same project, same four minutes, with a structure. Same brains, different system, much clearer output. The missing word was <strong>clarity</strong>, now provided on purpose.</p>
+        </div>
+      </div>
+      <h3>The five-step structure (use it for any kickoff)</h3>
+      <ol class="steps">
+        <li>Write the goal in one sentence.</li>
+        <li>List five tasks.</li>
+        <li>Order them, 1 to 5.</li>
+        <li>Put one owner's name beside each task.</li>
+        <li>Define "done" for task 1.</li>
+      </ol>
+    </section>
+
+    <section id="mini-scrum">
+      <h2>Your mini-Scrum</h2>
+      <p>Small enough for one slide, strong enough to carry a thesis, an org event or a capstone.</p>
+      <ol class="steps">
+        <li>Write down everything the project needs. That is your backlog.</li>
+        <li>Put it in order, and pick the MVP.</li>
+        <li>Give each item one accountable owner.</li>
+        <li>Pick what fits in one week. That is your sprint.</li>
+        <li>Hold five-minute check-ins, twice a week.</li>
+        <li>Show each other working output every week.</li>
+        <li>Ask "what do we improve?", then repeat.</li>
+      </ol>
+      <div class="note good"><strong>This month.</strong> Run it on one real project. Keep the artifacts (your one-page PRD, your backlog, your demo notes). Together they become a portfolio of a project you managed.</div>
+    </section>
+
+    <section id="ai">
+      <h2>AI prompts from the session</h2>
+      <p>Each station has an AI assist. Try these on your own project idea:</p>
+      <ol class="steps">
+        <li><strong>Requirements:</strong> "I want to build [idea]. What clarifying questions should I ask first?"</li>
+        <li><strong>PRD:</strong> "Turn these messy notes into a one-page PRD: [notes]"</li>
+        <li><strong>Stories:</strong> "Break this PRD into user stories in 'As a..., I want..., so that...' format."</li>
+        <li><strong>Approach:</strong> "Write a short technical approach for this story: [story]"</li>
+        <li><strong>Sprint:</strong> "Propose a one-week sprint plan for a three-person team."</li>
+      </ol>
+      <div class="note warn"><strong>AI compresses the typing, not the deciding.</strong> It does not draw your MVP line, own your priorities, or stand in the demo and answer for the result. That part is management, and it is yours.</div>
+    </section>
+
+    <section id="next">
+      <h2>Keep going</h2>
+      <h3>Many frameworks, one discipline</h3>
+      <div class="grid3">
+        <div class="card"><h3>Scrum</h3><p>Fixed-length sprints with planning, demos and retros. Closest to what we practised.</p></div>
+        <div class="card"><h3>Kanban</h3><p>No sprints. Continuous flow, with a limit on how much work is in progress at once.</p></div>
+        <div class="card"><h3>Waterfall</h3><p>Plan everything first, then build. Right when the work is fixed and well understood.</p></div>
+      </div>
+      <p>Most real teams mix them. Tools such as Jira, Trello or Notion are just a backlog wearing a nice shirt: never confuse buying the tool with doing the discipline. The discipline in one line: <strong>shared words, shared plan, clear owners, short feedback loops.</strong></p>
+
+      <h3>Read next</h3>
+      <div class="grid2">
+        <div class="card"><h3><a href="https://scrumguides.org/scrum-guide.html" rel="noopener" target="_blank">The Scrum Guide</a></h3><p>The official, short definition of Scrum's roles, events and artifacts. Free.</p></div>
+        <div class="card"><h3><a href="https://kanbanguides.org/" rel="noopener" target="_blank">The Kanban Guide</a></h3><p>A short, free definition of Kanban and flow.</p></div>
+        <div class="card"><h3><a href="https://agilemanifesto.org/" rel="noopener" target="_blank">The Agile Manifesto</a></h3><p>Four values and twelve principles behind agile ways of working.</p></div>
+        <div class="card"><h3><a href="https://www.atlassian.com/agile" rel="noopener" target="_blank">Atlassian Agile Coach</a></h3><p>Practical guides to user stories, estimation, sprints and retros.</p></div>
+      </div>
+      <p>For the story behind Brooks's Law, read <em>The Mythical Man-Month</em> by Frederick P. Brooks Jr.</p>
+
+      <h3>Starting a PM career</h3>
+      <p>Ship managed projects now. Run your capstone with the mini-Scrum and keep the artifacts. Employers can teach you tools. What makes them trust you with real work is planning, communicating, and owning outcomes.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span><a href="/">Algef Almocera</a> · <a href="/talks/">All talks</a></span>
+      <span><a href="https://www.linkedin.com/in/algef-almocera-666a2b35/" rel="noopener" target="_blank">LinkedIn</a> · <a href="https://www.instagram.com/algef.almocera/" rel="noopener" target="_blank">Instagram</a></span>
+    </div>
+  </footer>
+  <script src="/assets/street.js" defer></script>
+</body>
+</html>

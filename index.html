@@ -79,6 +79,7 @@ select.chip option{ color:#1b150f; }
 .reveal-none{}
 a.chip{ text-decoration:none; display:inline-block; }
 .lens{ display:none !important; }
+.brand{ opacity:0; }
 .intro p{ max-width:min(34em, 100%); }
 @media (max-width:640px){ #school, #reroll{ display:none; } }
 .placard .eq{ font-family:var(--display); font-style:italic; font-size:17px; line-height:1.35; color:#2a2219; border-top:1px solid rgba(42,34,25,.18); padding-top:10px; }
@@ -941,6 +942,7 @@ function frame(now){
     // overlays
     $('#intro').style.opacity = clamp(1 - a * 1.7); $('#intro').style.transform = `translateY(${-a * 60}px)`;
     $('#hint').style.opacity = clamp(1 - a * 4);
+    document.querySelector('.brand').style.opacity = clamp((a - .55) * 6);
     $('#bar').style.width = (pB * 100) + '%';
     const fin = $('#fin'); fin.style.opacity = smooth(pC); fin.classList.toggle('on', pC > .5);
     showChapter(a > .97 && pC < .25 ? Math.min(6, Math.floor(pB * 7)) : -1);

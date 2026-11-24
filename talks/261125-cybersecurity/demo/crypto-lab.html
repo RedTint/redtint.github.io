@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crypto Lab</title>
+<link rel="stylesheet" href="fonts/inter.css">
+<style>
+  /* Demo for 05 · How Cryptology Works. Runs offline from file:// (Web Crypto is available there in Chrome).
+     Three tabs, one per slide: Shift (the first lock), Lock (real AES encryption), Fingerprint (real SHA-256 hashing).
+     Nothing leaves the laptop. */
+  :root {
+    --bg: #0f172a; --panel: #111b30; --line: #263349; --text: #e2e8f0; --muted: #94a3b8;
+    --amber: #fbbf24; --cyan: #38bdf8; --coral: #fb7185; --emerald: #34d399;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: ui-monospace, "JetBrains Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); }
+  main { max-width: 1180px; margin: 0 auto; padding: 36px 32px 64px; }
+  .eyebrow { font: 700 16px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); margin: 0 0 14px; }
+  h1 { font-size: 52px; line-height: 1.05; letter-spacing: -.03em; margin: 0 0 24px; }
+  .tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+  .tabs button { font: 700 22px/1 var(--sans); padding: 0 26px; min-height: 56px; border-radius: 12px; border: 2px solid var(--line); background: #16213a; color: var(--muted); cursor: pointer; }
+  .tabs button[aria-selected="true"] { background: var(--cyan); border-color: var(--cyan); color: #04111d; }
+  section[role="tabpanel"][hidden] { display: none; }
+  label { display: block; font-size: 20px; color: var(--muted); margin: 0 0 8px; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: stretch; margin-bottom: 22px; }
+  input { flex: 1 1 420px; min-width: 0; font: 600 34px/1.2 var(--mono); color: var(--text); background: #0b1222; border: 2px solid var(--line); border-radius: 14px; padding: 12px 18px; outline: none; }
+  input.small { font-size: 26px; }
+  input:focus { border-color: var(--cyan); }
+  button { font: 600 20px/1 var(--sans); border-radius: 12px; padding: 0 20px; min-height: 56px; cursor: pointer; border: 2px solid var(--line); background: #16213a; color: var(--text); }
+  button.primary { background: var(--cyan); border-color: var(--cyan); color: #04111d; }
+  button:focus-visible, input:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+  .out { border-radius: 16px; padding: 20px 24px; border: 2px solid var(--line); background: var(--panel); margin-bottom: 18px; }
+  .out .k { font-size: 18px; color: var(--muted); margin: 0 0 6px; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; }
+  .out .v { font: 600 32px/1.35 var(--mono); word-break: break-all; margin: 0; }
+  .out.locked { border-color: var(--amber); } .out.locked .v { color: var(--amber); }
+  .out.good { border-color: var(--emerald); } .out.good .v { color: var(--emerald); }
+  .out.bad { border-color: var(--coral); } .out.bad .v { color: var(--coral); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 800px) { .grid2 { grid-template-columns: 1fr; } }
+  .list { font: 600 26px/1.55 var(--mono); columns: 3; column-gap: 28px; margin: 0; padding: 0; list-style: none; }
+  .list li { color: var(--muted); }
+  .list li b { color: var(--cyan); display: inline-block; width: 2.2em; }
+  .list li.hit { color: var(--emerald); }
+  .diff { color: var(--coral); }
+  .same { color: var(--muted); }
+  .note { font-size: 19px; color: var(--muted); line-height: 1.5; margin-top: 10px; }
+  .slider { display: flex; align-items: center; gap: 16px; font-size: 24px; margin-bottom: 22px; }
+  .slider input[type=range] { flex: 1; font: inherit; padding: 0; border: 0; background: none; accent-color: var(--cyan); }
+  .kx { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 18px; margin-bottom: 18px; }
+  .kx > div { border: 2px solid var(--line); border-radius: 16px; padding: 16px 18px; background: var(--panel); }
+  .kx .mid { border-color: rgba(251, 113, 133, .45); }
+  .kx h2 { margin: 0 0 12px; font-size: 26px; }
+  .kx h2 span { display: block; font-size: 16px; color: var(--coral); font-weight: 600; margin-top: 4px; }
+  .slot { display: flex; align-items: center; gap: 14px; margin: 0 0 12px; min-height: 76px; }
+  .sw { flex: none; width: 72px; height: 72px; border-radius: 50%; border: 2px dashed var(--line); background: transparent; transition: background .6s, border-color .6s, transform .4s; }
+  .sw.on { border: 2px solid rgba(255, 255, 255, .25); }
+  .sw.pop { transform: scale(1.12); }
+  .lbl { font-size: 18px; color: var(--muted); line-height: 1.3; }
+  .lbl b { color: var(--amber); font-weight: 600; }
+  .slot.eve { opacity: .25; transition: opacity .6s; } .slot.eve.on { opacity: 1; }
+  .val { display: block; font: 700 19px/1.3 var(--mono); color: var(--amber); margin-top: 4px; white-space: pre-line; overflow-wrap: anywhere; }
+  .val:empty { display: none; }
+  .val.same { color: var(--emerald); } .val.wrong { color: var(--coral); }
+  .calc { font: 600 24px/1.5 var(--mono); color: var(--text); margin: 10px 0 0; overflow-wrap: anywhere; }
+  .calc:empty { display: none; }
+  .calc .dim { color: var(--muted); font-family: var(--sans); font-weight: 500; font-size: 20px; }
+  .seg { display: inline-flex; border: 2px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .seg button { border: 0; border-radius: 0; min-height: 52px; }
+  .seg button[aria-pressed="true"] { background: var(--amber); color: #1a1205; }
+  .world { margin-top: 34px; }
+  .world h2 { font-size: 30px; margin: 0 0 6px; }
+  .world .lead { font-size: 19px; color: var(--muted); margin: 0 0 16px; line-height: 1.45; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+  .lockcard { border: 2px solid var(--line); border-radius: 14px; padding: 16px 18px; background: var(--panel); }
+  .lockcard h3 { margin: 0 0 4px; font-size: 22px; display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+  .lockcard .era { font: 600 15px/1.3 var(--mono); color: var(--muted); margin: 0 0 10px; }
+  .pill { flex: none; font: 800 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; padding: 5px 9px; border-radius: 999px; border: 1.5px solid; }
+  .pill.current { color: var(--emerald); border-color: var(--emerald); }
+  .pill.legacy { color: var(--amber); border-color: var(--amber); }
+  .pill.broken { color: var(--coral); border-color: var(--coral); }
+  .pill.toy { color: var(--muted); border-color: var(--muted); }
+  .lockcard dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 6px 12px; font-size: 17px; line-height: 1.4; }
+  .lockcard dt { color: var(--muted); font-weight: 700; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; padding-top: 3px; }
+  .lockcard dd { margin: 0; }
+  .lockcard dd.ttb { color: var(--amber); font-weight: 700; }
+  .lockcard.current dd.ttb { color: var(--emerald); }
+  .v.sansv { font: 600 26px/1.4 var(--sans); }
+  @media (max-width: 900px) { .kx { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .sw { transition: none; } }
+  .slider b { font: 700 34px/1 var(--mono); color: var(--amber); width: 2.2em; text-align: right; }
+  .jwt { font: 600 22px/1.5 var(--mono) !important; }
+  .jh, .jwt .jh { color: var(--coral); } .jp, .jwt .jp { color: var(--amber); } .js, .jwt .js { color: var(--cyan); }
+  .jwt .dot { color: var(--muted); }
+  .jwt .changed { background: rgba(251, 113, 133, .22); border-radius: 4px; }
+  .jsonv { font: 600 20px/1.5 var(--mono) !important; white-space: pre-wrap; }
+  .k2 { font-size: 18px; color: var(--muted); margin: 24px 0 10px; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; }
+  .jedit { margin: -6px 0 6px; font-size: 18px; color: var(--muted); }
+  .jedit summary { cursor: pointer; padding: 6px 0; }
+  .jedit textarea { width: 100%; min-height: 120px; margin-top: 8px; font: 500 18px/1.5 var(--mono); color: var(--text); background: #0b1222; border: 2px solid var(--line); border-radius: 12px; padding: 12px 14px; word-break: break-all; }
+  .seg button { font-size: 18px; }
+  .mono { font-family: var(--mono); word-break: break-all; }
+  .vsteps { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 8px; }
+  .vsteps li { display: flex; gap: 14px; align-items: flex-start; border: 2px solid var(--line); border-radius: 12px; padding: 10px 14px; background: var(--panel); }
+  .vsteps .n { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font: 800 18px/1 var(--sans); border: 2px solid var(--line); color: var(--muted); }
+  .vsteps li.ok .n { border-color: var(--emerald); color: var(--emerald); }
+  .vsteps li.bad { border-color: rgba(251, 113, 133, .6); } .vsteps li.bad .n { border-color: var(--coral); color: var(--coral); }
+  .vsteps li.skip { opacity: .45; }
+  .vsteps b { display: block; font-size: 19px; margin-bottom: 3px; }
+  .vsteps .d { display: block; font: 500 16px/1.5 var(--mono); color: var(--muted); word-break: break-all; }
+  .vsteps .d b { display: inline; font: inherit; font-weight: 700; color: var(--text); }
+  .vsteps .d .bad { color: var(--coral); }
+  .build { margin-top: 40px; }
+  .build h2 { font-size: 30px; margin: 0 0 6px; }
+  .build .lead { font-size: 19px; color: var(--muted); margin: 0 0 4px; line-height: 1.45; }
+  .build .lead code { font-family: var(--mono); color: var(--text); }
+  .codebox { border: 2px solid var(--line); border-radius: 14px; background: #0a1120; margin-top: 14px; overflow: hidden; }
+  .codebox header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 10px 8px 16px; border-bottom: 1px solid var(--line); font: 700 13px/1.2 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .codebox header button { min-height: 38px; padding: 6px 14px; font-size: 15px; }
+  .codebox pre { margin: 0; padding: 16px 18px; overflow-x: auto; font: 500 16px/1.6 var(--mono); color: var(--text); tab-size: 2; }
+  .codebox .c { color: #7c8aa3; font-style: italic; }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Demo · How Cryptology Works</p>
+  <h1>Crypto Lab</h1>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t-shift" aria-controls="p-shift" aria-selected="true">1 · Shift</button>
+    <button role="tab" id="t-lock" aria-controls="p-lock" aria-selected="false">2 · Lock</button>
+    <button role="tab" id="t-kx" aria-controls="p-kx" aria-selected="false">3 · Share a key</button>
+    <button role="tab" id="t-cert" aria-controls="p-cert" aria-selected="false">4 · Certificate</button>
+    <button role="tab" id="t-hash" aria-controls="p-hash" aria-selected="false">5 · Fingerprint</button>
+    <button role="tab" id="t-jwt" aria-controls="p-jwt" aria-selected="false">6 · Token</button>
+  </div>
+
+  <!-- 1 · SHIFT: the first lock, and why it fails -->
+  <section role="tabpanel" id="p-shift" aria-labelledby="t-shift">
+    <p class="note" style="margin:0 0 18px">The Caesar cipher, about 2,000 years old. Move every letter a fixed number of places in the alphabet. That number is the key.</p>
+    <label for="s-in">Your message</label>
+    <div class="row"><input id="s-in" type="text" value="MEET ME AT NOON" autocomplete="off" spellcheck="false"></div>
+    <div class="slider"><span>Shift every letter by</span><input id="s-key" type="range" min="1" max="25" value="3" aria-label="Shift"><b id="s-keyv">3</b></div>
+    <div class="out locked"><p class="k">What a stranger sees</p><p class="v" id="s-out"></p></div>
+    <div class="row"><button class="primary" id="s-all" type="button">Try all 25 keys</button></div>
+    <ol class="list" id="s-list" aria-live="polite"></ol>
+    <div class="world" data-world="shift"></div>
+    <div class="build" data-code="code-shift-0"></div>
+  </section>
+
+  <!-- 2 · LOCK: real AES encryption -->
+  <section role="tabpanel" id="p-lock" aria-labelledby="t-lock" hidden>
+    <div class="grid2">
+      <div>
+        <label for="l-in">Password</label>
+        <div class="row"><input id="l-in" type="text" value="sunflower22" autocomplete="off" spellcheck="false"></div>
+      </div>
+      <div>
+        <label for="l-key">Key (a random 128-bit number)</label>
+        <div class="row"><input id="l-key" class="small" type="text" value="3f9a1c7e5b2d84f06e1a9c3b7d5f2e48" autocomplete="off" spellcheck="false"></div>
+      </div>
+    </div>
+    <div class="row">
+      <button id="l-new" type="button">New random key</button>
+      <button id="l-tweak" type="button">Change one character of the key</button>
+    </div>
+    <div class="out locked"><p class="k">What travels the internet (AES, locked)</p><p class="v" id="l-out"></p></div>
+    <label for="l-try">Unlock it with this key</label>
+    <div class="row">
+      <input id="l-try" class="small" type="text" value="3f9a1c7e5b2d84f06e1a9c3b7d5f2e48" autocomplete="off" spellcheck="false">
+      <button class="primary" id="l-open" type="button">Unlock</button>
+      <button id="l-wrong" type="button">Try a wrong key</button>
+    </div>
+    <div class="out" id="l-res" aria-live="polite"><p class="k">Result</p><p class="v">Press Unlock.</p></div>
+    <p class="note">Real AES-128-GCM from the browser. A wrong key never gives "nothing": it gives garbage. GCM also carries a check value, so it notices and refuses. For the demo the starting value (nonce) is fixed, so the same password and key always give the same result. Real connections use a fresh one every time.</p>
+    <div class="world" data-world="lock"></div>
+    <div class="build" data-code="code-lock-0"></div>
+  </section>
+
+  <!-- 3 · SHARE A KEY: key exchange, as paint mixing, with the real numbers one click away -->
+  <section role="tabpanel" id="p-kx" aria-labelledby="t-kx" hidden>
+    <div class="kx">
+      <div class="side"><h2>You</h2>
+        <div class="slot"><span class="sw" id="k-ys"></span><span class="lbl">your secret color<br><b>your private key, never sent</b><span class="val" id="v-ys"></span></span></div>
+        <div class="slot"><span class="sw" id="k-yf"></span><span class="lbl">your final color<span class="val" id="v-yf"></span></span></div>
+      </div>
+      <div class="mid"><h2>In public <span>what every stranger sees</span></h2>
+        <div class="slot"><span class="sw" id="k-base"></span><span class="lbl">the public starting color<span class="val" id="v-base"></span></span></div>
+        <div class="slot"><span class="sw" id="k-ym"></span><span class="lbl">your mixture →<br><b>your public key</b><span class="val" id="v-ym"></span></span></div>
+        <div class="slot"><span class="sw" id="k-sm"></span><span class="lbl">← the server's mixture<br><b>its public key</b><span class="val" id="v-sm"></span></span></div>
+        <div class="slot eve"><span class="sw" id="k-eve"></span><span class="lbl">a stranger's best try:<br>mix the two mixtures<span class="val" id="v-eve"></span></span></div>
+      </div>
+      <div class="side"><h2>The server</h2>
+        <div class="slot"><span class="sw" id="k-ss"></span><span class="lbl">the server's secret color<br><b>its private key, never sent</b><span class="val" id="v-ss"></span></span></div>
+        <div class="slot"><span class="sw" id="k-sf"></span><span class="lbl">the server's final color<span class="val" id="v-sf"></span></span></div>
+      </div>
+    </div>
+    <div class="out" id="k-step" aria-live="polite"><p class="k">Step <span id="k-n">0</span> of 5</p><p class="v sansv" id="k-say">Press Next step.</p><p class="calc" id="k-calc"></p></div>
+    <div class="row">
+      <button class="primary" id="k-next" type="button">Next step</button>
+      <button id="k-reset" type="button">Start over with new secrets</button>
+      <span class="seg" role="group" aria-label="Show">
+        <button type="button" data-kmode="color" aria-pressed="true">Colors</button>
+        <button type="button" data-kmode="small" aria-pressed="false">Small numbers</button>
+        <button type="button" data-kmode="real" aria-pressed="false">Real size</button>
+      </span>
+    </div>
+    <p class="note" id="k-note"></p>
+    <div class="world" data-world="kx"></div>
+    <div class="build" data-code="code-kx-0"></div>
+  </section>
+
+  <!-- 4 · CERTIFICATE: no live tool here, the live part is clicking the padlock on a real site -->
+  <section role="tabpanel" id="p-cert" aria-labelledby="t-cert" hidden>
+    <div class="out"><p class="k">Try it on a real site</p><p class="v sansv">Open any HTTPS site and click the icon left of the address. Then "Connection is secure", then "Certificate is valid". Look for: Issued to, Issued by, Valid until.</p></div>
+    <div class="world" data-world="cert"></div>
+    <div class="build" data-code="code-cert-0,code-cert-1"></div>
+  </section>
+
+  <!-- 5 · FINGERPRINT: real SHA-256 hashing and salt -->
+  <section role="tabpanel" id="p-hash" aria-labelledby="t-hash" hidden>
+    <div class="grid2">
+      <div>
+        <label for="h-a">Password A</label>
+        <div class="row"><input id="h-a" type="text" value="password123" autocomplete="off" spellcheck="false"></div>
+      </div>
+      <div>
+        <label for="h-b">Password B</label>
+        <div class="row"><input id="h-b" type="text" value="password124" autocomplete="off" spellcheck="false"></div>
+      </div>
+    </div>
+    <div class="out"><p class="k">Fingerprint of A (SHA-256)</p><p class="v" id="h-ha"></p></div>
+    <div class="out"><p class="k">Fingerprint of B (SHA-256) · <span class="diff">red</span> = different from A</p><p class="v" id="h-hb"></p></div>
+    <div class="row"><button class="primary" id="h-salt" type="button">Add a salt to each user</button></div>
+    <div id="h-salted" hidden>
+      <div class="grid2">
+        <div class="out good"><p class="k">alice · salt <span id="h-sa"></span></p><p class="v" id="h-xa"></p></div>
+        <div class="out good"><p class="k">bob · salt <span id="h-sb"></span></p><p class="v" id="h-xb"></p></div>
+      </div>
+      <p class="note">Both users chose Password A. With a different salt per user, the stored fingerprints still look nothing alike.</p>
+    </div>
+    <div class="world" data-world="hash"></div>
+    <div class="build" data-code="code-hash-0,code-hash-1"></div>
+  </section>
+
+  <!-- 6 · TOKEN: a real ES256-signed JWT. Server signs with its private key, checks with its public key. -->
+  <section role="tabpanel" id="p-jwt" aria-labelledby="t-jwt" hidden>
+    <p class="note" style="margin:0 0 18px">After you log in, many sites give your browser a <b>JWT</b> (JSON Web Token). The browser sends it back with every click to say who you are. The server signs it with its <b>private key</b>. Anyone can read it and change it. Only a check with the server's <b>public key</b> shows whether it was changed.</p>
+    <div class="row"><button class="primary" id="j-login" type="button">Log in as alice: the server signs a new token</button></div>
+    <div class="out"><p class="k">The token your browser holds · <span class="jh">header</span> . <span class="jp">payload</span> . <span class="js">signature</span></p><p class="v jwt" id="j-token"></p></div>
+    <div class="grid2">
+      <div class="out"><p class="k">Header · anyone can read it</p><p class="v jsonv" id="j-head"></p></div>
+      <div class="out"><p class="k">Payload · anyone can read it</p><p class="v jsonv" id="j-body"></p></div>
+    </div>
+    <p class="k2">Try to cheat</p>
+    <div class="row">
+      <button id="j-admin" type="button">Change role to admin</button>
+      <button id="j-own" type="button">Sign it with the attacker's own key</button>
+      <button id="j-none" type="button">Remove the signature (alg: none)</button>
+      <button id="j-reset" type="button">Back to the real token</button>
+    </div>
+    <details class="jedit"><summary>Edit the token by hand</summary><textarea id="j-edit" spellcheck="false" aria-label="Token"></textarea></details>
+    <p class="k2">The server checks it</p>
+    <div class="row">
+      <div class="seg" role="group" aria-label="Server">
+        <button type="button" data-jmode="careful" aria-pressed="true">Careful server: checks the signature</button>
+        <button type="button" data-jmode="careless" aria-pressed="false">Careless server: only reads it</button>
+      </div>
+    </div>
+    <p class="k2" style="margin-top:4px">How the server checks the signature</p>
+    <ol class="vsteps" id="j-steps"></ol>
+    <p class="note" style="margin:-6px 0 18px">When the server made the token, it hashed the same <span class="mono">header.payload</span> text and signed that fingerprint with its private key. To check, it hashes what arrived and asks: does this signature fit this fingerprint and my public key?</p>
+    <div class="out" id="j-res" aria-live="polite"><p class="k" id="j-resk">Result</p><p class="v sansv" id="j-resv"></p><p class="note" id="j-why" style="margin:8px 0 0"></p></div>
+    <p class="note">Server's public key (ECDSA P-256), safe for anyone to have: <span class="mono" id="j-pub"></span></p>
+    <div class="world" data-world="jwt"></div>
+    <div class="build" data-code="code-jwt-0"></div>
+  </section>
+</main>
+<script type="text/plain" id="code-jwt-0" data-title="Browser console or Node">
+// A JSON Web Token (JWT) signed with ES256: the server signs with its private key, anyone checks with its public key.
+// Web Crypto only, no library. Real apps should use a maintained library (for example "jose") with a fixed algorithm.
+const enc = new TextEncoder(), dec = new TextDecoder();
+const b64url = (bytes) => btoa(String.fromCharCode(...new Uint8Array(bytes))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+const fromB64url = (s) => Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0));
+const ES256 = { name: "ECDSA", hash: "SHA-256" };
+
+// The server makes its key pair once. The private key never leaves the server.
+const server = await crypto.subtle.generateKey({ name: "ECDSA", namedCurve: "P-256" }, false, ["sign", "verify"]);
+
+// 1. Sign: header.payload, then a signature over exactly those characters.
+async function sign(payload, privateKey) {
+  const head = b64url(enc.encode(JSON.stringify({ alg: "ES256", typ: "JWT" })));
+  const body = b64url(enc.encode(JSON.stringify(payload)));
+  const sig = await crypto.subtle.sign(ES256, privateKey, enc.encode(head + "." + body));
+  return head + "." + body + "." + b64url(sig);
+}
+
+// 2. Verify: a careful server only accepts ES256, checks the signature with ITS public key, then checks expiry.
+async function verify(token, publicKey) {
+  const [head, body, sig] = token.split(".");
+  const header = JSON.parse(dec.decode(fromB64url(head)));
+  if (header.alg !== "ES256") return "rejected: wrong algorithm";      // never trust "alg" from the token
+  const ok = await crypto.subtle.verify(ES256, publicKey, fromB64url(sig || ""), enc.encode(head + "." + body));
+  if (!ok) return "rejected: tampered";
+  const payload = JSON.parse(dec.decode(fromB64url(body)));
+  if (payload.exp && payload.exp < Date.now() / 1000) return "rejected: expired";
+  return "accepted: " + JSON.stringify(payload);
+}
+
+const token = await sign({ sub: "alice", role: "student", exp: Math.floor(Date.now() / 1000) + 3600 }, server.privateKey);
+console.log(token);
+console.log(await verify(token, server.publicKey));                   // accepted
+
+// Anyone can READ it: the payload is only Base64, not encrypted.
+console.log(dec.decode(fromB64url(token.split(".")[1])));             // {"sub":"alice","role":"student",...}
+
+// An attacker changes role to admin and keeps the old signature.
+const [h, b, s] = token.split(".");
+const evilBody = b64url(enc.encode(dec.decode(fromB64url(b)).replace('"student"', '"admin"')));
+console.log(await verify(h + "." + evilBody + "." + s, server.publicKey));   // rejected: tampered
+
+// The attacker signs it with their own key instead. Still not the server's key.
+const attacker = await crypto.subtle.generateKey({ name: "ECDSA", namedCurve: "P-256" }, false, ["sign", "verify"]);
+const forged = await sign({ sub: "alice", role: "admin" }, attacker.privateKey);
+console.log(await verify(forged, server.publicKey));                  // rejected: tampered
+
+// The "alg: none" trick: no signature at all. Careless servers once accepted this.
+const none = b64url(enc.encode('{"alg":"none"}')) + "." + evilBody + ".";
+console.log(await verify(none, server.publicKey));                    // rejected: wrong algorithm
+</script>
+<script type="text/plain" id="code-shift-0" data-title="Browser console or Node">
+// Caesar cipher: move every letter `key` places along the alphabet.
+function shift(text, key) {
+  return text.replace(/[a-z]/gi, (ch) => {
+    const base = ch <= "Z" ? 65 : 97;            // char code of 'A' or 'a'
+    const pos = ch.charCodeAt(0) - base;         // 0 to 25
+    return String.fromCharCode(base + (((pos + key) % 26) + 26) % 26);
+  });
+}
+
+const secret = shift("MEET ME AT NOON", 3);
+console.log(secret);              // PHHW PH DW QRRQ
+console.log(shift(secret, -3));   // MEET ME AT NOON
+
+// Breaking it: try all 25 keys, then read the one that makes sense.
+for (let k = 1; k <= 25; k++) console.log(k, shift(secret, -k));
+</script>
+<script type="text/plain" id="code-lock-0" data-title="Browser console or Node">
+// AES-GCM, using the Web Crypto built into every browser (and Node 20+).
+const toHex = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+const enc = new TextEncoder(), dec = new TextDecoder();
+
+// 1. Make a random 128-bit key. Both sides need this same key (symmetric).
+const key = await crypto.subtle.generateKey({ name: "AES-GCM", length: 128 }, true, ["encrypt", "decrypt"]);
+
+// 2. Lock. The IV must be new and random for every message. Never reuse one with the same key.
+const iv = crypto.getRandomValues(new Uint8Array(12));
+const locked = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc.encode("sunflower22"));
+console.log(toHex(locked));                  // what travels the internet
+
+// 3. Unlock with the same key and IV.
+const unlocked = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, locked);
+console.log(dec.decode(unlocked));           // sunflower22
+
+// 4. Wrong key: AES-GCM refuses instead of handing back garbage.
+const wrongKey = await crypto.subtle.generateKey({ name: "AES-GCM", length: 128 }, true, ["decrypt"]);
+try {
+  await crypto.subtle.decrypt({ name: "AES-GCM", iv }, wrongKey, locked);
+} catch (e) {
+  console.log("Refused:", e.name);           // Refused: OperationError
+}
+</script>
+<script type="text/plain" id="code-kx-0" data-title="Browser console or Node">
+const toHex = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+
+// Part 1. The idea, with small numbers (Diffie-Hellman).
+function modpow(base, exp, mod) {            // (base ** exp) % mod, fast, with BigInt
+  let result = 1n;
+  base %= mod;
+  while (exp > 0n) {
+    if (exp & 1n) result = (result * base) % mod;
+    base = (base * base) % mod;
+    exp >>= 1n;
+  }
+  return result;
+}
+
+const p = 23n, g = 5n;                       // public: agreed in the open
+const a = 6n;                                // your private key, never sent
+const b = 15n;                               // the server's private key, never sent
+const A = modpow(g, a, p);                   // your public key: 8, sent in the open
+const B = modpow(g, b, p);                   // the server's public key: 19, sent in the open
+console.log(modpow(B, a, p), modpow(A, b, p)); // 2n 2n: the same shared key on both sides
+
+// Part 2. The real thing your browser uses: X25519 (Chrome 133+, Firefox 130+, Safari 17+, Node 20+).
+const you = await crypto.subtle.generateKey({ name: "X25519" }, false, ["deriveBits"]);
+const server = await crypto.subtle.generateKey({ name: "X25519" }, false, ["deriveBits"]);
+
+// Only the public keys cross the internet. Each side mixes in its own private key.
+const yourSecret = await crypto.subtle.deriveBits({ name: "X25519", public: server.publicKey }, you.privateKey, 256);
+const serverSecret = await crypto.subtle.deriveBits({ name: "X25519", public: you.publicKey }, server.privateKey, 256);
+console.log(toHex(yourSecret));
+console.log(toHex(yourSecret) === toHex(serverSecret)); // true: this becomes the AES key
+</script>
+<script type="text/plain" id="code-cert-0" data-title="Browser console or Node">
+// What a certificate's key pair does: sign with the private key, check with the public key (ECDSA).
+const enc = new TextEncoder();
+
+// The website makes its pair once. The private key never leaves its server.
+const site = await crypto.subtle.generateKey({ name: "ECDSA", namedCurve: "P-256" }, false, ["sign", "verify"]);
+
+// The server signs its part of the key exchange.
+const message = enc.encode("example.com, key exchange public key: 8f3a1c...");
+const signature = await crypto.subtle.sign({ name: "ECDSA", hash: "SHA-256" }, site.privateKey, message);
+
+// Your browser checks it with the public key from the certificate.
+console.log(await crypto.subtle.verify({ name: "ECDSA", hash: "SHA-256" }, site.publicKey, signature, message)); // true
+
+// Someone in the middle swaps in their own key: one character changed, the check fails.
+const forged = enc.encode("example.com, key exchange public key: 9f3a1c...");
+console.log(await crypto.subtle.verify({ name: "ECDSA", hash: "SHA-256" }, site.publicKey, signature, forged)); // false
+</script>
+<script type="text/plain" id="code-cert-1" data-title="Node only · connects to a real site">
+// Node.js only: read a real website's certificate and connection settings.
+import tls from "node:tls";
+
+const socket = tls.connect(443, "example.com", { servername: "example.com" }, () => {
+  const cert = socket.getPeerCertificate();
+  console.log("Issued to:  ", cert.subject.CN);
+  console.log("Issued by:  ", cert.issuer.O);
+  console.log("Valid until:", cert.valid_to);
+  console.log("Connection: ", socket.getProtocol(), socket.getCipher().name);
+  socket.end();
+});
+</script>
+<script type="text/plain" id="code-hash-0" data-title="Browser console or Node">
+// SHA-256 fingerprints, using the Web Crypto built into every browser (and Node 20+).
+const toHex = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+const sha256 = async (text) => toHex(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)));
+
+console.log(await sha256("password123"));   // ef92b778bafe771e...
+console.log(await sha256("password124"));   // 33631376724e5d54...: one character, all different
+
+// Sign up: make a random salt for this user, store the salt and the fingerprint. Never the password.
+const salt = toHex(crypto.getRandomValues(new Uint8Array(16)));
+const stored = { user: "alice", salt, hash: await sha256(salt + "password123") };
+
+// Log in: fingerprint what was typed with the same salt, then compare.
+const typed = "password123";
+console.log((await sha256(stored.salt + typed)) === stored.hash);   // true
+</script>
+<script type="text/plain" id="code-hash-1" data-title="Node only · what to use for real passwords">
+// Node.js: for real passwords use a slow hash. scrypt is built in.
+import { scryptSync, randomBytes, timingSafeEqual } from "node:crypto";
+
+const salt = randomBytes(16);
+const stored = scryptSync("password123", salt, 64);   // store salt + this
+
+const attempt = scryptSync("password123", salt, 64);  // at login
+console.log(timingSafeEqual(stored, attempt));        // true
+</script>
+
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---- tabs (also 1 / 2 / 3 on the keyboard when not typing)
+  var tabs = ["shift", "lock", "kx", "cert", "hash", "jwt"];
+  function show(name) {
+    tabs.forEach(function (n) {
+      $("t-" + n).setAttribute("aria-selected", n === name ? "true" : "false");
+      $("p-" + n).hidden = n !== name;
+    });
+    try { localStorage.setItem("crypto-lab-tab", name); } catch (e) {}
+  }
+  tabs.forEach(function (n) { $("t-" + n).addEventListener("click", function () { show(n); }); });
+  document.addEventListener("keydown", function (e) {
+    if ((e.target.tagName === "INPUT" && e.target.type !== "range") || e.target.tagName === "TEXTAREA") return;
+    var i = ["1", "2", "3", "4", "5", "6"].indexOf(e.key); if (i >= 0) show(tabs[i]);
+  });
+  window.addEventListener("hashchange", function () { var h = location.hash.slice(1); if (tabs.indexOf(h) >= 0) show(h); });   // the slides reuse this window
+  var hashTab = (location.hash || "").slice(1);
+  var saved = null; try { saved = localStorage.getItem("crypto-lab-tab"); } catch (e) {}
+  show(tabs.indexOf(hashTab) >= 0 ? hashTab : (tabs.indexOf(saved) >= 0 ? saved : "shift"));
+
+  // ---- BUILD IT YOURSELF: runnable JavaScript under each tab. The code lives in <script type="text/plain"> blocks below.
+  Array.prototype.forEach.call(document.querySelectorAll(".build"), function (box) {
+    var h = document.createElement("h2"); h.textContent = "Build it yourself · JavaScript"; box.appendChild(h);
+    var lead = document.createElement("p"); lead.className = "lead";
+    lead.innerHTML = "Paste into the browser console (F12, then Console), or save as <code>demo.mjs</code> and run <code>node demo.mjs</code>.";
+    box.appendChild(lead);
+    box.getAttribute("data-code").split(",").forEach(function (id) {
+      var src = $(id); if (!src) return;
+      var code = src.textContent.replace(/^\n+|\s+$/g, "");
+      var wrap = document.createElement("div"); wrap.className = "codebox";
+      var head = document.createElement("header");
+      var t = document.createElement("span"); t.textContent = src.getAttribute("data-title"); head.appendChild(t);
+      var btn = document.createElement("button"); btn.type = "button"; btn.textContent = "Copy";
+      btn.addEventListener("click", function () {
+        var done = function () { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); };
+        if (navigator.clipboard) navigator.clipboard.writeText(code).then(done, function () { btn.textContent = "Select and copy"; });
+      });
+      head.appendChild(btn); wrap.appendChild(head);
+      var pre = document.createElement("pre"); var c = document.createElement("code");
+      var esc = function (x) { return x.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); };
+      c.innerHTML = code.split("\n").map(function (line) {
+        var i = line.indexOf("//");
+        return i < 0 ? esc(line) : esc(line.slice(0, i)) + '<span class="c">' + esc(line.slice(i)) + "</span>";
+      }).join("\n");
+      pre.appendChild(c); wrap.appendChild(pre); box.appendChild(wrap);
+    });
+  });
+
+  // ---- 1 · SHIFT
+  function shift(s, k) {
+    return s.replace(/[a-z]/gi, function (ch) {
+      var base = ch <= "Z" ? 65 : 97;
+      return String.fromCharCode((ch.charCodeAt(0) - base + k + 26) % 26 + base);
+    });
+  }
+  function renderShift() {
+    var k = +$("s-key").value; $("s-keyv").textContent = k;
+    $("s-out").textContent = shift($("s-in").value, k);
+    $("s-list").innerHTML = "";
+  }
+  $("s-in").addEventListener("input", renderShift);
+  $("s-key").addEventListener("input", renderShift);
+  $("s-all").addEventListener("click", function () {
+    var c = $("s-out").textContent, list = $("s-list"); list.innerHTML = "";
+    for (var k = 1; k <= 25; k++) {
+      var li = document.createElement("li"), b = document.createElement("b");
+      b.textContent = k; li.appendChild(b); li.appendChild(document.createTextNode(shift(c, -k)));
+      list.appendChild(li);
+    }
+  });
+  renderShift();
+
+  // ---- 2 · LOCK (AES-128-GCM)
+  var enc = new TextEncoder(), dec = new TextDecoder();
+  var IV = new Uint8Array(12);    // fixed for the demo, see the note on the page
+  function hexToBytes(h) {
+    h = h.trim().toLowerCase();
+    if (!/^[0-9a-f]{32}$/.test(h)) return null;
+    var b = new Uint8Array(16); for (var i = 0; i < 16; i++) b[i] = parseInt(h.substr(i * 2, 2), 16); return b;
+  }
+  function toHex(buf) { return Array.prototype.map.call(new Uint8Array(buf), function (x) { return ("0" + x.toString(16)).slice(-2); }).join(""); }
+  function randHex() { var b = new Uint8Array(16); crypto.getRandomValues(b); return toHex(b); }
+  function aesKey(bytes) { return crypto.subtle.importKey("raw", bytes, "AES-GCM", false, ["encrypt", "decrypt"]); }
+  var lastCipher = null;
+  function setRes(kind, big) { var r = $("l-res"); r.className = "out " + kind; r.querySelector(".v").textContent = big; }
+  function renderLock() {
+    var kb = hexToBytes($("l-key").value);
+    if (!kb) { $("l-out").textContent = "The key must be 32 characters, 0-9 and a-f."; lastCipher = null; return; }
+    aesKey(kb).then(function (k) { return crypto.subtle.encrypt({ name: "AES-GCM", iv: IV }, k, enc.encode($("l-in").value)); })
+      .then(function (ct) { lastCipher = ct; $("l-out").textContent = toHex(ct); setRes("", "Press Unlock."); });
+  }
+  $("l-in").addEventListener("input", renderLock);
+  $("l-key").addEventListener("input", function () { $("l-try").value = $("l-key").value; renderLock(); });
+  $("l-new").addEventListener("click", function () { $("l-key").value = $("l-try").value = randHex(); renderLock(); });
+  $("l-tweak").addEventListener("click", function () {
+    var k = $("l-key").value, i = k.length - 1, c = k[i];
+    $("l-key").value = $("l-try").value = k.slice(0, i) + (c === "f" ? "0" : (parseInt(c, 16) + 1).toString(16));
+    renderLock();
+  });
+  $("l-wrong").addEventListener("click", function () { $("l-try").value = randHex(); $("l-open").click(); });
+  $("l-open").addEventListener("click", function () {
+    var kb = hexToBytes($("l-try").value);
+    if (!kb || !lastCipher) { setRes("bad", "That is not a valid key."); return; }
+    aesKey(kb).then(function (k) { return crypto.subtle.decrypt({ name: "AES-GCM", iv: IV }, k, lastCipher); })
+      .then(function (pt) { setRes("good", dec.decode(pt)); })
+      .catch(function () {
+        // AES-GCM refused (its check value did not match). Show what the same key produces with the check
+        // switched off: GCM encrypts with AES-CTR starting at counter nonce||00000002, so this is the exact garbage.
+        var body = new Uint8Array(lastCipher).slice(0, new Uint8Array(lastCipher).length - 16);
+        var ctr = new Uint8Array(16); ctr.set(IV); ctr[15] = 2;
+        crypto.subtle.importKey("raw", kb, "AES-CTR", false, ["decrypt"])
+          .then(function (k) { return crypto.subtle.decrypt({ name: "AES-CTR", counter: ctr, length: 32 }, k, body); })
+          .then(function (junk) {
+            setRes("bad", "Refused: wrong key.");
+            var r = $("l-res"), k1 = document.createElement("p"), v1 = document.createElement("p");
+            k1.className = "k"; k1.style.marginTop = "14px"; k1.textContent = "Without the check, this key would give you";
+            v1.className = "v"; v1.style.color = "var(--muted)"; v1.textContent = toHex(junk) + "  (garbage, not the password)";
+            r.appendChild(k1); r.appendChild(v1);
+          });
+      });
+  });
+  if (!(window.crypto && crypto.subtle)) $("l-out").textContent = "This browser blocks Web Crypto here. Open the page in Chrome.";
+  else renderLock();
+
+  // ---- 3 · SHARE A KEY (paint mixing; the color model keeps the order of mixing irrelevant, like the real maths)
+  // Paint is modelled as reflectance per channel; mixing equal parts = geometric mean. Both sides end with
+  // base^(1/3) * yours^(1/3) * server^(1/3), whichever order they mix in. A stranger mixing the two public
+  // mixtures gets base^(1/2) * yours^(1/4) * server^(1/4): a different color.
+  var PALETTE = [[250, 204, 21], [56, 189, 248], [244, 114, 182], [52, 211, 153], [251, 146, 60], [167, 139, 250], [248, 113, 113], [45, 212, 191]];
+  function refl(c) { return c.map(function (v) { return (v + 18) / 273; }); }
+  function rgb(r) { return "rgb(" + r.map(function (v) { return Math.round(Math.max(0, Math.min(255, v * 273 - 18))); }).join(",") + ")"; }
+  function mix(parts) {   // [[reflectance, weight], ...]
+    return [0, 1, 2].map(function (ch) { return parts.reduce(function (acc, p) { return acc * Math.pow(p[0][ch], p[1]); }, 1); });
+  }
+  var kx = {}, kStep = 0, kMode = "color", nums = {};
+  var P2048 = BigInt("0xffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aacaa68ffffffffffffffff");
+  function modpow(x, e, m) { var r = 1n; x %= m; while (e > 0n) { if (e & 1n) r = r * x % m; x = x * x % m; e >>= 1n; } return r; }
+  function dh(p, g, a, b) {
+    var A = modpow(g, a, p), B = modpow(g, b, p);
+    return { p: p, g: g, a: a, b: b, A: A, B: B, kA: modpow(B, a, p), kB: modpow(A, b, p), eve: A * B % p };
+  }
+  function fmt(n) {   // small numbers in full; big ones as start…end plus the digit count
+    var s = n.toString();
+    return s.length <= 14 ? s : s.slice(0, 8) + "…" + s.slice(-6) + "\n" + s.length + " digits";
+  }
+  function pw(b, e) { return fmt(b) + "<sup>" + fmt(e) + "</sup> mod " + (kMode === "real" ? "p" : fmt(nums[kMode].p)); }
+  function pick(n, avoid) { var c; do { c = Math.floor(Math.random() * n); } while (avoid.indexOf(c) >= 0); return c; }
+  function kxNew(first) {
+    var bi = first ? 0 : pick(PALETTE.length, []), yi = first ? 1 : pick(PALETTE.length, [bi]), si = first ? 2 : pick(PALETTE.length, [bi, yi]);
+    var B = refl(PALETTE[bi]), Y = refl(PALETTE[yi]), S = refl(PALETTE[si]);
+    var ym = mix([[B, .5], [Y, .5]]), sm = mix([[B, .5], [S, .5]]);
+    kx = { base: B, you: Y, shop: S, ym: ym, sm: sm,
+      yf: mix([[sm, 2 / 3], [Y, 1 / 3]]), sf: mix([[ym, 2 / 3], [S, 1 / 3]]), eve: mix([[ym, .5], [sm, .5]]) };
+    // the numbers: small (p = 23, g = 5) and real size (the 2048-bit group from RFC 3526, g = 2, 256-bit secrets)
+    function rnd256() { var u = new Uint8Array(32); crypto.getRandomValues(u); return BigInt("0x" + toHex(u)); }
+    var sa = first ? 6 : 2 + Math.floor(Math.random() * 20), sb = first ? 15 : 2 + Math.floor(Math.random() * 20);
+    nums.small = dh(23n, 5n, BigInt(sa), BigInt(sb));
+    nums.real = dh(P2048, 2n, rnd256(), rnd256());
+    kStep = 0; kxRender();
+  }
+  var SAY = [
+    "Press Next step.",
+    "Both sides agree on a starting color, in public. Everyone can see it.",
+    "Each side picks a secret color and keeps it. It never leaves the house.",
+    "Each side mixes its secret into the public color and sends the mixture. Strangers see both mixtures.",
+    "Each side adds its own secret to the mixture it received.",
+    "Both sides now hold the same color. That is the key. A stranger who mixes the two mixtures gets a different color."
+  ];
+  function sw(id, r, show) { var e = $(id); e.style.background = show ? rgb(r) : "transparent"; e.classList.toggle("on", !!show); }
+  function kxRender() {
+    var s = kStep;
+    sw("k-base", kx.base, s >= 1); sw("k-ys", kx.you, s >= 2); sw("k-ss", kx.shop, s >= 2);
+    sw("k-ym", kx.ym, s >= 3); sw("k-sm", kx.sm, s >= 3);
+    sw("k-yf", kx.yf, s >= 4); sw("k-sf", kx.sf, s >= 4);
+    sw("k-eve", kx.eve, s >= 5); document.querySelector(".slot.eve").classList.toggle("on", s >= 5);
+    ["k-yf", "k-sf"].forEach(function (id) { $(id).classList.toggle("pop", s === 5); });
+    $("k-n").textContent = s; $("k-say").textContent = SAY[s];
+    var N = nums[kMode], V = {};
+    if (N) {
+      V = { base: s >= 1 && "g = " + fmt(N.g), ys: s >= 2 && "a = " + fmt(N.a), ss: s >= 2 && "b = " + fmt(N.b),
+            ym: s >= 3 && "A = " + fmt(N.A), sm: s >= 3 && "B = " + fmt(N.B), yf: s >= 4 && fmt(N.kA), sf: s >= 4 && fmt(N.kB),
+            eve: s >= 5 && fmt(N.eve) };
+    }
+    ["ys", "yf", "base", "ym", "sm", "eve", "ss", "sf"].forEach(function (k) {
+      var e = $("v-" + k); e.textContent = V[k] || "";
+      e.className = "val" + ((k === "yf" || k === "sf") ? " same" : k === "eve" ? " wrong" : "");
+    });
+    var c = "";
+    if (N) {
+      var mod = kMode === "real" ? "p, a prime " + N.p.toString().length + " digits long" : fmt(N.p);
+      c = [
+        "",
+        "g = " + fmt(N.g) + ", wrap around at " + mod + '<br><span class="dim">mod means: divide and keep only the remainder, like a clock.</span>',
+        "a = " + fmt(N.a) + " · b = " + fmt(N.b) + '<br><span class="dim">picked at random, never sent</span>',
+        "You send A = " + pw(N.g, N.a) + " = " + fmt(N.A) + "<br>The server sends B = " + pw(N.g, N.b) + " = " + fmt(N.B),
+        "You: " + pw(N.B, N.a) + " = " + fmt(N.kA) + "<br>The server: " + pw(N.A, N.b) + " = " + fmt(N.kB),
+        (N.kA === N.kB ? "Same number on both sides. " : "") + "A stranger has g, p, A and B. A × B mod p = " + fmt(N.eve) + '<br><span class="dim">' +
+          (kMode === "real" ? "To find a from A, they would have to try exponents one by one. At this size, that takes longer than the age of the universe." : "To find a from A, they try 5<sup>1</sup>, 5<sup>2</sup>, 5<sup>3</sup>... With 23 that takes a second. That is why real ones are huge.") + "</span>"
+      ][s];
+    }
+    $("k-calc").innerHTML = c;
+    $("k-note").textContent = kMode === "real" ? "Real size: classic Diffie-Hellman with the 2048-bit group from RFC 3526 and fresh 256-bit secrets. Browsers today mostly use a faster variant built on curves (X25519). The idea is the same." : "";
+    $("k-next").textContent = s >= 5 ? "Again" : "Next step";
+  }
+  $("k-next").addEventListener("click", function () { kStep = kStep >= 5 ? 0 : kStep + 1; kxRender(); });
+  $("k-reset").addEventListener("click", function () { kxNew(false); });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-kmode]"), function (b) {
+    b.addEventListener("click", function () {
+      kMode = b.getAttribute("data-kmode");
+      Array.prototype.forEach.call(document.querySelectorAll("[data-kmode]"), function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+      kxRender();
+    });
+  });
+  kxNew(true);
+
+  // ---- 4 · FINGERPRINT (SHA-256)
+  function sha256(s) { return crypto.subtle.digest("SHA-256", enc.encode(s)).then(toHex); }
+  function paintDiff(el, h, ref) {
+    el.innerHTML = "";
+    for (var i = 0; i < h.length; i++) {
+      var sp = document.createElement("span"); sp.className = h[i] === ref[i] ? "same" : "diff"; sp.textContent = h[i]; el.appendChild(sp);
+    }
+  }
+  var salts = null;
+  function renderHash() {
+    if (!(window.crypto && crypto.subtle)) { $("h-ha").textContent = "Open the page in Chrome."; return; }
+    var a = $("h-a").value, b = $("h-b").value;
+    Promise.all([sha256(a), sha256(b)]).then(function (r) {
+      $("h-ha").textContent = r[0]; paintDiff($("h-hb"), r[1], r[0]);
+    });
+    if (salts) Promise.all([sha256(salts[0] + a), sha256(salts[1] + a)]).then(function (r) { $("h-xa").textContent = r[0]; $("h-xb").textContent = r[1]; });
+  }
+  $("h-a").addEventListener("input", renderHash);
+  $("h-b").addEventListener("input", renderHash);
+  $("h-salt").addEventListener("click", function () {
+    function s6() { var b = new Uint8Array(3); crypto.getRandomValues(b); return toHex(b); }
+    salts = salts ? [s6(), s6()] : ["7c2e91", "d04a3f"];
+    $("h-sa").textContent = salts[0]; $("h-sb").textContent = salts[1];
+    $("h-salted").hidden = false; $("h-salt").textContent = "New salts";
+    renderHash();
+  });
+  renderHash();
+
+
+  // ---- 6 · TOKEN (JWT, ES256). Careful server: fixed algorithm, checks the signature with its public key, checks expiry.
+  // Careless server: only decodes the token (the jwt.decode-instead-of-jwt.verify mistake), so any change gets through.
+  (function () {
+    var enc = new TextEncoder(), dec = new TextDecoder(), ES = { name: "ECDSA", hash: "SHA-256" };
+    var b64u = function (bytes) { var s = ""; new Uint8Array(bytes).forEach(function (b) { s += String.fromCharCode(b); }); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
+    var unb64u = function (t) { var s = atob(t.replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from(s, function (c) { return c.charCodeAt(0); }); };
+    var part = function (obj) { return b64u(enc.encode(JSON.stringify(obj))); };
+    var server, attacker, real = "", token = "", mode = "careful", last = "real";
+    function gen() { return crypto.subtle.generateKey({ name: "ECDSA", namedCurve: "P-256" }, true, ["sign", "verify"]); }
+    function sign(payload, key) {
+      var hb = part({ alg: "ES256", typ: "JWT" }) + "." + part(payload);
+      return crypto.subtle.sign(ES, key, enc.encode(hb)).then(function (sig) { return hb + "." + b64u(sig); });
+    }
+    function parse(t) {
+      var p = t.trim().split(".");
+      if (p.length !== 3) return null;
+      try { return { p: p, head: JSON.parse(dec.decode(unb64u(p[0]))), body: JSON.parse(dec.decode(unb64u(p[1]))) }; } catch (e) { return null; }
+    }
+    function pretty(o) { return JSON.stringify(o, null, 1).replace(/\n\s*/g, "\n  ").replace(/\n  }$/, "\n}"); }
+    function paint() {
+      var p = token.split("."), r = real.split(".");
+      var span = function (cls, txt, i) { return '<span class="' + cls + (r[i] !== undefined && txt !== r[i] ? " changed" : "") + '">' + txt + "</span>"; };
+      $("j-token").innerHTML = p.length === 3 ? span("jh", p[0], 0) + '<span class="dot">.</span>' + span("jp", p[1], 1) + '<span class="dot">.</span>' + span("js", p[2], 2) : token.replace(/</g, "&lt;");
+      var t = parse(token);
+      $("j-head").textContent = t ? pretty(t.head) : "(cannot read)";
+      $("j-body").textContent = t ? pretty(t.body) : "(cannot read)";
+      if (document.activeElement !== $("j-edit")) $("j-edit").value = token;
+      check();
+    }
+    function result(ok, k, v, why) {
+      $("j-res").className = "out " + (ok ? "good" : "bad"); $("j-resk").textContent = k; $("j-resv").textContent = v; $("j-why").textContent = why || "";
+    }
+    var seq = 0;   // only the latest check may write the result (verify and digest are async)
+    var hex = function (bytes) { return Array.prototype.map.call(new Uint8Array(bytes), function (x) { return ("0" + x.toString(16)).slice(-2); }).join(""); };
+    var cut = function (x, n) { return x.length > n ? x.slice(0, n) + "…" : x; };
+    function steps(list) {
+      // list: [state, title, detail]; state: ok | bad | skip
+      var ol = $("j-steps"); ol.innerHTML = "";
+      list.forEach(function (st, i) {
+        var li = document.createElement("li"); li.className = st[0];
+        var n = document.createElement("span"); n.className = "n"; n.textContent = st[0] === "ok" ? "✓" : st[0] === "bad" ? "✗" : String(i + 1);
+        var tx = document.createElement("div"), b = document.createElement("b"), d = document.createElement("span");
+        b.textContent = st[1]; d.className = "d"; d.innerHTML = st[2] || "";
+        tx.appendChild(b); tx.appendChild(d); li.appendChild(n); li.appendChild(tx); ol.appendChild(li);
+      });
+    }
+    var esc = function (x) { return String(x).replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
+    function check() {
+      var id = ++seq, t = parse(token);
+      if (!t) {
+        steps([["bad", "Split the token at the two dots", "It does not have three readable parts."]]);
+        return result(false, "Rejected", "This is not a valid token.", "A JWT is three Base64 parts joined by dots.");
+      }
+      var who = (t.body.sub || "?") + ", role: " + (t.body.role || "?");
+      var split = ["ok", "Split the token at the two dots",
+        '<span class="jh">' + esc(cut(t.p[0], 14)) + '</span> · <span class="jp">' + esc(cut(t.p[1], 14)) + '</span> · <span class="js">' + esc(cut(t.p[2] || "(empty)", 14)) + "</span>"];
+      if (mode === "careless") {
+        steps([split,
+          ["ok", "Decode the payload and believe it", esc(JSON.stringify(t.body))],
+          ["skip", "Check the algorithm", "skipped"],
+          ["skip", "Hash header.payload with SHA-256", "skipped"],
+          ["skip", "Check the signature with the public key", "skipped"],
+          ["skip", "Check the expiry", "skipped"]]);
+        var changed = token !== real;
+        return result(!changed, changed ? "Accepted. That is the problem." : "Accepted",
+          "Logged in as " + who + ".",
+          changed ? "This server only read the token and never checked the signature. Anyone can edit the payload and become anyone. This is a real, common bug: calling jwt.decode() where jwt.verify() was needed."
+                  : "It happens to be the real token. But this server would have accepted any edit too. Try Change role to admin.");
+      }
+      var algOk = t.head.alg === "ES256";
+      var algStep = [algOk ? "ok" : "bad", "Check the algorithm: this server only accepts ES256",
+        "The token says <b>" + esc(t.head.alg) + "</b>. The server decides this itself and never lets the token choose."];
+      if (!algOk) {
+        steps([split, algStep, ["skip", "Hash header.payload with SHA-256", "not reached"], ["skip", "Check the signature with the public key", "not reached"], ["skip", "Check the expiry", "not reached"]]);
+        return result(false, "Rejected", "Wrong algorithm: the token says alg: " + t.head.alg + ".",
+          "A careful server decides the algorithm itself and never trusts the token's header. Some libraries once accepted alg: none, an unsigned token (2015).");
+      }
+      var signed = t.p[0] + "." + t.p[1], rp = real.split(".");
+      var sig; try { sig = unb64u(t.p[2]); } catch (e) { sig = new Uint8Array(0); }
+      Promise.all([
+        crypto.subtle.digest("SHA-256", enc.encode(signed)),
+        crypto.subtle.digest("SHA-256", enc.encode(rp[0] + "." + rp[1])),
+        crypto.subtle.verify(ES, server.publicKey, sig, enc.encode(signed)),
+        crypto.subtle.exportKey("jwk", server.publicKey)
+      ]).then(function (r) {
+        if (id !== seq) return;
+        var h = hex(r[0]), h0 = hex(r[1]), ok = r[2], jwk = r[3];
+        var same = h === h0;
+        var hashStep = ["ok", "Hash exactly the text <header>.<payload> with SHA-256",
+          "SHA-256 → <b>" + cut(h, 24) + "</b>" + (same ? "" : '<br><span class="bad">The real token hashed to ' + cut(h0, 24) + ". The text changed, so the fingerprint changed.</span>")];
+        var sigStep = [sig.length === 64 ? "ok" : "bad", "Decode the signature",
+          sig.length === 64 ? "64 bytes, two numbers: r = " + cut(hex(sig.slice(0, 32)), 16) + ", s = " + cut(hex(sig.slice(32)), 16)
+                            : sig.length + " bytes. An ES256 signature is always 64."];
+        var verStep = [ok ? "ok" : "bad", "ECDSA check: does this signature fit this fingerprint and the server's public key?",
+          "Public key x = " + cut(jwk.x, 12) + ", y = " + cut(jwk.y, 12) + " → <b>" + (ok ? "fits" : "does not fit") + "</b>" +
+          (ok ? "" : last === "own" ? "<br>It was signed with a different private key, so the server's public key does not fit it." : "<br>The signature was made for a different fingerprint.")];
+        var expired = t.body.exp && t.body.exp < Date.now() / 1000;
+        var expStep = !ok ? ["skip", "Check the expiry", "not reached"] :
+          [expired ? "bad" : "ok", "Check the expiry (exp)", t.body.exp ? "valid until " + new Date(t.body.exp * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "no expiry set"];
+        steps([split, algStep, hashStep, sigStep, verStep, expStep]);
+        if (!ok) return result(false, "Rejected: tampered", "The signature does not match.",
+          last === "own" ? "It was signed, but with the attacker's private key. The server's public key only matches signatures made by the server's own private key."
+                         : "The signature was made over the original header and payload. Change one character and the check with the server's public key fails. Making a new valid signature needs the server's private key.");
+        if (expired) return result(false, "Rejected", "The signature is fine, but the token has expired.", "Short expiry limits the damage if a token is stolen.");
+        result(true, "Accepted", "Logged in as " + who + ".", "Signed by the server's private key, and nothing was changed.");
+      });
+    }
+    function login() {
+      return sign({ sub: "alice", name: "Alice", role: "student", exp: Math.floor(Date.now() / 1000) + 3600 }, server.privateKey).then(function (t) { real = token = t; last = "real"; paint(); });
+    }
+    function edited(payloadChange) {
+      var t = parse(real); var body = t.body; payloadChange(body); return part(body);
+    }
+    Promise.all([gen(), gen()]).then(function (k) {
+      server = k[0]; attacker = k[1];
+      crypto.subtle.exportKey("jwk", server.publicKey).then(function (j) { $("j-pub").textContent = JSON.stringify({ kty: j.kty, crv: j.crv, x: j.x, y: j.y }); });
+      return login();
+    }).catch(function (e) { result(false, "Not available", "This browser blocked Web Crypto here.", String(e)); });
+    $("j-login").addEventListener("click", login);
+    $("j-reset").addEventListener("click", function () { token = real; last = "real"; paint(); });
+    $("j-admin").addEventListener("click", function () {
+      var p = real.split("."); token = p[0] + "." + edited(function (b) { b.role = "admin"; }) + "." + p[2]; last = "admin"; paint();
+    });
+    $("j-own").addEventListener("click", function () {
+      var b = parse(real).body; b.role = "admin";
+      sign(b, attacker.privateKey).then(function (t) { token = t; last = "own"; paint(); });
+    });
+    $("j-none").addEventListener("click", function () {
+      token = part({ alg: "none", typ: "JWT" }) + "." + edited(function (b) { b.role = "admin"; }) + "."; last = "none"; paint();
+    });
+    $("j-edit").addEventListener("input", function () { token = $("j-edit").value.trim(); last = "hand"; paint(); });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-jmode]"), function (b) {
+      b.addEventListener("click", function () {
+        mode = b.getAttribute("data-jmode");
+        Array.prototype.forEach.call(document.querySelectorAll("[data-jmode]"), function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+        if (server) check();
+      });
+    });
+  })();
+
+  // ---- IN THE REAL WORLD: when each lock is used, why it was retired, the risk, how long it takes to break.
+  // Rough public figures for teaching; "GPU" = one high-end gaming graphics card. Password times: guessing every
+  // 8-letter lowercase password (about 200 billion of them).
+  var WORLD = {
+    shift: { title: "Old locks: why they are gone", lead: "Every one of these was trusted in its day. Each fell when someone found a shortcut.", cards: [
+      { n: "Caesar cipher", era: "about 50 BC", s: "toy", st: "Toy",
+        used: "Julius Caesar's military letters. Today only as ROT13, to hide spoilers and puzzle answers, never for security.",
+        risk: "Only 25 keys. Anyone can try them all.", ttb: "Instant for a computer. Minutes by hand." },
+      { n: "Letter swapping (substitution)", era: "used for over 1,000 years", s: "broken", st: "Broken",
+        used: "Diplomats, spies, royal courts. Mary, Queen of Scots wrote her secret letters this way.",
+        risk: "Letters keep their pattern: E is still the most common letter. Counting letters (first described by Al-Kindi in the 800s) breaks it. Her decoded letters led to her execution in 1587.", ttb: "Hours by hand. Instant for a computer." },
+      { n: "Enigma machine", era: "1920s to 1945", s: "broken", st: "Broken",
+        used: "German military radio messages in World War II.",
+        risk: "Polish mathematicians broke it in 1932; Bletchley Park in Britain kept breaking it through the war. A design flaw (a letter never became itself) and lazy operator habits gave it away.", ttb: "Each day's settings, often within hours, using early code-breaking machines." }
+    ]},
+    lock: { title: "Real encryption: used, retired, broken", lead: "Locks are retired when computers get fast enough to try every key, or someone finds a weakness.", cards: [
+      { n: "DES (56-bit key)", era: "1977 to 2005", s: "broken", st: "Retired",
+        used: "The US standard for banks and government for almost 30 years.",
+        risk: "The key is too short. Computers caught up.", ttb: "22 hours in 1999 (a public challenge). Under a day today with dedicated hardware." },
+      { n: "Triple DES", era: "1990s to 2023", s: "legacy", st: "Retired",
+        used: "DES run three times. Payment systems and banks kept it into the 2010s.",
+        risk: "Slow, and its small blocks leak patterns in long sessions (the Sweet32 attack, 2016). Not allowed for new US government data after 2023.", ttb: "No key search, but Sweet32 recovered a login cookie from about 785 GB of captured traffic." },
+      { n: "RC4", era: "1987 to 2015", s: "broken", st: "Broken",
+        used: "Early HTTPS and WEP, the first Wi-Fi security.",
+        risk: "Its output is not truly random. Banned from HTTPS in 2015.", ttb: "WEP Wi-Fi keys: under a minute once enough traffic is captured." },
+      { n: "AES-128", era: "2001 to now", s: "current", st: "In use", cur: true,
+        used: "This lab, HTTPS, Wi-Fi (WPA2 and WPA3), phone and laptop storage, messaging apps.",
+        risk: "Not the lock itself. Real breaks come from stolen keys, weak passwords and software bugs.", ttb: "Trying every key would take far longer than the age of the universe." },
+      { n: "AES-256", era: "2001 to now", s: "current", st: "In use", cur: true,
+        used: "Top-secret government data and long-term secrets.",
+        risk: "Chosen as a margin against future quantum computers, which would weaken AES-128 (but not break it outright).", ttb: "No known way, even with a future quantum computer." }
+    ]},
+    kx: { title: "Sharing a key: used, retired, broken", lead: "The hard part was never the lock. It was getting the same key to both sides.", cards: [
+      { n: "Send the key along", era: "before 1976", s: "toy", st: "Unsafe",
+        used: "Couriers, codebooks, a key told by phone. Still how many people share Wi-Fi passwords.",
+        risk: "Anyone who copies the key on the way reads everything after.", ttb: "Zero. The key is right there." },
+      { n: "Diffie-Hellman, 512-bit", era: "1990s to 2015", s: "broken", st: "Broken",
+        used: "Weak \"export grade\" versions that 1990s US export rules required.",
+        risk: "The Logjam attack (2015). Browsers removed support that year.", ttb: "About a minute per connection, after one week of preparation." },
+      { n: "Diffie-Hellman, 1024-bit", era: "until about 2017", s: "broken", st: "Retired",
+        used: "Common on websites and VPNs through the early 2010s.",
+        risk: "Researchers estimated a well-funded government could break the most common groups. Browsers phased this kind of key exchange out.", ttb: "Within reach of a nation-state with hundreds of millions of dollars of hardware." },
+      { n: "Diffie-Hellman, 2048-bit", era: "still allowed", s: "legacy", st: "Legacy",
+        used: "This lab's Real size mode. Still accepted by some servers and VPNs.",
+        risk: "Safe today, but slow and large. Most of the web moved to curves.", ttb: "No known practical way on today's computers." },
+      { n: "X25519 (curves)", era: "2018 to now", s: "current", st: "In use", cur: true,
+        used: "The default key exchange in HTTPS (TLS 1.3), SSH, Signal and WhatsApp.",
+        risk: "A large future quantum computer could break it. None exists yet.", ttb: "No known way on today's computers." },
+      { n: "X25519 + ML-KEM (post-quantum)", era: "2024 to now", s: "current", st: "In use", cur: true,
+        used: "Chrome, Firefox and Cloudflare turn it on by default for HTTPS.",
+        risk: "Built against \"harvest now, decrypt later\": recording today's traffic to unlock it once quantum computers exist.", ttb: "No known way, even for a quantum computer." }
+    ]},
+    cert: { title: "Certificates: used, retired, broken", lead: "A certificate is only as strong as its signature. Weak signatures get forged.", cards: [
+      { n: "No certificate (plain HTTP)", era: "early web to about 2018", s: "toy", st: "Unsafe",
+        used: "Most of the web until the mid-2010s. Since 2018 Chrome labels these sites Not secure.",
+        risk: "Anyone on the route can pretend to be the site, or change the page.", ttb: "Zero. There is nothing to break." },
+      { n: "RSA 512-bit", era: "1990s to 2015", s: "broken", st: "Broken",
+        used: "Export-grade keys, again because of 1990s export rules.",
+        risk: "The FREAK attack (2015) tricked servers into using them.", ttb: "About 7 hours and $100 of rented cloud computers." },
+      { n: "RSA 1024-bit", era: "until about 2014", s: "broken", st: "Retired",
+        used: "Standard on websites through the 2000s.",
+        risk: "The 768-bit version was broken in 2009. Certificate authorities stopped issuing 1024-bit certificates.", ttb: "Estimated within reach of a well-funded attacker." },
+      { n: "SHA-1 signatures", era: "until 2017", s: "broken", st: "Broken",
+        used: "Signing most certificates in the 2000s.",
+        risk: "Two different files with the same fingerprint were made in 2017 (SHAttered). Browsers stopped trusting SHA-1 certificates that year.", ttb: "About $110,000 of cloud computing in 2017. Much cheaper now." },
+      { n: "RSA 2048-bit and ECDSA", era: "now", s: "current", st: "In use", cur: true,
+        used: "Almost every HTTPS certificate today.",
+        risk: "Stolen private keys, and mistakes by certificate authorities. Future quantum computers.", ttb: "The largest RSA key ever broken is 829 bits (2020, about 2,700 years of computer time). 2048 is far beyond." },
+      { n: "Short-lived, logged certificates", era: "now and next", s: "current", st: "In use", cur: true,
+        used: "Every certificate is written to public logs (Certificate Transparency), so fakes get spotted.",
+        risk: "Lifetimes are shrinking (398 days today, heading to 47 days by 2029) so a stolen key is useful for less time.", ttb: "A fake certificate shows up in public logs." }
+    ]},
+    hash: { title: "Storing passwords: used, retired, broken", lead: "Times below: guessing every 8-letter lowercase password (about 200 billion) on one gaming graphics card. Rough figures.", cards: [
+      { n: "Plain text", era: "still happens", s: "broken", st: "Never OK",
+        used: "RockYou (2009) leaked 32 million passwords stored as plain text. That list is still the first one attackers try.",
+        risk: "One breach exposes every password as typed.", ttb: "Zero. Nothing to break." },
+      { n: "MD5", era: "1992 to 2000s", s: "broken", st: "Broken",
+        used: "Was the common password fingerprint in the 2000s.",
+        risk: "Very fast to compute, and broken for fingerprints in 2004.", ttb: "About one second." },
+      { n: "SHA-1, no salt", era: "1995 to 2010s", s: "broken", st: "Broken",
+        used: "LinkedIn stored millions of passwords this way. They leaked in 2012 and most were cracked within days.",
+        risk: "Fast, and the same password gives the same fingerprint for everyone.", ttb: "A few seconds." },
+      { n: "SHA-256 alone", era: "2001 to now", s: "legacy", st: "Wrong job", 
+        used: "Still excellent for fingerprinting files and signing certificates. This lab uses it.",
+        risk: "Too fast for passwords. Without salt, shared passwords show and ready-made tables work.", ttb: "About ten seconds." },
+      { n: "SHA-256 + salt", era: "2000s", s: "legacy", st: "Not enough",
+        used: "A step up: shared passwords no longer show, ready-made tables stop working.",
+        risk: "Each guess is still fast, one user at a time.", ttb: "About ten seconds per user." },
+      { n: "bcrypt, scrypt, Argon2", era: "1999 to now", s: "current", st: "In use", cur: true,
+        used: "What well-built sites use today. Argon2 won the Password Hashing Competition in 2015.",
+        risk: "Slow on purpose, and the slowness can be turned up as computers get faster. A reused or famous password still falls first.", ttb: "About a year or more at normal settings. A long passphrase: effectively never." }
+    ]},
+    jwt: { title: "Login tokens: used, broken", lead: "A signature stops changes. It does not stop theft: whoever holds a valid token is you until it expires.", cards: [
+      { n: "Random session ID in a cookie", era: "1990s to now", s: "current", st: "In use", cur: true,
+        used: "The classic login: the server stores who you are and gives the browser a long random ID.",
+        risk: "Nothing to forge, but a stolen cookie (cross-site scripting, malware) logs the attacker in as you.", ttb: "No way to guess it. Stealing it is the real attack." },
+      { n: "Careless server: reads but never checks", era: "still found today", s: "broken", st: "Broken",
+        used: "Code that calls jwt.decode() where jwt.verify() was needed. A frequent finding in bug bounty reports.",
+        risk: "Anyone edits the payload and becomes any user, or an admin.", ttb: "Zero. Edit the text." },
+      { n: "alg: none accepted", era: "disclosed 2015", s: "broken", st: "Broken",
+        used: "Several popular JWT libraries trusted the token's own header when it said: no signature.",
+        risk: "An unsigned token with any payload was accepted.", ttb: "Zero. Delete the signature." },
+      { n: "Algorithm confusion (RS256 to HS256)", era: "disclosed 2015", s: "broken", st: "Broken",
+        used: "Servers that let the token choose between asymmetric and symmetric signing.",
+        risk: "The attacker signs with HS256 using the server's public key as the shared secret. The public key is public, so anyone can.", ttb: "Zero, once you have the public key." },
+      { n: "HS256 with a weak secret", era: "2010s to now", s: "legacy", st: "Risky",
+        used: "Symmetric signing: one shared secret signs and checks. Fine if the secret is long and random.",
+        risk: "A short or common secret (\"secret\", \"changeme\") is guessed offline from one captured token, then any token can be forged.", ttb: "Seconds for a dictionary word. A random 256-bit secret: no known way." },
+      { n: "ES256 or RS256, fixed algorithm, short expiry", era: "now", s: "current", st: "In use", cur: true,
+        used: "What this lab does: the server signs with its private key, and only accepts its own algorithm and its own public key.",
+        risk: "Still readable by anyone, so never put secrets in the payload. Still usable if stolen, so keep expiry short.", ttb: "Forging: no known way. Stealing: as easy as the site's weakest page." }
+    ]}
+  };
+  Object.keys(WORLD).forEach(function (k) {
+    var host = document.querySelector('[data-world="' + k + '"]'), w = WORLD[k];
+    if (!host) return;
+    var h = document.createElement("h2"); h.textContent = w.title; host.appendChild(h);
+    var p = document.createElement("p"); p.className = "lead"; p.textContent = w.lead; host.appendChild(p);
+    var grid = document.createElement("div"); grid.className = "cards"; host.appendChild(grid);
+    w.cards.forEach(function (c) {
+      var card = document.createElement("article"); card.className = "lockcard" + (c.cur ? " current" : "");
+      var h3 = document.createElement("h3"), nm = document.createElement("span"), pill = document.createElement("span");
+      nm.textContent = c.n; pill.className = "pill " + c.s; pill.textContent = c.st; h3.appendChild(nm); h3.appendChild(pill); card.appendChild(h3);
+      var era = document.createElement("p"); era.className = "era"; era.textContent = c.era; card.appendChild(era);
+      var dl = document.createElement("dl");
+      [["Used", c.used, ""], ["Risk", c.risk, ""], ["To break", c.ttb, "ttb"]].forEach(function (r) {
+        var dt = document.createElement("dt"), dd = document.createElement("dd"); dt.textContent = r[0]; dd.textContent = r[1]; if (r[2]) dd.className = r[2];
+        dl.appendChild(dt); dl.appendChild(dd);
+      });
+      card.appendChild(dl); grid.appendChild(card);
+    });
+  });
+})();
+</script>
+</body>
+</html>

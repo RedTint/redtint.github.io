@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cybersecurity Technical Masterclass · Algef Almocera</title>
-  <meta name="description" content="Take-home resources from the Cybersecurity Technical Masterclass: commands, checklists, the data lab answers, and a 90-day plan to start in security.">
+  <title>Cybersecurity Technical Crash Course · Algef Almocera</title>
+  <meta name="description" content="Take-home resources from the Cybersecurity Technical Crash Course: live demos, commands, checklists, the data lab answers, and the roadmap for starting in security.">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,16 +28,18 @@
   <main class="wrap">
     <div class="talk-head">
       <p class="kicker">Talk resources</p>
-      <h1>Cybersecurity Technical Masterclass</h1>
+      <h1>Cybersecurity Technical Crash Course</h1>
       <p class="meta">25 November 2026 · PhilDev CORE Talent Accelerator · 3 hours</p>
       <p>We started with one computer in one room and followed it all the way out to the internet and back: what an operating system protects, how a network finds its way, how encryption keeps a login secret, what attackers actually do, and how defenders hold the line. This page has everything you need to keep going.</p>
       <ul class="toc">
         <li><a href="#slides">Slides</a></li>
+        <li><a href="#demos">Demos</a></li>
         <li><a href="#habits">Three habits</a></li>
         <li><a href="#commands">Commands</a></li>
-        <li><a href="#phish">Spot the phish</a></li>
+        <li><a href="#phish">Social engineering</a></li>
         <li><a href="#passwords">Password storage</a></li>
-        <li><a href="#defence">Defence in depth</a></li>
+        <li><a href="#data">Protecting data</a></li>
+        <li><a href="#defense">Defense in depth</a></li>
         <li><a href="#roadmap">Roadmap</a></li>
         <li><a href="#practice">Practice sites</a></li>
       </ul>
@@ -48,6 +50,16 @@
       <p class="deck-later">The slides will be posted here after the session on 25 November 2026.</p>
     </section>
 
+    <section id="demos">
+      <h2>Demos from the session</h2>
+      <p>These run in your browser. Nothing you type is sent anywhere, except where noted.</p>
+      <div class="grid3">
+        <div class="card"><h3><a href="demo/password-ladder.html">The Password Ladder</a></h3><p>Eight steps from plaintext to slow, salted hashing. Every hash is computed live. Use the arrow keys.</p></div>
+        <div class="card"><h3><a href="demo/crypto-lab.html">Crypto Lab</a></h3><p>Encryption, hashing, signatures, certificates and login tokens (JWT), each one hands-on.</p></div>
+        <div class="card"><h3><a href="demo/password-leak-check.html">Has this password leaked?</a></h3><p>Checks a password against known breaches. Only the first five characters of its hash leave your browser.</p></div>
+      </div>
+    </section>
+
     <section id="habits">
       <h2>If you forget everything else</h2>
       <div class="habits">
@@ -55,6 +67,7 @@
         <div class="habit">Use a password manager</div>
         <div class="habit">Verify through a second channel</div>
       </div>
+      <p><strong>What "a second channel" means:</strong> when a message asks for money, a password or a click, confirm it a different way before you act. A friend asks for money in chat: call them on a number you already have. The bank emails a link: open the bank app yourself. Never check by replying to the same message, because the scammer controls it.</p>
       <p class="muted">And the commitment from the end of the session: one thing you will do this week, and one person you will tell.</p>
     </section>
 
@@ -62,7 +75,7 @@
       <h2>Commands from the session</h2>
       <p>These run in the Terminal app on macOS. Most also work on Linux; where they differ, the Linux version is in the comment.</p>
 
-      <div class="note warn"><strong>The rule.</strong> Only scan, probe or test machines you own or have written permission to test. Everything below runs on your own computer or your own lab virtual machine.</div>
+      <div class="note warn"><strong>The rule.</strong> Only scan, probe or test machines you own or have written permission to test. Doing it to anyone else's system is a crime under the Cybercrime Prevention Act (RA 10175) and carries a prison sentence. Everything below runs on your own computer.</div>
 
       <h3>The machine alone: accounts and permissions</h3>
 <pre><code><span class="p">$ </span>whoami                                  <span class="c"># the account, not the person</span>
@@ -84,25 +97,19 @@
       <h3>The journey out</h3>
 <pre><code><span class="p">$ </span>traceroute -n -q 1 -w 1 example.com     <span class="c"># every line is a different machine on the route</span></code></pre>
 
-      <h3>Scan and close the doors on your own lab machine</h3>
-      <p>Needs <a href="https://canonical.com/multipass" rel="noopener" target="_blank">Multipass</a> and <a href="https://nmap.org/" rel="noopener" target="_blank">nmap</a> on your computer, and a lab VM you created yourself.</p>
-<pre><code><span class="p">$ </span>multipass launch --name lab             <span class="c"># your own Ubuntu VM</span>
-<span class="p">$ </span>multipass exec lab -- sudo apt-get install -y nginx   <span class="c"># give it a web server to find</span>
-<span class="p">$ </span>multipass info lab | grep IPv4          <span class="c"># note the lab IP</span>
-<span class="p">$ </span>nmap -sV &lt;LAB_IP&gt;                       <span class="c"># 22/tcp ssh, 80/tcp http: two open doors</span>
+      <h3>Ports: close every door you are not using</h3>
+      <p>A port is a numbered door on a computer. If no program is listening, there is no door. A firewall set to default deny keeps everything closed unless you allow it.</p>
+<pre><code><span class="p">$ </span>lsof -iTCP -sTCP:LISTEN -n -P           <span class="c"># programs listening on your own machine   Linux: ss -tlnp</span></code></pre>
 
-<span class="c"># default deny, then allow only what you need</span>
-<span class="p">$ </span>multipass exec lab -- sudo ufw allow 22/tcp
-<span class="p">$ </span>multipass exec lab -- sudo ufw default deny incoming
-<span class="p">$ </span>multipass exec lab -- sudo ufw --force enable
-<span class="p">$ </span>nmap -sV &lt;LAB_IP&gt;                       <span class="c"># port 80 is now filtered</span>
-
-<span class="p">$ </span>multipass exec lab -- sudo ufw --force disable        <span class="c"># reset</span></code></pre>
+      <h3>Practice attacks on your own copy of OWASP Juice Shop</h3>
+      <p>Needs <a href="https://www.docker.com/products/docker-desktop/" rel="noopener" target="_blank">Docker</a>. It runs only on your computer and is built to be attacked.</p>
+<pre><code><span class="p">$ </span>docker run --rm -p 127.0.0.1:3000:3000 bkimminich/juice-shop
+<span class="c"># then open http://localhost:3000 and try the SQL injection, XSS and access control attacks from the session</span></code></pre>
     </section>
 
     <section id="phish">
-      <h2>Spot the phish</h2>
-      <p>Every scam in the session had one tell. Learn the tells, not the messages.</p>
+      <h2>Social engineering: spot the phish</h2>
+      <p>Social engineering is tricking a person instead of breaking a machine. It works by pushing on feelings: urgency, authority, fear, trust, curiosity and scarcity. Every scam in the session had one tell. Learn the tells, not the messages.</p>
       <div class="table-wrap">
         <table>
           <thead><tr><th>Channel</th><th>The scam</th><th>The tell</th></tr></thead>
@@ -116,7 +123,13 @@
           </tbody>
         </table>
       </div>
-      <p>Bad grammar used to be the tell. AI removed it. The rule that still works: <strong>verify through a second channel</strong> you already trust.</p>
+      <h3>When it is aimed at you (spear phishing)</h3>
+      <ul class="list">
+        <li><strong>The best friend who needs money.</strong> The account, the nickname and the writing style all look right, because the account was taken over. Call them on a number you already have.</li>
+        <li><strong>"Guys, favor, please like this" in the group chat.</strong> The link opens a fake login page. Check the address bar before you type a password, and open the app yourself instead.</li>
+        <li><strong>"Post your mother's maiden name if you are proud of her."</strong> Fun posts like this collect the answers to your security questions. Do not answer them.</li>
+      </ul>
+      <p>Bad grammar used to be the tell. AI removed it. The rule that still works: <strong>verify through a second channel</strong> you already trust. If you already clicked or paid, tell someone and report it quickly. Speed matters more than embarrassment.</p>
     </section>
 
     <section id="passwords">
@@ -136,8 +149,53 @@
     </section>
 
 
-    <section id="defence">
-      <h2>Defence in depth</h2>
+    <section id="data">
+      <h2>Protecting other people's data</h2>
+      <p>At home you protect your own data. In a company you protect data that belongs to customers, so the Data Privacy Act (RA 10173) applies: the company must name a Data Protection Officer and report a breach within 72 hours.</p>
+      <p><strong>Personal information (PII)</strong> is anything that points to one person, alone or combined: a name, an email, a phone number, a government ID, or a birth date plus a city.</p>
+      <h3>Two decisions for every piece of data</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Classify</th><th>Meaning</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>1 Public</td><td>Anyone may see it</td><td>The company hotline number</td></tr>
+            <tr><td>2 Internal</td><td>For staff only</td><td>The office seating plan</td></tr>
+            <tr><td>3 Confidential</td><td>Only people who need it</td><td>Names, emails, phone numbers</td></tr>
+            <tr><td>4 Restricted</td><td>Very few people</td><td>Passwords, card numbers, health records</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Protect</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>Mask</td><td>Hide part of it on screen: +63 917 *** 4821</td></tr>
+            <tr><td>Tokenize</td><td>Swap it for a random token; the real value stays in a vault</td></tr>
+            <tr><td>Pseudonymize</td><td>Replace the name with a code. The company can still look up who it is, so it is still personal data</td></tr>
+            <tr><td>Anonymize</td><td>Remove the person for good, with no way back</td></tr>
+            <tr><td>Do not collect</td><td>The safest data is data you never asked for</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>The data lab answers</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Field</th><th>Classify</th><th>Protect</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>Full name</td><td>Confidential</td><td>Pseudonymize</td><td>Points straight at one person. Most staff only need "Customer 4471".</td></tr>
+            <tr><td>Email</td><td>Confidential</td><td>Mask</td><td>Enough to confirm it, not enough to misuse it.</td></tr>
+            <tr><td>Mobile</td><td>Confidential</td><td>Mask</td><td>Show the last four digits. Scammers want the full number.</td></tr>
+            <tr><td>Government ID</td><td>Restricted</td><td>Tokenize</td><td>Enough to steal an identity, and you cannot change it like a password.</td></tr>
+            <tr><td>Birth date</td><td>Confidential</td><td>Anonymize: keep the year</td><td>Most uses only need the age.</td></tr>
+            <tr><td>Home address</td><td>Confidential</td><td>Anonymize: keep the city</td><td>Reports need the city, not the front door.</td></tr>
+            <tr><td>Time stamp</td><td>Internal</td><td>Anonymize: keep the day</td><td>Exact times reveal a person's habits.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="defense">
+      <h2>Defense in depth</h2>
       <div class="table-wrap">
         <table>
           <thead><tr><th>Layer</th><th>Prevent</th><th>Detect</th><th>Respond</th></tr></thead>
@@ -147,7 +205,7 @@
             <tr><td>Network</td><td>Segment, default deny</td><td>Monitoring</td><td>Cut it off</td></tr>
             <tr><td>Data</td><td>Classify, encrypt</td><td>Export alerts</td><td>Notify within 72 hours</td></tr>
             <tr><td>Person</td><td>Verify through a second channel</td><td>A report button</td><td>No blame</td></tr>
-            <tr><td>Organisation</td><td>Policy, reviews</td><td>A security operations centre</td><td>An incident plan, 3-2-1 backups</td></tr>
+            <tr><td>Organization</td><td>Policy, reviews</td><td>A security operations center (SOC)</td><td>An incident plan, 3-2-1 backups</td></tr>
           </tbody>
         </table>
       </div>
@@ -163,22 +221,31 @@
         <li>Hardware and connections: Wi-Fi, Bluetooth, NFC</li>
         <li>Operating systems: the GUI and the command line</li>
         <li>Networking: ping, traceroute, dig, arp, nmap, tcpdump</li>
-        <li>Virtualization: VirtualBox or Multipass</li>
+        <li>Virtualization: VirtualBox</li>
         <li>Everyday software, and its sharing settings</li>
       </ol>
-      <p>Then add Python, SQL, cloud basics and reading logs. You only need networking and operating systems to start.</p>
+      <p>Then add Python, SQL, cloud basics and reading logs. Learn as much of this as you can. AI now handles the easy tasks, so the people who get hired are the ones who understand how it all works.</p>
+
+      <h3>What the roadmap covers</h3>
+      <p><strong>Common ground, the same for everyone:</strong> IT basics, operating systems, networking, security concepts and one scripting language. After that, every career mixes three areas differently:</p>
+      <div class="grid3">
+        <div class="card"><h3>Attack skills</h3><p>Find the holes before a criminal does: penetration testing and web app testing. Always with permission.</p></div>
+        <div class="card"><h3>Defense skills</h3><p>Watch, detect, respond: reading logs, handling alerts, incident response, hardening systems.</p></div>
+        <div class="card"><h3>Governance</h3><p>Set the rules and prove they are followed: risk, policy, audits, and laws such as the Data Privacy Act.</p></div>
+      </div>
 
       <h3>Where people start</h3>
-      <div class="grid2">
-        <div class="card">
-          <h3>Entry roles</h3>
-          <p>SOC Analyst (Tier 1), IT Support moving into security, governance and compliance (GRC), junior penetration tester, application security.</p>
-        </div>
-        <div class="card">
-          <h3>Where data meets security</h3>
-          <p>Data analysts, engineers and scientists, ML engineers, security analysts and detection engineers all work with the same logs and pipelines.</p>
-        </div>
-      </div>
+      <p class="muted">A typical order, not a required one.</p>
+      <ol class="steps">
+        <li><strong>IT help desk / support technician.</strong> Solves users' problems, manages accounts and access, and spots everyday security problems like phishing or malware.</li>
+        <li><strong>Junior system administrator.</strong> Keeps operating systems running, applies patches, and manages user permissions.</li>
+        <li><strong>Network support / junior network administrator.</strong> Monitors network traffic, supports routers and switches, and helps enforce network security.</li>
+        <li><strong>SOC analyst.</strong> Watches security alerts around the clock and investigates anything odd.</li>
+        <li><strong>Compliance (GRC).</strong> Checks that the company follows its own rules and the law.</li>
+        <li><strong>Application security.</strong> Reviews software for vulnerabilities and helps developers fix them.</li>
+        <li><strong>Junior penetration tester.</strong> Attacks the company's own systems, with written permission, to find holes first.</li>
+      </ol>
+      <p><strong>Or bring security into another job.</strong> Software developers check every input and protect logins. Data engineers and analysts decide who can see the data and mask personal data. Cloud and DevOps engineers close open settings and manage keys and access. Nobody gets hired to hack. They get hired because they understand how systems work.</p>
 
       <h3>Certifications, honestly</h3>
       <div class="grid2">
@@ -192,40 +259,11 @@
         </div>
       </div>
       <p>Certifications open the door. Public writeups and real skill get you through it.</p>
-
-      <h3>Your first 90 days</h3>
-      <div class="grid3">
-        <div class="card">
-          <p class="meta">Days 1 to 30</p>
-          <ul class="list">
-            <li>MFA and a password manager, tonight</li>
-            <li>VirtualBox and a Linux VM</li>
-            <li>TryHackMe Pre-Security</li>
-          </ul>
-        </div>
-        <div class="card">
-          <p class="meta">Days 31 to 60</p>
-          <ul class="list">
-            <li>PortSwigger Web Security Academy</li>
-            <li>OWASP Juice Shop, run locally</li>
-            <li>Start writing public writeups</li>
-          </ul>
-        </div>
-        <div class="card">
-          <p class="meta">Days 61 to 90</p>
-          <ul class="list">
-            <li>picoCTF</li>
-            <li>Three public writeups</li>
-            <li>Security+ study</li>
-            <li>Meet five people working in security in the Philippines</li>
-          </ul>
-        </div>
-      </div>
     </section>
 
     <section id="practice">
       <h2>Practice sites</h2>
-      <p>Legal places to practise. Everything here is built to be attacked.</p>
+      <p>Legal places to practice. Everything here is built to be attacked.</p>
       <div class="grid2">
         <div class="card"><h3><a href="https://tryhackme.com/" rel="noopener" target="_blank">TryHackMe</a></h3><p>Guided rooms. Start with Pre-Security.</p></div>
         <div class="card"><h3><a href="https://portswigger.net/web-security" rel="noopener" target="_blank">PortSwigger Academy</a></h3><p>Free web security labs: SQL injection, XSS, access control.</p></div>

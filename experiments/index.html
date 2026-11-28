@@ -10,6 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/site.css">
+  <style>
+    .card .shot { margin: -18px -20px 16px; border-bottom: 1px solid var(--rule); border-radius: var(--radius) var(--radius) 0 0; aspect-ratio: 16 / 9; width: calc(100% + 40px); height: auto; max-width: none; object-fit: cover; }
+    .card .note { margin-top: 12px; padding: 10px 12px; border-left: 3px solid var(--seal); background: rgba(156, 44, 37, .06); font: 400 14px/1.5 var(--sans); }
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -35,9 +39,11 @@
     <section>
       <div class="grid2">
         <a class="card" href="/experiments/hospital-wing-4b/" target="_blank" rel="noopener">
+          <img class="shot" src="/experiments/hospital-wing-4b/preview.webp" width="1200" height="675" alt="A dim, abandoned hospital corridor with flickering lights, an overturned gurney and taped-off doors, framed by a security-camera style HUD" loading="lazy">
           <p class="meta">Face tracking game · three.js · MediaPipe</p>
           <h3>Hospital Wing 4B</h3>
-          <p>A head-coupled 3D window into a haunted hospital corridor. Your webcam tracks your face so the view follows your head; the mouse works too. The camera image stays in your browser.</p>
+          <p>A head-coupled 3D window into a haunted hospital corridor. Your webcam tracks your face so the view follows your head; the mouse works too.</p>
+          <p class="note"><strong>Uses your camera.</strong> It asks for webcam access to track your head. Nothing is recorded or uploaded: the video is analysed live in your browser and discarded. You can skip the camera and play with the mouse.</p>
         </a>
       </div>
     </section>

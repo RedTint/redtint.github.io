@@ -4,11 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Hospital Wing 4B</title>
+<meta name="author" content="Algef Almocera">
+<meta name="description" content="Hospital Wing 4B: a head-tracked horror experiment by Algef Almocera.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /*
+BY      Algef Almocera · https://redtint.github.io/
 VOICE   clinical, cold, surveillance-feed; the user's reference sets the look
 IDEA    a security monitor that is also a window into Wing 4B
 PICTURE full-bleed real-time corridor; head position drives an off-axis projection
@@ -80,6 +83,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .gcard h1{font-size:clamp(28px,5vw,48px);line-height:1.05;margin:0 0 14px;font-weight:600;letter-spacing:.02em}
 .gcard h1 span{color:var(--red)}
 .gcard p{color:#c3cec8;margin:0 0 22px;font-size:16px;max-width:60ch}
+.gcard .gby{margin:-6px 0 18px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.gby a,.by a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+.gby a:hover,.by a:hover{border-bottom-color:var(--ink)}
+.by{margin-top:6px;font-size:11px;letter-spacing:.08em;color:#7f9289;pointer-events:auto}
 .gbtns{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px}
 .gbtn{min-height:48px;padding:0 22px;border:1px solid rgba(220,235,228,.5);font-size:14px;letter-spacing:.06em;background:rgba(10,16,14,.7)}
 .gbtn.pri{background:#d9e6df;color:#07100c;border-color:#d9e6df;font-weight:600}
@@ -140,7 +147,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   </div>
   <div id="pip" hidden><canvas id="pipc" width="240" height="180"></canvas><span>HEAD-TRACKING DEPTH VIEW · <em id="fps">--</em></span></div>
   <footer class="foot">
-    <div class="stamp">CAM 04 · WING 4B EAST CORRIDOR · <span class="rec">● REC</span> · <span id="clock">--</span><div class="keys">MOUSE LOOK · <kbd>W</kbd>/<kbd>↑</kbd> WALK · <kbd>S</kbd>/<kbd>↓</kbd> BACK · <kbd>A</kbd> <kbd>D</kbd> SIDESTEP · <kbd>SHIFT</kbd> RUN · <kbd>E</kbd> INTERACT</div></div>
+    <div class="stamp">CAM 04 · WING 4B EAST CORRIDOR · <span class="rec">● REC</span> · <span id="clock">--</span><div class="keys">MOUSE LOOK · <kbd>W</kbd>/<kbd>↑</kbd> WALK · <kbd>S</kbd>/<kbd>↓</kbd> BACK · <kbd>A</kbd> <kbd>D</kbd> SIDESTEP · <kbd>SHIFT</kbd> RUN · <kbd>E</kbd> INTERACT</div><div class="by">AN EXPERIMENT BY <a href="https://redtint.github.io/" target="_blank" rel="noopener">ALGEF ALMOCERA</a></div></div>
     <div class="ctrl live">
       <button id="wF" class="pad" aria-label="Hold to walk forward">▲</button><button id="wB" class="pad" aria-label="Hold to walk back">▼</button>
       <label title="How strongly the view follows your head or mouse">LOOK <input id="gain" type="range" min="0.3" max="2" step="0.05" value="1"></label>
@@ -161,6 +168,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 <div id="gate">
   <div class="gcard">
     <h1>HOSPITAL WING 4B<br><span>CAM 04 — LIVE</span></h1>
+    <p class="gby">An experiment by <a href="https://redtint.github.io/" target="_blank" rel="noopener">Algef Almocera</a></p>
     <p>Look around by turning your head (or moving the mouse). Lean toward the screen to step closer, lean back to pull away. Walk with <b>W</b> or <b>↑</b>, hold Shift to run. Every door on this ward has someone behind it.</p>
     <div class="gbtns">
       <button class="gbtn pri" id="goCam" disabled>ENABLE HEAD TRACKING</button>
@@ -1029,6 +1037,7 @@ function shadowMat(op, inflate, edge, depthWrite) {
 }
 function makePerson() {
   const root = PEOPLE.clone(PEOPLE.src), g = new THREE.Group(); g.add(root); g.visible = false;
+  root.rotation.y = Math.PI;   // the model is authored facing -z; everything here treats +z as forward
   const skinned = []; root.traverse(o => { if (o.isSkinnedMesh) skinned.push(o); });
   for (const o of skinned) {
     o.material = shadowMat(.97, 0, .42, true); o.frustumCulled = false; o.castShadow = o.receiveShadow = false;
@@ -1069,11 +1078,13 @@ const tweens = [];
 function tween(dur, fn, done) { tweens.push({ t: 0, dur, fn, done }); }
 function runTweens(dt) { for (let i = tweens.length - 1; i >= 0; i--) { const w = tweens[i]; w.t += dt; const k = Math.min(1, w.t / w.dur); w.fn(k); if (k >= 1) { tweens.splice(i, 1); w.done?.(); } } }
 const CREDITS = [
-  ['CONCEPT & DIRECTION', 'Hospital Wing 4B'],
+  ['CREATED BY', 'Algef Almocera'],
+  ['CONCEPT & DIRECTION', 'Algef Almocera'],
   ['3D ENVIRONMENT & LIGHTING', 'Procedural · three.js r170'],
   ['WEBCAM PARALLAX ENGINE', 'MediaPipe Face Landmarker'],
   ['FIGURES', 'Mixamo character · three.js examples'],
   ['AUDIO DESIGN', 'Synthesised live · Web Audio'],
+  ['© 2026', 'Algef Almocera · redtint.github.io'],
 ];
 
 /* ---- textures for the new spaces ---- */
@@ -1101,21 +1112,63 @@ const makeEcgTex = () => signCanvas(256, 160, (g, W, H) => {
   for (let x = 0; x < W; x += 4) { const p = x % 64; g.lineTo(x, 70 - (p > 26 && p < 32 ? (p - 26) * 9 : p >= 32 && p < 38 ? (38 - p) * 9 - 20 : 0)); } g.stroke();
   txt(g, 'HR 0', 50, 128, 20, '#ff5a4a', 700); txt(g, 'SpO2 --', 170, 128, 18, '#5dd2ff', 700);
 }, 0);
-function makeBrokenGlass(hole = true) {
-  const S2 = 512, [c, g] = mk(S2, S2);
-  g.fillStyle = 'rgba(190,210,205,.22)'; g.fillRect(0, 0, S2, S2);
-  for (let i = 0; i < 30; i++) blob(g, R(0, S2), R(0, S2), R(30, 120), [60, 66, 60], R(.05, .15));
-  const cx = R(.35, .65) * S2, cy = R(.3, .65) * S2;
-  if (hole) {
-    g.globalCompositeOperation = 'destination-out'; g.beginPath(); const n = 16;
-    for (let i = 0; i <= n; i++) { const a = i / n * 6.2832, r = (i % 2 ? R(.06, .16) : R(.22, .46)) * S2; i ? g.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r) : g.moveTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r); }
-    g.fill(); g.globalCompositeOperation = 'source-over';
+// glass panes: 'hole' = smashed through, 'crack' = a few stress cracks, 'clean' = intact but filthy
+function makeBrokenGlass(mode = 'hole') {
+  const S2 = 1024, k = S2 / 512, [c, g] = mk(S2, S2);
+  // faintly tinted pane, grimier toward the bottom
+  const base = g.createLinearGradient(0, 0, 0, S2); base.addColorStop(0, 'rgba(160,182,176,.09)'); base.addColorStop(.65, 'rgba(150,165,155,.14)'); base.addColorStop(1, 'rgba(92,96,80,.34)');
+  g.fillStyle = base; g.fillRect(0, 0, S2, S2);
+  for (let i = 0; i < 26; i++) blob(g, R(0, S2), R(S2 * .3, S2), R(30, 120) * k, [72, 74, 62], R(.03, .09));
+  // dirty drips running down
+  for (let i = 0; i < 46; i++) { const x = R(0, S2), y = R(-40, S2 * .6), l = R(40, 260) * k, lg = g.createLinearGradient(0, y, 0, y + l); lg.addColorStop(0, 'rgba(70,72,60,0)'); lg.addColorStop(1, `rgba(70,72,60,${R(.06, .16)})`); g.fillStyle = lg; g.fillRect(x, y, R(1.2, 3.5) * k, l); }
+  // greasy hand marks where people leaned on it
+  for (let i = 0; i < 2; i++) { g.save(); g.translate(R(.15, .85) * S2, R(.45, .8) * S2); g.rotate(R(-.5, .5)); g.scale(k, k); g.fillStyle = 'rgba(215,225,220,.06)';
+    for (let f = 0; f < 4; f++) { g.beginPath(); g.ellipse(-24 + f * 15, -46 + Math.abs(f - 1.5) * 7, 6, 20, 0, 0, 6.28); g.fill(); }
+    g.beginPath(); g.ellipse(36, -10, 6, 15, -.8, 0, 6.28); g.fill(); g.beginPath(); g.ellipse(-2, -2, 30, 32, 0, 0, 6.28); g.fill(); g.restore(); }
+  // a soft diagonal reflection
+  g.save(); g.translate(S2 * R(.3, .7), S2 / 2); g.rotate(-.6); const sh = g.createLinearGradient(-S2 * .2, 0, S2 * .2, 0); sh.addColorStop(0, 'rgba(255,255,255,0)'); sh.addColorStop(.5, 'rgba(235,245,250,.07)'); sh.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = sh; g.fillRect(-S2 * .2, -S2, S2 * .4, S2 * 2); g.restore();
+  if (mode === 'clean') return tex(c);
+  // a crack runs nearly straight with sharp kinks and the odd fork; drawn as a dark line with a bright refracted edge
+  g.lineCap = 'round'; g.lineJoin = 'miter';
+  const crack = (x, y, a, len, w, depth = 0) => {
+    const pts = [[x, y]]; let left = len;
+    while (left > 0) { const st = Math.min(left, R(18, 55) * k); a += R(-.22, .22); x += Math.cos(a) * st; y += Math.sin(a) * st; pts.push([x, y]); left -= st;
+      if (depth < 2 && rnd() < .16) crack(x, y, a + (rnd() < .5 ? -1 : 1) * R(.35, .8), left * R(.3, .7), w * .7, depth + 1); }
+    for (const [col, lw, o] of [['rgba(12,16,14,.45)', w * 1.8, k], ['rgba(236,246,242,.8)', w, 0]]) { g.strokeStyle = col; g.lineWidth = lw; g.beginPath(); pts.forEach(([px, py], i) => i ? g.lineTo(px + o, py + o) : g.moveTo(px + o, py + o)); g.stroke(); }
+    return pts;
+  };
+  if (mode === 'crack') {
+    // stress cracks running in from the edges
+    const n = 2 + Math.floor(R(0, 2.99));
+    for (let i = 0; i < n; i++) { const t = R(.1, .9) * S2, e = [[t, 0, Math.PI / 2], [S2, t, Math.PI], [t, S2, -Math.PI / 2], [0, t, 0]][Math.floor(R(0, 3.99))]; crack(e[0], e[1], e[2] + R(-.6, .6), R(.5, 1.3) * S2, 1.6 * k); }
+    return tex(c);
   }
-  g.strokeStyle = 'rgba(235,245,240,.75)'; g.lineWidth = 1.3;
-  for (let i = 0; i < 22; i++) { let a = R(0, 6.28), x = cx, y = cy; g.beginPath(); g.moveTo(x, y); for (let k = 0; k < 9; k++) { a += R(-.3, .3); x += Math.cos(a) * R(20, 60); y += Math.sin(a) * R(20, 60); g.lineTo(x, y); } g.stroke(); }
-  for (let r = 60; r < 260; r += R(40, 80)) { g.beginPath(); for (let a = 0; a < 6.3; a += .35) { const rr = r * R(.9, 1.1); g.lineTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr); } g.stroke(); }
+  // smashed through: a jagged hole whose corners send cracks out toward the frame
+  const cx = R(.38, .62) * S2, cy = R(.35, .6) * S2, n = 9 + Math.floor(R(0, 5)), hole = [], a0 = R(0, 6.28);
+  for (let i = 0; i < n; i++) { const a = a0 + (i + R(-.3, .3)) / n * 6.2832, r = (rnd() < .3 ? R(.08, .14) : R(.16, .3)) * S2; hole.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r * R(.8, 1.15), a]); }
+  // loose shards around the hole sit at slightly different angles, so they catch the light differently
+  for (let i = 0; i < n; i++) { const [x, y, a] = hole[i], [x2, y2] = hole[(i + 1) % n], r = R(.06, .16) * S2; g.fillStyle = rnd() < .5 ? 'rgba(230,240,236,.07)' : 'rgba(10,14,12,.1)'; g.beginPath(); g.moveTo(x, y); g.lineTo(x2, y2); g.lineTo((x + x2) / 2 + Math.cos(a) * r, (y + y2) / 2 + Math.sin(a) * r); g.closePath(); g.fill(); }
+  const rays = [];
+  for (const [x, y, a] of hole) if (rnd() < .8) rays.push(crack(x, y, a + R(-.25, .25), R(.25, .8) * S2, 1.7 * k));
+  // a few short cross cracks between neighbouring rays, near the hole (never full rings)
+  for (let i = 0; i < rays.length; i++) { const A = rays[i], B = rays[(i + 1) % rays.length]; if (rnd() < .5 || A.length < 3 || B.length < 3) continue;
+    const p = A[1 + Math.floor(R(0, Math.min(3, A.length - 1)))], q = B[1 + Math.floor(R(0, Math.min(3, B.length - 1)))];
+    g.strokeStyle = 'rgba(236,246,242,.55)'; g.lineWidth = 1.1 * k; g.beginPath(); g.moveTo(p[0], p[1]); g.quadraticCurveTo((p[0] + q[0]) / 2 + R(-12, 12) * k, (p[1] + q[1]) / 2 + R(-12, 12) * k, q[0], q[1]); g.stroke(); }
+  // punch the hole out, then give it a thick greenish glass edge
+  g.beginPath(); hole.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath();
+  g.globalCompositeOperation = 'destination-out'; g.fill(); g.globalCompositeOperation = 'source-over';
+  g.strokeStyle = 'rgba(150,200,180,.85)'; g.lineWidth = 3.2 * k; g.stroke(); g.strokeStyle = 'rgba(245,252,250,.9)'; g.lineWidth = k; g.stroke();
   return tex(c);
 }
+const glassMat = mode => new THREE.MeshStandardMaterial({ map: makeBrokenGlass(mode), transparent: true, roughness: .05, metalness: .3, side: THREE.DoubleSide, depthWrite: false });
+const shardGeo = () => new THREE.ShapeGeometry(new THREE.Shape([new THREE.Vector2(0, 0), new THREE.Vector2(R(.025, .09), R(-.02, .02)), new THREE.Vector2(R(-.01, .05), R(.015, .06))]));
+const ecgAlarmTex = () => signCanvas(256, 160, (g, W, H) => {
+  g.fillStyle = '#1a0303'; g.fillRect(0, 0, W, H); g.strokeStyle = 'rgba(150,40,30,.3)'; g.lineWidth = 1;
+  for (let x = 0; x < W; x += 16) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
+  g.strokeStyle = '#ff4a3a'; g.lineWidth = 2.5; g.beginPath(); g.moveTo(0, 70);
+  for (let x = 0; x < W; x += 3) { const q = x % 22; g.lineTo(x, 70 - (q < 4 ? q * 13 : q < 8 ? (8 - q) * 13 - 26 : R(-4, 4))); } g.stroke();
+  txt(g, 'HR 214', 56, 128, 22, '#ff5a4a', 800); txt(g, 'ALARM', 184, 128, 20, '#ffd34a', 800);
+}, 0);
 const makeMoldTex = () => { const [c, g] = mk(512, 512); g.lineCap = 'round';
   const branch = (x, y, a, w, d) => { if (d > 7 || w < .6) return; const l = R(30, 80); const nx = x + Math.cos(a) * l, ny = y + Math.sin(a) * l; g.strokeStyle = `rgba(14,20,10,${.55 + .4 * (1 - d / 8)})`; g.lineWidth = w; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + R(-15, 15), y + R(-15, 15), nx, ny); g.stroke(); branch(nx, ny, a + R(-.6, .2), w * .72, d + 1); if (rnd() < .6) branch(nx, ny, a + R(.2, .9), w * .6, d + 1); };
   for (let i = 0; i < 40; i++) blob(g, R(150, 360), R(0, 220), R(30, 110), [18, 28, 14], R(.15, .35));
@@ -1152,12 +1205,20 @@ function facadeTex(brick) {
   else { g.fillStyle = '#8a8c86'; g.fillRect(0, 0, S2, S2); for (let i = 0; i < 200; i++) blob(g, R(0, S2), R(0, S2), R(10, 80), [60, 60, 56], R(.05, .15)); }
   const lg = g.createLinearGradient(0, 0, 0, S2); lg.addColorStop(0, 'rgba(10,10,10,.35)'); lg.addColorStop(1, 'rgba(10,10,10,.05)'); g.fillStyle = lg; g.fillRect(0, 0, S2, S2);
   for (let r = 0; r < 4; r++) for (let k = 0; k < 4; k++) {
-    const x = 28 + k * 128, y = 22 + r * 128, w = 70, h = 84, lit = rnd() < .14, broken = rnd() < .12;
-    g.fillStyle = '#c9c6ba'; g.fillRect(x - 5, y + h, w + 10, 7);
-    const wg = g.createLinearGradient(x, y, x + w, y + h); wg.addColorStop(0, broken ? '#050505' : '#2a3138'); wg.addColorStop(1, '#0b0e12'); g.fillStyle = wg; g.fillRect(x, y, w, h);
-    g.strokeStyle = '#2a2a28'; g.lineWidth = 3; g.strokeRect(x, y, w, h); g.beginPath(); g.moveTo(x, y + h / 2); g.lineTo(x + w, y + h / 2); g.stroke();
-    if (lit) { const lc = pick(['#ffcf8a', '#ffd9a0', '#b8d4ff']); g.fillStyle = lc; g.globalAlpha = .55; g.fillRect(x + 3, y + 3, w - 6, h - 6); g.globalAlpha = 1; eg.fillStyle = lc; eg.fillRect(x + 3, y + 3, w - 6, h - 6); }
-    g.fillStyle = 'rgba(20,16,12,.35)'; g.fillRect(x + 4, y + h + 7, w - 8, R(20, 50));
+    const x = 28 + k * 128, y = 22 + r * 128, w = 70, h = 84, lit = rnd() < .14, broken = !lit && rnd() < .1, boarded = !lit && !broken && rnd() < .07, blind = !boarded && rnd() < .35;
+    g.fillStyle = 'rgba(205,200,188,.6)'; g.fillRect(x - 4, y - 7, w + 8, 6);          // lintel
+    g.fillStyle = '#c9c6ba'; g.fillRect(x - 6, y + h, w + 12, 7);                         // sill
+    const wg = g.createLinearGradient(x, y, x + w * .6, y + h); wg.addColorStop(0, broken ? '#070707' : '#3b4651'); wg.addColorStop(.4, broken ? '#030303' : '#171c23'); wg.addColorStop(1, '#0a0d11'); g.fillStyle = wg; g.fillRect(x, y, w, h);
+    if (lit) { const lc = pick(['#ffcf8a', '#ffd9a0', '#b8d4ff']), lg2 = g.createRadialGradient(x + w / 2, y + h * .3, 4, x + w / 2, y + h / 2, w); lg2.addColorStop(0, lc); lg2.addColorStop(1, 'rgba(60,40,20,.9)');
+      g.globalAlpha = .6; g.fillStyle = lg2; g.fillRect(x + 3, y + 3, w - 6, h - 6); g.globalAlpha = 1; eg.fillStyle = lc; eg.fillRect(x + 3, y + 3, w - 6, h - 6);
+      if (!blind && rnd() < .6) { const cw = R(8, 22); g.fillStyle = 'rgba(80,36,28,.75)'; eg.fillStyle = '#000'; for (const cx2 of [x + 3, x + w - 3 - cw]) { g.fillRect(cx2, y + 3, cw, h - 6); eg.fillRect(cx2, y + 3, cw, h - 6); } } }
+    if (blind) { const drop = R(.25, 1) * (h - 6); for (let yy = y + 3; yy < y + 3 + drop; yy += 4) { g.fillStyle = lit ? 'rgba(70,48,26,.55)' : 'rgba(150,150,140,.22)'; g.fillRect(x + 3, yy, w - 6, 2); eg.fillStyle = 'rgba(0,0,0,.6)'; eg.fillRect(x + 3, yy, w - 6, 2); } }
+    if (broken) { g.fillStyle = 'rgba(110,120,128,.4)'; for (const [px, py, sx, sy] of [[x, y, 1, 1], [x + w, y + h, -1, -1], [x + w, y, -1, 1]]) if (rnd() < .8) { g.beginPath(); g.moveTo(px, py); g.lineTo(px + sx * R(12, 34), py); g.lineTo(px, py + sy * R(12, 40)); g.closePath(); g.fill(); } }
+    if (boarded) { for (let b = 0; b < 3; b++) { g.save(); g.translate(x + w / 2, y + 14 + b * 28); g.rotate(R(-.18, .18)); g.fillStyle = rgba([92 + R(-12, 12), 70, 46], 1); g.fillRect(-w / 2 - 6, -8, w + 12, 16); g.fillStyle = '#222'; g.fillRect(-w / 2 - 1, -2, 3, 3); g.fillRect(w / 2 - 2, -2, 3, 3); g.restore(); } }
+    // frame and mullions (also masked out of the glow)
+    for (const [ctx, col] of [[g, '#1f1f1d'], [eg, '#000']]) { ctx.strokeStyle = col; ctx.lineWidth = 4; ctx.strokeRect(x, y, w, h); ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x, y + h * .4); ctx.lineTo(x + w, y + h * .4); ctx.moveTo(x + w / 2, y + h * .4); ctx.lineTo(x + w / 2, y + h); ctx.stroke(); }
+    g.strokeStyle = 'rgba(210,210,200,.16)'; g.lineWidth = 1; g.strokeRect(x + 3, y + 3, w - 6, h - 6);
+    g.fillStyle = 'rgba(20,16,12,.35)'; g.fillRect(x + 4, y + h + 7, w - 8, R(20, 50));   // rain stain under the sill
   }
   grain(g, S2, S2, 16);
   return { map: tex(c), emissiveMap: tex(ec) };
@@ -1215,7 +1276,7 @@ function buildRoom() {
   const sheetM = new THREE.MeshStandardMaterial({ map: T.sheet, roughness: .85 });
   const screenM = new THREE.MeshStandardMaterial({ map: T.ecg, emissiveMap: T.ecg, emissive: 0xffffff, emissiveIntensity: 1.6 });
   const moldM = new THREE.MeshStandardMaterial({ map: T.mold, transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, roughness: .9 });
-  const glassM = [makeBrokenGlass(), makeBrokenGlass()].map(t => new THREE.MeshStandardMaterial({ map: t, transparent: true, roughness: .05, metalness: .3, side: THREE.DoubleSide, depthWrite: false }));
+  const glassM = [glassMat('hole'), glassMat('crack')];
   // shell: outer wall facing the hallway (with a wide doorway), room walls, stub of hallway
   const oL = o - .95, oR = o + .85, OH = 2.3, Z1 = -.15;
   quadsMesh(Q => {
@@ -1257,7 +1318,16 @@ function buildRoom() {
   for (const [y, h] of [[1.05, .05], [2.25, .05]]) add(new THREE.BoxGeometry(.06, h, 3.05), M.dark, o + 3.03, y, -2.9);
   for (const z of [-1.42, -2.9, -4.38]) add(new THREE.BoxGeometry(.06, 1.22, .05), M.dark, o + 3.03, 1.65, z);
   [[-2.15, 0], [-3.65, 1]].forEach(([z, i]) => { const p = add(new THREE.PlaneGeometry(1.45, 1.18), glassM[i], o + 3.04, 1.65, z, S, false); p.rotation.y = -Math.PI / 2; });
-  for (let i = 0; i < 24; i++) { const s = add(new THREE.CircleGeometry(R(.015, .05), 3), glassM[0], o + R(1.9, 2.9), .004, R(-1.6, -4.2), S, false); s.rotation.set(-Math.PI / 2, 0, R(0, 6)); }
+  // shards: thick on the floor under the window, thinning out into the room, a few left on the sill
+  const shardM = new THREE.MeshStandardMaterial({ color: 0xcfe2dc, transparent: true, opacity: .55, roughness: .04, metalness: .6, side: THREE.DoubleSide, depthWrite: false });
+  for (let i = 0; i < 60; i++) { const near = rnd() < .7, s = add(shardGeo(), shardM, o + (near ? R(2.4, 2.95) : R(1.2, 2.4)), .004 + i * .00005, R(-1.5, -4.3), S, false); s.rotation.set(-Math.PI / 2 + R(-.12, .12), 0, R(0, 6.28)); s.scale.setScalar(near ? 1 : R(.5, .9)); }
+  for (let i = 0; i < 10; i++) { const s = add(shardGeo(), shardM, o + R(2.85, 2.98), 1.052, R(-2.2, -3.6), S, false); s.rotation.set(-Math.PI / 2, 0, R(0, 6.28)); }
+  // rubber gaskets around each pane, a stencilled warning, and a smeared hand on the glass
+  for (const z of [-1.45, -2.87, -2.93, -4.35]) add(new THREE.BoxGeometry(.03, 1.18, .025), M.black, o + 3.025, 1.65, z, S, false);
+  for (const y of [1.09, 2.21]) add(new THREE.BoxGeometry(.03, .025, 2.95), M.black, o + 3.025, y, -2.9, S, false);
+  const warn = add(new THREE.PlaneGeometry(.34, .12), new THREE.MeshStandardMaterial({ map: signCanvas(512, 180, (g, W, H) => { g.clearRect(0, 0, W, H); txt(g, 'OBSERVATION', W / 2, 62, 54, 'rgba(235,238,230,.85)', 700); txt(g, 'DO NOT TAP ON GLASS', W / 2, 132, 38, 'rgba(235,238,230,.7)', 600); }, 0), transparent: true, depthWrite: false }), o + 3.02, 1.24, -3.55, S, false); warn.rotation.y = -Math.PI / 2;
+  const hand = add(new THREE.PlaneGeometry(.3, .55), M.smear, o + 3.015, 1.45, -4.05, S, false); hand.rotation.set(0, -Math.PI / 2, .25);
+
   // doorway casing + the door swung out into the hall
   add(new THREE.BoxGeometry(.1, OH + .1, .08), M.frame, oL - .05, (OH + .1) / 2, .04); add(new THREE.BoxGeometry(.1, OH + .1, .08), M.frame, oR + .05, (OH + .1) / 2, .04); add(new THREE.BoxGeometry(oR - oL + .2, .1, .08), M.frame, o - .05, OH + .05, .04);
   const dr = makeDoor({ w: 1.0, h: 2.25, closet: false, frame: false }); dr.grp.position.set(oL + .5, 0, .02); S.add(dr.grp); dr.hinge.rotation.y = -1.25;
@@ -1279,11 +1349,12 @@ function buildRoom() {
   for (const p of [railPts[0], railPts[3], railPts[6]]) rod(p, V(p.x, CH, p.z), .008, M.chrome);
   rod(V(o - 2.6, 2.62, -5.6), V(o - 1.0, 2.62, -5.6), .018, M.chrome);
   const curtain = (w, h, cx, cz, rotY, seed) => {
-    const g = new THREE.PlaneGeometry(w, h, Math.round(w * 30), 6), p = g.attributes.position;
+    const g = new THREE.PlaneGeometry(w, h, Math.round(w * 30), 28), p = g.attributes.position;
     for (let i = 0; i < p.count; i++) { const x = p.getX(i), y = p.getY(i), k = (h / 2 - y) / h; p.setZ(i, Math.sin(x * 13 + seed) * .055 + Math.sin(x * 4.1 + seed * 2) * .04 + k * k * Math.sin(x * 2 + seed) * .08); }
     g.computeVertexNormals(); const m = add(g, curtainM, cx, 2.62 - h / 2, cz, S, true); m.rotation.y = rotY; return m;
   };
-  curtain(1.8, 2.15, o - 2.25, -1.55, Math.PI / 2, 1); curtain(1.6, 2.1, o - 1.8, -5.6, 0, 2); curtain(1.6, 2.2, o + 1.55, -4.7, -Math.PI / 2, 3);
+  curtain(1.8, 2.15, o - 2.25, -1.55, Math.PI / 2, 1); const drape = curtain(1.6, 2.1, o - 1.8, -5.6, 0, 2); curtain(1.6, 2.2, o + 1.55, -4.7, -Math.PI / 2, 3);
+  drape.userData.base = drape.geometry.attributes.position.array.slice();
   // hospital bed
   const bed = new THREE.Group(); bed.position.set(o - .85, 0, -3.55); bed.rotation.y = -.9; S.add(bed);
   add(new THREE.BoxGeometry(1.95, .12, .86), M.cartBody, 0, .45, 0, bed);
@@ -1339,7 +1410,8 @@ function buildRoom() {
   SC.room = { group: G, lights: L, fog: [0x0a0e0c, .045], envPos: V(o, 1.6, -3),
     title: '[ <span class="lg">HOSPITAL WING 4B //&nbsp;</span>OBSERVATION ROOM 104 ]', view: 'ROOM VIEW',
     rects: [[o - 1.3, o + 1.3, .35, 2.3], [o - .75, o + .6, -.5, .5], [o - 2.55, o + 2.55, -6.2, -.4], [o - .55, o + .55, 2.2, 3.6, 'end'], [o + .95, o + 1.75, -7.5, -6.0, 'res']],
-    spawn: { x: o, z: 1.7, yaw: 0 }, flicker: flk, chartPos: V(o - .15, 0, -1.65), scared: false, inner: idr, endDup };
+    spawn: { x: o, z: 1.7, yaw: 0 }, flicker: flk, chartPos: V(o - .15, 0, -1.65), scared: false, inner: idr, endDup,
+    bed, drape, screenM, ecg: T.ecg, ecgAlarm: ecgAlarmTex() };
 }
 
 /* ---------------- EMERGENCY EXIT + STREET ---------------- */
@@ -1376,11 +1448,12 @@ function buildExit() {
   const sh = new THREE.Shape(); sh.absarc(0, 0, dr + .22, th0 - Math.PI / 2, th0 - Math.PI / 2 + thL, false); sh.absarc(0, 0, dr - .4, th0 - Math.PI / 2 + thL, th0 - Math.PI / 2, true);
   const top = add(new THREE.ExtrudeGeometry(sh, { depth: .06, bevelEnabled: false, curveSegments: 40 }), new THREE.MeshStandardMaterial({ map: M.frame.map, color: 0xd0c9b2, roughness: .45 }), dc.x, 1.12, dc.z); top.rotation.x = -Math.PI / 2;
   add(new THREE.CylinderGeometry(dr + .01, dr + .01, .1, 40, 1, true, th0, thL), new THREE.MeshStandardMaterial({ color: 0x4a2a20, roughness: .6, side: THREE.DoubleSide }), dc.x, .08, dc.z);
-  const pane = [makeBrokenGlass(), makeBrokenGlass(), makeBrokenGlass(false)].map(t => new THREE.MeshStandardMaterial({ map: t, transparent: true, roughness: .05, metalness: .3, side: THREE.DoubleSide, depthWrite: false }));
+  const pane = { hole: glassMat('hole'), hole2: glassMat('hole'), crack: glassMat('crack'), crack2: glassMat('crack'), clean: glassMat('clean') };
+  const deskPanes = [pane.clean, pane.crack, pane.hole, pane.clean, pane.crack2, pane.clean];
   const pr = dr - .15, n = 6;
   for (let i = 0; i <= n; i++) { const a = th0 + thL * i / n; rod(V(dc.x + Math.sin(a) * pr, 1.18, dc.z + Math.cos(a) * pr), V(dc.x + Math.sin(a) * pr, 2.65, dc.z + Math.cos(a) * pr), .035, M.dark); }
   add(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(Array.from({ length: 12 }, (_, i) => { const a = th0 + thL * i / 11; return V(dc.x + Math.sin(a) * pr, 2.65, dc.z + Math.cos(a) * pr); })), 40, .04, 6), M.dark, 0, 0, 0);
-  for (let i = 0; i < n; i++) { const a = th0 + thL * (i + .5) / n, w = 2 * pr * Math.sin(thL / n / 2); const p = add(new THREE.PlaneGeometry(w - .06, 1.42), pane[i % 3], dc.x + Math.sin(a) * pr, 1.92, dc.z + Math.cos(a) * pr, S, false); p.rotation.y = a; }
+  for (let i = 0; i < n; i++) { const a = th0 + thL * (i + .5) / n, w = 2 * pr * Math.sin(thL / n / 2); const p = add(new THREE.PlaneGeometry(w - .06, 1.42), deskPanes[i], dc.x + Math.sin(a) * pr, 1.92, dc.z + Math.cos(a) * pr, S, false); p.rotation.y = a; }
   add(new THREE.BoxGeometry(.5, 1.3, .6), M.cartBody, o - 6.4, .65, -5.5); add(new THREE.PlaneGeometry(.45, 1.2), M.cart, o - 6.4, .65, -5.19, S, false);
   for (let i = 0; i < 3; i++) { const a = .3 + i * .5, r2 = dr - .7; const m = add(new THREE.BoxGeometry(.45, .32, .08), M.black, dc.x + Math.sin(a) * r2, 1.32, dc.z + Math.cos(a) * r2); m.rotation.y = a; }
   for (let i = 0; i < 6; i++) add(new THREE.BoxGeometry(.05, .3, .22), new THREE.MeshStandardMaterial({ color: pick([0x2b3b6a, 0x6a2b2b, 0x2b5a3a, 0x222222]), roughness: .7 }), o - 6.9 + i * .06, 1.3, -5.6);
@@ -1404,18 +1477,20 @@ function buildExit() {
   const puddleM = new THREE.MeshStandardMaterial({ color: 0x0a0c0e, roughness: .02, metalness: .4, alphaMap: tex(pc, false), transparent: true, opacity: .75, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 });
   floorDecal(puddleM, 3.2, 5.5, o - 1.6, .2, Math.PI / 2 + .1, .004);
   scatterPapers(34, o - 8.5, o - .5, -5.5, 5.5);
+  const shardM = new THREE.MeshStandardMaterial({ color: 0xcfe2dc, transparent: true, opacity: .55, roughness: .04, metalness: .6, side: THREE.DoubleSide, depthWrite: false });
+  for (let i = 0; i < 70; i++) { const atDoor = i < 40, s = add(shardGeo(), shardM, atDoor ? o + R(-1.6, -.2) : dc.x + R(.2, 1.6), .004 + i * .00004, atDoor ? R(-2.3, -.4) : dc.z + R(1.6, 2.6), S, false); s.rotation.set(-Math.PI / 2 + R(-.1, .1), 0, R(0, 6.28)); }
   // exit doors: transom, sidelights, glass leaves swung out, chains
   const alu = new THREE.MeshStandardMaterial({ color: 0x3a3f42, metalness: .7, roughness: .4 });
   for (const z of [-op, -1.55, 1.55, op]) add(new THREE.BoxGeometry(.12, oh, .08), alu, o - .1, oh / 2, z);
   add(new THREE.BoxGeometry(.12, .08, op * 2), alu, o - .1, 2.6, 0); add(new THREE.BoxGeometry(.12, .08, op * 2), alu, o - .1, oh, 0);
-  [[0, 2.78, 3.1, .34, 0], [-2.08, 1.3, .98, 2.5, 1], [2.08, 1.3, .98, 2.5, 2]].forEach(([z, y, w, h, i]) => { const p = add(new THREE.PlaneGeometry(w, h), pane[i % 3], o - .1, y, z, S, false); p.rotation.y = Math.PI / 2; });
+  [[0, 2.78, 3.1, .34, 0], [-2.08, 1.3, .98, 2.5, 1], [2.08, 1.3, .98, 2.5, 2]].forEach(([z, y, w, h, i]) => { const p = add(new THREE.PlaneGeometry(w, h), [pane.clean, pane.crack2, pane.clean][i], o - .1, y, z, S, false); p.rotation.y = Math.PI / 2; });
   const chainGeo = (() => { const gs = []; for (let i = 0; i < 18; i++) { const t = new THREE.TorusGeometry(.022, .006, 5, 10); if (i % 2) t.rotateY(Math.PI / 2); t.translate(0, -i * .036, 0); gs.push(t); } return mergeGeometries(gs); })();
   for (const s of [-1, 1]) {
     const piv = new THREE.Group(); piv.position.set(o, 0, s * 1.55); piv.rotation.y = -s * 1.05; S.add(piv);
     const leaf = new THREE.Group(); leaf.position.set(0, 0, -s * .75); piv.add(leaf);
     add(new THREE.BoxGeometry(.06, 2.5, .07), alu, 0, 1.27, s * .72, leaf); add(new THREE.BoxGeometry(.06, 2.5, .07), alu, 0, 1.27, -s * .72, leaf);
     add(new THREE.BoxGeometry(.06, .07, 1.5), alu, 0, 2.5, 0, leaf); add(new THREE.BoxGeometry(.06, .2, 1.5), alu, 0, .1, 0, leaf);
-    const gl = add(new THREE.PlaneGeometry(1.38, 2.25), pane[s < 0 ? 0 : 1], 0, 1.33, 0, leaf, false); gl.rotation.y = Math.PI / 2;
+    const gl = add(new THREE.PlaneGeometry(1.38, 2.25), s < 0 ? pane.hole2 : pane.crack, 0, 1.33, 0, leaf, false); gl.rotation.y = Math.PI / 2;
     rod(V(-.08, 1.05, -.6), V(-.08, 1.05, .6), .016, M.chrome, leaf);
     const ch = add(chainGeo, M.steel, -.09, 1.05, R(-.3, .3), leaf); ch.rotation.z = .1;
     add(chainGeo, M.steel, .1, 2.45, s * .3, leaf);
@@ -1512,9 +1587,9 @@ function buildExit() {
   const rg = new THREE.BufferGeometry(); rg.setAttribute('position', new THREE.BufferAttribute(rp, 3));
   const rain = new THREE.LineSegments(rg, new THREE.LineBasicMaterial({ color: 0x8c9cb0, transparent: true, opacity: .3 })); rain.frustumCulled = false; S.add(rain);
   const light = { next: 6, flash: 0 };
-  SC.exit = { group: G, lights: L, fog: [0x0b1015, .03], envPos: V(o + .6, 1.6, 0),
+  SC.exit = { group: G, lights: L, fog: [0x0b1015, .03], envPos: V(o + .6, 1.6, 0), flash: () => { light.flash = .5; },
     title: '[ <span class="lg">HOSPITAL WING 4B //&nbsp;</span>EMERGENCY EXIT ]', view: 'EXIT CORRIDOR',
-    rects: [[o - 8.6, o - .6, -5.4, 5.4], [o - .8, o + 1.2, -1.3, 1.3], [o - 9.6, o - 8.4, -.4, .4, 'res']], resDup, spawn: { x: o - 7.6, z: .6, yaw: -Math.PI / 2 }, cars, signM, canopyLight,
+    rects: [[o - 8.6, o - .6, -5.4, 5.4], [o - .8, o + 1.2, -1.3, 1.3], [o + .15, o + 3.6, -6, 6], [o - 9.6, o - 8.4, -.4, .4, 'res']], resDup, spawn: { x: o - 7.6, z: .6, yaw: -Math.PI / 2 }, cars, signM, canopyLight,
     update(t, dt) {
       for (const c of cars) { const ph = (t * 2.4 + c.ph) % 1, r = ph < .25 || (ph > .5 && ph < .6) ? 1 : 0, b = (ph > .25 && ph < .5) || ph > .75 ? 1 : 0; c.mr.emissiveIntensity = r * 6; c.mb.emissiveIntensity = b * 6; c.lr.intensity = r * 9; c.lb.intensity = b * 9; }
       signM.emissiveIntensity = Math.random() < .03 ? .4 : 2.2; canopyLight.intensity = Math.random() < .04 ? .3 : 3;
@@ -1579,7 +1654,7 @@ const INTER = {
   ],
   exit: [
     { x: EX - 9, z: 0, r: 3.0, label: 'OPEN THE DOOR', when: () => !LINK.res.open, act: () => setLink('res', true) },
-    { x: EX + .2, z: 0, r: 30, label: 'MOVE FORWARD TO EXIT BUILDING', passive: true, when: () => !ending.on, act: () => { autoWalk = true; } },
+    { x: EX + .2, z: 0, r: 4.5, label: 'WALK OUT OF THE BUILDING', passive: true, when: () => !ending.on },
   ],
 };
 let promptAct = null;
@@ -1622,22 +1697,20 @@ function switchTo(name, sp) {
   $('.brand').innerHTML = c.title; setTrk(...trkLast); c.onEnter?.();
 }
 const ending = { on: false, t: 0, from: null, credits: false };
+// stepping outside only changes the feed; the credits roll once the player has walked out to the curb
 function startEnding() {
-  if (ending.on) return; ending.on = true; ending.t = 0; ending.credits = false; lockMove = true; autoWalk = false;
-  const tp = SC.exit.group.localToWorld(V(EX + 5.0, 0, 8.5));
-  ending.from = { x: rig.target.x, z: rig.target.z, yaw: baseYaw }; ending.to = { x: tp.x, z: tp.z - view.ez, yaw: baseYaw + angDiff(-.17 + SC.exit.group.rotation.y, baseYaw) };
+  if (ending.on) return; ending.on = true; ending.t = 0; ending.credits = false; autoWalk = false;
   SC.exit.view = 'EXTERIOR VIEW'; $('.brand').innerHTML = '[ EXTERIOR // SECTOR 4 STREET ]'; setTrk(...trkLast); thunder();
 }
 function runEnding(dt) {
-  if (!ending.on) return; ending.t += dt; const k = ease(ending.t / 3.4), a = ending.from, b = ending.to;
-  rig.target.x = a.x + (b.x - a.x) * k; rig.target.z = a.z + (b.z - a.z) * k; baseYaw = a.yaw + (b.yaw - a.yaw) * k; walk.last = clock.elapsedTime;
-  if (ending.t > 3.6 && !ending.credits) { ending.credits = true; $('#credits').classList.add('on'); $('#credits').setAttribute('aria-hidden', 'false'); }
+  if (!ending.on) return; ending.t += dt;
+  if (!ending.credits && toLocal('exit', rig.target.x, rig.target.z + view.ez).x > EX + 3.0) { ending.credits = true; lockMove = true; $('#credits').classList.add('on'); $('#credits').setAttribute('aria-hidden', 'false'); }
 }
 function resetRun() {
   ending.on = false; lockMove = false; $('#credits').classList.remove('on'); $('#credits').setAttribute('aria-hidden', 'true'); SC.exit.view = 'EXIT CORRIDOR';
   fx.sites?.forEach(s => { s.armed = true; }); fx.lights.forEach(L => { L.killed = false; }); scare.lastEnd = clock.elapsedTime;
   const f = fx.figure; if (f && !f.off) { f.g.position.copy(f.home); f.g.rotation.y = Math.PI / 2 + .35; f.g.visible = true; f.state = 'wait'; f.seen = 0; f.stung = false; f.person?.set('idle', .6, true); }
-  SC.room.scared = false; SC.exit.walker = false;
+  SC.room.scared = false; SC.exit.walker = false; for (const n in ZONES) ZONES[n].forEach(zn => { zn.armed = true; });
 }
 function ghostTo(name) { if (fx.ghost) SC[name].group.add(fx.ghost.g); }
 function roomScare() {
@@ -1649,9 +1722,78 @@ function roomScare() {
 function exitWalker() {
   let path = [V(EX + 1.7, 0, -9), V(EX + 1.7, 0, 9)];
   const a = { dur: 8, fired: new Set(),
-    ev: [[0, () => { ghostTo('exit'); ghost(path[0].x, path[0].z, 0, 'walk', .75, .4); }], [7.6, ghostHide], [7.9, () => ghostTo('corridor')]],
+    ev: [[0, () => { ghostTo('exit'); ghost(path[0].x, path[0].z, 0, 'walk', .65, .4); }], [7.6, ghostHide], [7.9, () => ghostTo('corridor')]],
     tick: lt => { const G = fx.ghost; if (G?.g.visible) { moveAlong(G, path, lt * 1.1); if (lt > 3 && lt < 5) lookAtYou(G, 1); } }, end: () => { ghostHide(); ghostTo('corridor'); } };
   scare.a = a; scare.t = 0;
+}
+
+/* ---------------- Room 104 and the lobby: trip-wire scares ---------------- */
+function beep(f = 980, dur = .09, vol = .16) {
+  const c = AUD(); if (!c) return; const t = c.currentTime, o = outChain(c, 0, .25), os = c.createOscillator(), g = c.createGain(), lp = c.createBiquadFilter();
+  os.type = 'square'; os.frequency.value = f; lp.type = 'lowpass'; lp.frequency.value = 2400;
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .005); g.gain.setValueAtTime(vol, t + dur); g.gain.linearRampToValueAtTime(0, t + dur + .02);
+  os.connect(lp).connect(g).connect(o); os.start(t); os.stop(t + dur + .05);
+}
+function setScreens(alarm) { const r = SC.room, t = alarm ? r.ecgAlarm : r.ecg; r.screenM.map = r.screenM.emissiveMap = t; r.screenM.needsUpdate = true; }
+// push a face and two hands into the curtain from behind (local x, y, depth, radius)
+function pressDrape(k, lt = 0) {
+  const m = SC.room.drape, p = m.geometry.attributes.position, b = m.userData.base, hx = Math.sin(lt * 1.7) * .06;
+  const bumps = k ? [[.05 + hx, .08, .24 * k, .14], [-.3 + hx, -.13, .12 * k, .08], [.4 + hx, -.09, .12 * k, .08]] : [];
+  for (let i = 0; i < p.count; i++) { const x = b[i * 3], y = b[i * 3 + 1]; let dz = 0; for (const [bx, by, d, r] of bumps) dz += d * Math.exp(-((x - bx) ** 2 + (y - by) ** 2) / (r * r)); p.setZ(i, b[i * 3 + 2] + dz); }
+  p.needsUpdate = true; m.geometry.computeVertexNormals();
+}
+const exitLocalAhead = d => { const e = camera.position; return SC.exit.group.worldToLocal(V(e.x - Math.sin(look.yaw) * d, 0, e.z - Math.cos(look.yaw) * d)); };
+const ZONE_SCARES = {
+  // the dead heart monitor wakes up, races, and the bed slams against the floor
+  bed: () => { const r = SC.room, bed = r.bed, by = bed.position.y, br = bed.rotation.z; let next = 0, gap = .42;
+    return { dur: 3.4,
+      ev: [[0, () => setScreens(true)], [1.15, () => { bang(1.2, -.3); scrape(-.3); shake(.6); shock = .7; lights('strobe', .5); puff(bed.localToWorld(V(0, .7, 0)), 120); }], [1.7, () => beep(980, 1.4, .18)], [3.3, () => setScreens(false)]],
+      tick: lt => { if (lt < 1.6 && lt > next) { beep(); next = lt + gap; gap = Math.max(.1, gap * .78); }
+        const j = lt > 1.15 && lt < 1.6 ? 1 - (lt - 1.15) / .45 : 0; bed.position.y = by + Math.abs(Math.sin(lt * 70)) * .05 * j; bed.rotation.z = br + Math.sin(lt * 53) * .03 * j;
+        r.screenM.emissiveIntensity = lt < 1.6 ? (Math.sin(lt * 30) > 0 ? 2.6 : 1) : 1.6; },
+      end: () => { bed.position.y = by; bed.rotation.z = br; setScreens(false); r.screenM.emissiveIntensity = 1.6; } }; },
+  // someone presses their face and hands into the curtain from the other side
+  drape: () => ({ dur: 2.6,
+    ev: [[0, () => { whisper(-.4); creak(.5, -.4); }], [1.55, () => { bang(1.1, -.3); scrape(-.3); stinger(); shock = .8; shake(.6); lights('strobe', .35); }], [1.95, () => lights('off', .45)]],
+    tick: lt => pressDrape(lt < 1.5 ? ease(lt / 1.2) : lt < 1.95 ? 1.7 : 0, lt),
+    end: () => pressDrape(0) }),
+  // the restricted door swings open on someone waiting right behind it
+  behind: () => ({ dur: 1.7,
+    ev: [[0, () => { ghostTo('room'); const x = RX + 1.3, z = -7.7, G = ghost(x, z, faceCam(x, z), 'idle', .4, .6); if (G) G.headTilt = .35; }],
+      [.35, () => { bang(1.1, 0); stinger(); lights('strobe', .35); shake(.5); shock = .8; }], [.95, () => lights('off', .5)], [1.05, ghostHide], [1.6, () => ghostTo('corridor')]],
+    tick: () => { const G = fx.ghost; if (G?.g.visible) lookAtYou(G, 1); },
+    end: () => { ghostHide(); ghostTo('corridor'); } }),
+  // slumped behind the reception glass, watching; when the lights come back it is in front of the desk
+  desk: () => ({ dur: 2.9,
+    ev: [[0, () => { ghostTo('exit'); const x = EX - 4.4, z = -3.2, G = ghost(x, z, faceCam(x, z), 'idle', .4, .9); if (G) G.headTilt = .3; lights('strobe', .9); whisper(.5); }],
+      [1.0, () => lights('off', .55)], [1.15, () => { const x = EX - 4.0, z = -1.45; ghost(x, z, faceCam(x, z), 'idle', .3, .5); }],
+      [1.55, () => { bang(1.2, .4); shake(.7); shock = 1; lights('strobe', .3); }], [1.85, () => lights('off', .5)], [1.95, ghostHide], [2.8, () => ghostTo('corridor')]],
+    tick: () => { const G = fx.ghost; if (G?.g.visible) lookAtYou(G, 1); },
+    end: () => { ghostHide(); ghostTo('corridor'); } }),
+  // someone leans out from behind the pillar, then snaps back
+  pillar: () => { let hide, peek; return { dur: 2.0,
+    ev: [[0, () => { ghostTo('exit'); const c = toLocal('exit', camera.position.x, camera.position.z), px = EX - 2.5, pz = 2.7, d = Math.hypot(px - c.x, pz - c.z) || 1, ux = (px - c.x) / d, uz = (pz - c.z) / d;
+        hide = V(px + ux * .8, 0, pz + uz * .8); peek = V(hide.x - uz * .55, 0, hide.z + ux * .55); ghost(hide.x, hide.z, faceCam(hide.x, hide.z), 'idle', .5, .7); whisper(.3); }],
+      [1.1, () => scuttle(.5, .4)], [1.35, ghostHide], [1.9, () => ghostTo('corridor')]],
+    tick: lt => { const G = fx.ghost; if (!G?.g.visible || !hide) return; const k = lt < 1.1 ? ease(lt / .7) : 1 - ease((lt - 1.1) / .2); G.g.position.set(hide.x + (peek.x - hide.x) * k, 0, hide.z + (peek.z - hide.z) * k); G.headTilt = .5; lookAtYou(G, 1); },
+    end: () => { ghostHide(); ghostTo('corridor'); } }; },
+  // lightning shows someone outside the doors; the next flash, it is inside with you
+  flash: () => ({ dur: 2.6,
+    ev: [[0, () => { ghostTo('exit'); SC.exit.flash(); thunder(); lights('off', 1.7); const x = EX + 1.6, z = .2; ghost(x, z, faceCam(x, z), 'idle', .4, .4); }],
+      [.45, ghostHide], [1.2, () => { SC.exit.flash(); const p = exitLocalAhead(1.5); ghost(p.x, p.z, faceCam(p.x, p.z), 'idle', .3, .55); bang(1.3, 0); stinger(); shock = 1; shake(.9); }],
+      [1.6, ghostHide], [2.5, () => ghostTo('corridor')]],
+    tick: () => { const G = fx.ghost; if (G?.g.visible) { G.headTilt = .4; lookAtYou(G, 1); } },
+    end: () => { ghostHide(); ghostTo('corridor'); } }),
+};
+// trip-wires in each space's local coordinates: [x0, x1, z0, z1], or a condition
+const ZONES = {
+  room: [{ s: 'bed', r: [RX - 2.5, RX + 2.5, -3.2, -2.0] }, { s: 'drape', r: [RX - 2.5, RX + 2.5, -5.2, -3.9] }, { s: 'behind', when: () => LINK.res.k > .2 }],
+  exit: [{ s: 'desk', r: [EX - 6.6, EX - 5.2, -2, 3] }, { s: 'pillar', r: [EX - 4.6, EX - 2.9, -2.2, 1.9] }, { s: 'flash', r: [EX - 2.6, EX - .4, -2.4, 2.4] }],
+};
+function checkZones(t) {
+  const list = ZONES[cur]; if (!list || busy || !scaresOn || !entered || scare.a || panelOpen() || ending.on || t - scare.lastEnd < 1.5) return;
+  const c = toLocal(cur, camera.position.x, camera.position.z), x = c.x, z = c.z;
+  for (const zn of list) if (zn.armed !== false && (zn.when ? zn.when() : x > zn.r[0] && x < zn.r[1] && z > zn.r[2] && z < zn.r[3])) { zn.armed = false; const a = ZONE_SCARES[zn.s](); a.fired = new Set(); scare.a = a; scare.t = 0; return; }
 }
 
 /* ---------------- post-processing ---------------- */
@@ -1900,6 +2042,7 @@ const PANELS = {
   <dl class="kv"><dt>Power</dt><dd>Auxiliary, 31%</dd><dt>Doors</dt><dd>Locked from inside</dd><dt>Last procedure</dt><dd>23 Oct, 22:51 · exploratory · 4B-12</dd><dt>Instrument count</dt><dd>41 of 44</dd><dt>Ventilation</dt><dd>Reversed — negative pressure failed</dd></dl>
   <blockquote>Anaesthesia log, last line: “Patient sat up. Pulse 0. Do not open.”</blockquote>` },
   about: { rig: [0, view.cy, .4], html: `<h2>ABOUT THIS FEED</h2><p class="sub">A head-coupled 3D window, rendered live with three.js</p>
+  <p><b>Made by</b> <a href="https://redtint.github.io/" target="_blank" rel="noopener">Algef Almocera</a>. One of the experiments at redtint.github.io. © 2026 Algef Almocera.</p>
   <p><b>How the tracking works.</b> Your webcam finds your face 30–60 times a second using MediaPipe Face Landmarker. Where your face points becomes where you look: turn left, right, up or down and the view turns with you. Lean in and you step forward; lean back and you pull away. Small shifts of your head add parallax on top. Without a camera, the mouse steers your gaze.</p>
   <p><b>Privacy.</b> The camera image is analysed in your browser and never uploaded.</p>
   <p><b>Controls.</b> Move your head (or mouse) to look. <kbd>W</kbd>/<kbd>↑</kbd> walk, <kbd>S</kbd>/<kbd>↓</kbd> back, <kbd>A</kbd>/<kbd>D</kbd> sidestep, <kbd>Shift</kbd> run (or hold ▲ ▼ on touch screens). <kbd>C</kbd> recenter · <kbd>M</kbd> sound · <kbd>1</kbd>–<kbd>5</kbd> sections · <kbd>Esc</kbd> close panel. LOOK sets how strongly the view follows your head or mouse. SCARES turns the door scares off.</p>
@@ -2057,7 +2200,7 @@ const SCARES = {
     end: ghostHide }),
   // something drags inside; someone steps out of the door, then is yanked back in
   drag: s => { let z = -.4; return { dur: 2.4,
-    ev: [[0, () => { scrape(s.pan); creak(.9, s.pan); }], [.75, () => { const p = s.d.grp.localToWorld(V(0, 0, z)); ghost(p.x, p.z, s.d.grp.rotation.y, 'walk', .75, .4); }],
+    ev: [[0, () => { scrape(s.pan); creak(.9, s.pan); }], [.75, () => { const p = s.d.grp.localToWorld(V(0, 0, z)); ghost(p.x, p.z, s.d.grp.rotation.y, 'walk', .5, .4); }],
       ...steps(.8, 1.5, .34, s.pan, false), [1.55, () => { bang(1.1, s.pan); scrape(s.pan); shake(.55); lights('strobe', .3); shock = .5; }], [1.75, ghostHide]],
     tick: (lt, dt) => {
       s.d.hinge.rotation.y = s.d.openSign * 1.45 * (lt < 1.6 ? ease(lt / .7) : Math.max(0, 1 - (lt - 1.6) / .08));
@@ -2066,7 +2209,7 @@ const SCARES = {
     end: () => { s.d.hinge.rotation.y = 0; ghostHide(); } }; },
   // someone steps out and walks slowly across the hall into the dark, turning to look at you
   cross: s => { let path; return { dur: 3.4,
-    ev: [[0, () => { creak(.6, s.pan); const a = s.d.grp.localToWorld(V(0, 0, -.25)); path = [a, V(-s.d.side * .1, 0, s.z - .35), V(-s.d.side * 1.3, 0, s.z - 2.6)]; ghost(a.x, a.z, s.d.grp.rotation.y, 'walk', .8, .5); }],
+    ev: [[0, () => { creak(.6, s.pan); const a = s.d.grp.localToWorld(V(0, 0, -.25)); path = [a, V(-s.d.side * .1, 0, s.z - .35), V(-s.d.side * 1.3, 0, s.z - 2.6)]; ghost(a.x, a.z, s.d.grp.rotation.y, 'walk', .62, .5); }],
       ...steps(.2, 2.4, .6, s.pan * .3, false), [1.9, () => lights('strobe', .5)], [2.4, () => lights('off', .5)], [2.5, ghostHide], [2.9, () => bang(.5, s.pan)]],
     tick: lt => { s.d.hinge.rotation.y = s.d.openSign * 1.45 * (lt < 2.9 ? ease(lt / .5) : 0); const G = fx.ghost; if (G?.g.visible && path) { moveAlong(G, path, lt * 1.05); if (lt > 1.1) lookAtYou(G, 1); } },
     end: () => { s.d.hinge.rotation.y = 0; ghostHide(); } }; },
@@ -2131,7 +2274,7 @@ function loop() {
       yawIn = idle ? Math.sin(t * .21) * .28 : -mouse.x * .95; pitIn = idle ? Math.sin(t * .3) * .05 : -mouse.y * .5;
       nx = idle ? 0 : mouse.x * .25; ny = idle ? 0 : -mouse.y * .15;
     } else { yawIn = Math.sin(t * .2) * .25; }
-    lookT.yaw = baseYaw + clamp(yawIn * gain, -1.4, 1.4) * (ending.on ? .25 : 1); lookT.pitch = clamp(pitIn * gain, -.75, .75) * (ending.on ? .3 : 1);
+    lookT.yaw = baseYaw + clamp(yawIn * gain, -1.4, 1.4) * (ending.credits ? .25 : 1); lookT.pitch = clamp(pitIn * gain, -.75, .75) * (ending.credits ? .3 : 1);
     eyeT.set(nx * .45 * gain, ny * .3 * gain, 0);
     dollyT = track.mode === 'head' ? clamp((1 - nz) * 3.2 * gain, -.8, 1.1) : 0;
   }
@@ -2147,7 +2290,7 @@ function loop() {
   walk.v.z += ((-cy * fwd * spd - sy * side) - walk.v.z) * Math.min(1, dt * 6);
   const speed = Math.hypot(walk.v.x, walk.v.z);
   if (fwd || side) { walk.last = t; if (panelOpen()) setTab('explore', false); }
-  if (speed > .01 && !ending.on) {
+  if (speed > .01 && !ending.credits) {
     const inB = inWorld;
     const px = rig.target.x, pz = rig.target.z + view.ez, nx2 = px + walk.v.x * dt, nz2 = pz + walk.v.z * dt;
     if (inB(nx2, nz2)) { rig.target.x = nx2; rig.target.z = nz2 - view.ez; } else if (inB(nx2, pz)) rig.target.x = nx2; else if (inB(px, nz2)) rig.target.z = nz2 - view.ez;
@@ -2180,9 +2323,9 @@ function loop() {
   if (cur === 'corridor') updateFigure(t, dt);
   for (const n in SC) if (SC[n].group.visible) SC[n].update?.(t, dt); runTweens(dt); runEnding(dt); updatePrompt();
   updateLinks(dt, fwd); updateRegion(dt);
-  if (cur === 'exit') { const lp = toLocal('exit', camera.position.x, camera.position.z), inside = lp.x < EX; if (inside !== SC.exit.inside) { SC.exit.inside = inside; rainMuffle(inside); } if (!ending.on && lp.x > EX + .35) startEnding(); }
+  if (cur === 'exit') { const lp = toLocal('exit', camera.position.x, camera.position.z), inside = lp.x < EX; if (inside !== SC.exit.inside) { SC.exit.inside = inside; rainMuffle(inside); } if (!ending.on && toLocal('exit', rig.target.x, rig.target.z + view.ez).x > EX + .3) startEnding(); }
   PEOPLE.time.value = t; for (const P of PEOPLE.list) if (P.g.visible) P.update(dt);
-  checkScares(t); if (!hold) runScare(dt); updatePuffs(dt);
+  checkScares(t); checkZones(t); if (!hold) runScare(dt); updatePuffs(dt);
   shock = Math.max(0, shock - dt * .5); grade.uniforms.uShock.value = shock;
   grade.uniforms.uTime.value = t;
   composer.render();
@@ -2203,7 +2346,8 @@ function updateFigure(t, dt) {
     if (vis && !f.stung && f.seen > .35) { f.stung = true; stinger(); if (!REDUCED) { fx.lights.forEach(L => { L.fl.forced = .9; }); shock = 1; } }
     if (f.seen > 2.4) f.state = 'leave';
   } else if (f.state === 'leave') {
-    if (P) { P.set('walk', .8); P.headYaw *= .95; } f.g.rotation.y += (-Math.PI / 2 - f.g.rotation.y) * dt * 3; f.g.position.x -= dt * .75;
+    const turn = angDiff(-Math.PI / 2, f.g.rotation.y), go = Math.max(0, Math.cos(turn)) ** 2; f.g.rotation.y += turn * Math.min(1, dt * 3.5);
+    if (P) { P.set(go > .5 ? 'walk' : 'idle', go > .5 ? .55 : .6); P.headYaw *= .95; } f.g.position.x -= dt * .9 * go;
     if (f.g.position.x < ROOM.x1 + .5) { f.state = 'gone'; f.g.visible = false; f.gone = t; }
   } else if (f.state === 'gone' && t - f.gone > 40 && !vis) {
     f.g.position.copy(f.home); f.g.rotation.y = Math.PI / 2 + .35; if (P) { P.set('idle', .6, true); P.headYaw = 0; } else f.head.rotation.y = 0; f.g.visible = true; f.state = 'wait'; f.seen = 0; f.stung = false;
@@ -2243,7 +2387,7 @@ async function boot() {
     $('#goCam').disabled = $('#goMouse').disabled = false;
     if (!window.isSecureContext) $('#gnote').textContent = 'Camera tracking needs HTTPS or localhost; this address only supports mouse parallax.';
     if (AUTOTEST) { $('#gate').classList.add('gone'); track.mode = 'mouse'; setTrk('MOUSE PARALLAX', 'mouse'); }
-    if (AUTOTEST || location.search.includes('flowtest')) window.__wing = { fx, cur: () => cur, panel: () => panelOpen(), credits: () => $('#credits').classList.contains('on'), prompt: () => $('#prompt').textContent, reset: () => resetRun(), go: (n, x, z, yaw) => { const p = SC[n].group.localToWorld(V(x, 0, z)); switchTo(n, { x: p.x, z: p.z, yaw: yaw + SC[n].group.rotation.y }); }, link: n => setLink(n, true), cam: () => [camera.position.x, camera.position.z], ending: () => startEnding(), runEnd: (t) => { for (let k = 0; k < t * 60; k++) runEnding(1 / 60); }, roomScare: () => roomScare(), walker: () => exitWalker(),  setLook: (yaw, pitch = 0) => Object.assign(testEye, { yaw, pitch }), scareAt: (i, tt) => { if (scare.a) { scare.a.end?.(); scare.a = null; } hold = true; startScare(fx.sites[i]); for (let k = 0; k < Math.round(tt * 60); k++) { simT += 1 / 60; runScare(1 / 60); } }, release: () => { hold = false; }, scareT: () => (scare.a ? scare.t : -1), scare: i => startScare(fx.sites[i]), setRig: z => { rig.target.z = z; }, setEye: (x, y, z = 1) => Object.assign(testEye || {}, { x, y, z }), figureVisible, ready: true, info: () => renderer.info.render };
+    if (AUTOTEST || location.search.includes('flowtest')) window.__wing = { fx, cur: () => cur, panel: () => panelOpen(), credits: () => $('#credits').classList.contains('on'), prompt: () => $('#prompt').textContent, reset: () => resetRun(), go: (n, x, z, yaw) => { const p = SC[n].group.localToWorld(V(x, 0, z)); switchTo(n, { x: p.x, z: p.z, yaw: yaw + SC[n].group.rotation.y }); }, link: n => setLink(n, true), cam: () => [camera.position.x, camera.position.z], ending: () => startEnding(), runEnd: (t) => { for (let k = 0; k < t * 60; k++) runEnding(1 / 60); }, roomScare: () => roomScare(), walker: () => exitWalker(), zone: n => { if (scare.a) { scare.a.end?.(); } const a = ZONE_SCARES[n](); a.fired = new Set(); scare.a = a; scare.t = 0; }, adv: sec => { hold = true; for (let k = 0; k < Math.round(sec * 60); k++) { simT += 1 / 60; runScare(1 / 60); PEOPLE.time.value = simT; for (const P of PEOPLE.list) if (P.g.visible) P.update(1 / 60); for (const n in SC) if (SC[n].group.visible) SC[n].update?.(simT, 1 / 60); } },  setLook: (yaw, pitch = 0) => Object.assign(testEye, { yaw, pitch }), scareAt: (i, tt) => { if (scare.a) { scare.a.end?.(); scare.a = null; } hold = true; startScare(fx.sites[i]); for (let k = 0; k < Math.round(tt * 60); k++) { simT += 1 / 60; runScare(1 / 60); } }, release: () => { hold = false; }, scareT: () => (scare.a ? scare.t : -1), scare: i => startScare(fx.sites[i]), setRig: z => { rig.target.z = z; }, setEye: (x, y, z = 1) => Object.assign(testEye || {}, { x, y, z }), figureVisible, PEOPLE, THREE, camera, ready: true, info: () => renderer.info.render };
   } catch (err) { prog.textContent = 'Could not start the feed: ' + err.message; console.error(err); }
 }
 boot();
